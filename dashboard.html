@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Dashboard — Sin Chew Alarm</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Helvetica Neue',Arial,sans-serif;background:#0a0f1a;color:#fff;min-height:100vh}
+header{background:#1F3A5F;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;border-bottom:2px solid rgba(204,0,0,.4)}
+.hl{display:flex;align-items:center;gap:12px}
+.logo{width:34px;height:34px;flex-shrink:0}
+.ht{color:#fff;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700}
+.hs{color:rgba(255,255,255,.5);font-size:10px;margin-top:1px}
+.live-badge{display:flex;align-items:center;gap:6px;font-size:11px;color:#6ee7b7;font-weight:600}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#CC0000;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(204,0,0,.4)}50%{opacity:.8;box-shadow:0 0 0 6px rgba(204,0,0,0)}}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.stat-card{background:#111827;border:1px solid #1f2937;border-radius:14px;padding:16px 18px}
+.stat-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#6b7280;margin-bottom:6px}
+.stat-value{font-size:28px;font-weight:800;line-height:1}
+.stat-sub{font-size:11px;color:#4b5563;margin-top:4px}
+.s-red{color:#f87171}.s-green{color:#6ee7b7}.s-gold{color:#fbbf24}.s-blue{color:#60a5fa}
+.main-grid{display:grid;grid-template-columns:1fr 340px;gap:16px}
+@media(max-width:900px){.main-grid{grid-template-columns:1fr}}
+.panel{background:#111827;border:1px solid #1f2937;border-radius:16px;overflow:hidden}
+.panel-header{background:#1F3A5F;padding:12px 18px;display:flex;align-items:center;justify-content:space-between}
+.panel-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#fff}
+.panel-count{font-size:11px;color:rgba(255,255,255,.4);background:rgba(0,0,0,.3);padding:3px 9px;border-radius:20px}
+.feed-list{max-height:560px;overflow-y:auto}
+.feed-item{display:flex;align-items:flex-start;gap:12px;padding:13px 18px;border-bottom:1px solid rgba(255,255,255,.04);animation:slideIn .3s ease}
+@keyframes slideIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+.feed-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.feed-dot.valid{background:#22c55e}.feed-dot.done{background:#f59e0b}.feed-dot.invalid{background:#ef4444}
+.feed-body{flex:1;min-width:0}
+.feed-name{font-size:13px;font-weight:700;color:#f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.feed-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.feed-tag{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;white-space:nowrap}
+.feed-time{font-size:11px;color:#4b5563;white-space:nowrap}
+.feed-empty{padding:28px;text-align:center;color:#374151;font-size:13px}
+.right-col{display:flex;flex-direction:column;gap:16px}
+/* Due soon panel */
+.due-item{display:flex;align-items:flex-start;gap:10px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.04)}
+.due-dot{width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0;margin-top:5px}
+.due-name{font-size:13px;font-weight:700}
+.due-date{font-size:11px;color:#f59e0b;margin-top:2px}
+.due-addr{font-size:10px;color:#4b5563;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
+/* Svc type bars */
+.svc-list{padding:14px 18px;display:grid;gap:10px}
+.svc-row{display:flex;flex-direction:column;gap:4px}
+.svc-header{display:flex;justify-content:space-between;align-items:center}
+.svc-name{font-size:12px;font-weight:600;color:#e5e7eb}
+.svc-count{font-size:11px;font-weight:700;color:#CC0000}
+.svc-bar-bg{height:5px;background:#1f2937;border-radius:3px;overflow:hidden}
+.svc-bar-fill{height:100%;border-radius:3px;transition:width .6s;background:linear-gradient(90deg,#CC0000,#ff6b6b)}
+.refresh-bar{height:2px;background:#1f2937}
+.refresh-fill{height:100%;background:#CC0000;transition:width linear;width:100%}
+footer{text-align:center;padding:16px;font-size:11px;color:#374151;margin-top:16px}
+footer a{color:#CC0000;text-decoration:none}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.15);border-top-color:#CC0000;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hl">
+    <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="100" fill="#1F3A5F"/><circle cx="100" cy="100" r="92" fill="none" stroke="#CC0000" stroke-width="3"/><rect x="70" y="55" width="60" height="90" rx="4" fill="#CC0000"/><rect x="80" y="65" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="102" y="65" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="80" y="88" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="102" y="88" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="85" y="111" width="30" height="34" rx="2" fill="#1F3A5F"/><text x="100" y="170" font-family="Arial,sans-serif" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle" letter-spacing="2">SIN CHEW ALARM</text></svg></div>
+    <div><div class="ht">Sin Chew Alarm</div><div class="hs">Service Operations Dashboard · <span id="h-date"></span></div></div>
+  </div>
+  <div class="live-badge"><div class="live-dot"></div><span id="live-status">Loading…</span></div>
+</header>
+<div class="refresh-bar"><div class="refresh-fill" id="rfill"></div></div>
+
+<div class="container">
+  <div class="stats-bar">
+    <div class="stat-card"><div class="stat-label">Services Today</div><div class="stat-value s-red" id="s-today">—</div><div class="stat-sub" id="s-today-sub">loading</div></div>
+    <div class="stat-card"><div class="stat-label">Completed Today</div><div class="stat-value s-green" id="s-done">—</div><div class="stat-sub">service visits closed</div></div>
+    <div class="stat-card"><div class="stat-label">Due Within 30 Days</div><div class="stat-value s-gold" id="s-due">—</div><div class="stat-sub">scheduled for service</div></div>
+    <div class="stat-card"><div class="stat-label">Total Customers</div><div class="stat-value s-blue" id="s-total">—</div><div class="stat-sub">active passes</div></div>
+  </div>
+  <div class="main-grid">
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Live Service Feed</span><span class="panel-count" id="feed-count">—</span></div>
+      <div class="feed-list" id="feed"><div class="feed-empty"><span class="spin"></span></div></div>
+    </div>
+    <div class="right-col">
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">⚠️ Due for Service</span><span class="panel-count" id="due-count">—</span></div>
+        <div id="due-list"><div class="feed-empty" style="padding:18px;font-size:12px">No upcoming services</div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Today by Service Type</span></div>
+        <div class="svc-list" id="svc-list"><div style="color:#4b5563;font-size:12px">Loading…</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer><a href="./">← Portal</a> &nbsp;·&nbsp; <a href="scan.html">Scanner</a> &nbsp;·&nbsp; &copy; 2026 Sin Chew Alarm Pte Ltd</footer>
+
+<script>
+const STATS_URL = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/sinchew-stats';
+const REFRESH_MS = 8000;
+
+function fmtTime(iso) { return new Date(iso).toLocaleTimeString('en-SG', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Singapore' }); }
+function timeSince(iso) { const d = Math.floor((Date.now() - new Date(iso).getTime()) / 1000); return d < 60 ? d+'s ago' : d < 3600 ? Math.floor(d/60)+'m ago' : Math.floor(d/3600)+'h ago'; }
+
+function renderFeed(feed) {
+  const el = document.getElementById('feed');
+  document.getElementById('feed-count').textContent = feed.length + ' records';
+  if (!feed.length) { el.innerHTML = '<div class="feed-empty">No service activity yet today</div>'; return; }
+  el.innerHTML = feed.map(s => {
+    const tags = [];
+    if (s.service_type)  tags.push(`<span class="feed-tag" style="background:#1F3A5F22;color:#93c5fd">${s.service_type}</span>`);
+    if (s.plan_tier)     tags.push(`<span class="feed-tag" style="background:#CC000022;color:#f87171">${s.plan_tier}</span>`);
+    if (s.service_completed) tags.push(`<span class="feed-tag" style="background:#78350f;color:#fbbf24">✅ Completed</span>`);
+    return `<div class="feed-item">
+      <div class="feed-dot ${s.service_completed ? 'done' : 'valid'}"></div>
+      <div class="feed-body">
+        <div class="feed-name">${s.holder_name || s.code || '—'}</div>
+        <div class="feed-meta">${tags.join('')}</div>
+      </div>
+      <div class="feed-time">${fmtTime(s.scanned_at)}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderDue(due) {
+  const el = document.getElementById('due-list');
+  document.getElementById('due-count').textContent = due.length;
+  if (!due.length) { el.innerHTML = '<div class="feed-empty" style="padding:18px;font-size:12px">No services due in next 30 days</div>'; return; }
+  el.innerHTML = due.map(d => `<div class="due-item">
+    <div class="due-dot"></div>
+    <div style="flex:1;min-width:0">
+      <div class="due-name">${d.holder_name || d.code}</div>
+      <div class="due-date">${d.next_service_date}${d.plan_tier ? ' · ' + d.plan_tier : ''}</div>
+      <div class="due-addr">${d.service_address || ''}</div>
+    </div>
+  </div>`).join('');
+}
+
+function renderSvcTypes(bySvc) {
+  const el = document.getElementById('svc-list');
+  const entries = Object.entries(bySvc).sort((a,b) => b[1]-a[1]);
+  if (!entries.length) { el.innerHTML = '<div style="color:#4b5563;font-size:12px">No service activity today</div>'; return; }
+  const max = entries[0][1] || 1;
+  el.innerHTML = entries.map(([name, count]) => `<div class="svc-row"><div class="svc-header"><span class="svc-name">${name}</span><span class="svc-count">${count}</span></div><div class="svc-bar-bg"><div class="svc-bar-fill" style="width:${Math.round(count/max*100)}%"></div></div></div>`).join('');
+}
+
+async function refresh() {
+  try {
+    const res  = await fetch(STATS_URL);
+    const data = await res.json();
+    const now  = new Date();
+    document.getElementById('live-status').textContent = 'LIVE · ' + now.toLocaleTimeString('en-SG', { timeZone: 'Asia/Singapore' });
+    const s = data.stats || {};
+    document.getElementById('s-today').textContent = s.scans_today     ?? 0;
+    document.getElementById('s-done').textContent  = s.completed_today ?? 0;
+    document.getElementById('s-due').textContent   = s.due_soon_count  ?? 0;
+    document.getElementById('s-total').textContent = s.total_passes    ?? 0;
+    document.getElementById('s-today-sub').textContent = `${s.scans_today ?? 0} site visits logged`;
+    renderFeed(data.feed || []);
+    renderDue(data.due_soon || []);
+    renderSvcTypes(s.by_service_type || {});
+    startProgress();
+  } catch { document.getElementById('live-status').textContent = 'Error — retrying…'; }
+}
+
+function startProgress() {
+  const fill = document.getElementById('rfill');
+  fill.style.transition = 'none'; fill.style.width = '100%'; fill.offsetWidth;
+  fill.style.transition = `width ${REFRESH_MS}ms linear`; fill.style.width = '0%';
+}
+
+document.getElementById('h-date').textContent = new Date().toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Asia/Singapore' });
+refresh();
+setInterval(refresh, REFRESH_MS);
+</script>
+</body></html>
