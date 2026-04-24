@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>Tech Onboarding — Sin Chew Alarm</title>
+<!-- v4 2026-04-24 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -26,14 +27,11 @@ header{background:#1F3A5F;padding:13px 18px;display:flex;align-items:center;gap:
 .field textarea{min-height:72px;resize:vertical;font-family:inherit}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .field-hint{font-size:11px;color:#4b5563;margin-top:4px}
-.required-note{font-size:11px;color:#4b5563;margin-bottom:14px}
 .btn{width:100%;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:800;cursor:pointer;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn.green{background:#22c55e;color:#052e16}
 .btn:hover{opacity:.88}
 .btn:disabled{opacity:.4;cursor:default}
 .err{color:#f87171;font-size:12px;padding:8px 12px;background:rgba(239,68,68,.1);border-radius:7px;border-left:3px solid #ef4444;display:none;margin-bottom:10px}
-
-/* ── Success ────────────────────────────── */
 #success-view{display:none}
 .launch-card{background:linear-gradient(135deg,#064e3b,#065f46);border:2px solid #22c55e;border-radius:16px;padding:28px 22px;text-align:center;margin-bottom:14px}
 .launch-icon{font-size:52px;margin-bottom:10px}
@@ -66,7 +64,6 @@ header{background:#1F3A5F;padding:13px 18px;display:flex;align-items:center;gap:
 .wallet-btn.wa{background:#25D366}
 .view-link{display:block;font-size:12px;color:#6b7280;text-decoration:none;margin-bottom:14px;text-align:center}
 .btn-another{width:100%;padding:11px;border:1.5px solid #374151;border-radius:10px;font-size:13px;color:#9ca3af;background:transparent;cursor:pointer}
-
 .spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(0,0,0,.2);border-top-color:currentColor;border-radius:50%;animation:spin .6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 footer{text-align:center;padding:18px;font-size:11px;color:#374151}
@@ -75,36 +72,28 @@ footer a{color:#22c55e;text-decoration:none}
 </style>
 </head>
 <body>
-
 <header>
   <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="100" fill="#1F3A5F"/><circle cx="100" cy="100" r="92" fill="none" stroke="#CC0000" stroke-width="3"/><rect x="70" y="55" width="60" height="90" rx="4" fill="#CC0000"/><rect x="80" y="65" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="102" y="65" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="80" y="88" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="102" y="88" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="85" y="111" width="30" height="34" rx="2" fill="#1F3A5F"/><text x="100" y="170" font-family="Arial,sans-serif" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle" letter-spacing="2">SIN CHEW ALARM</text></svg></div>
   <div><div class="brand">Sin Chew Alarm</div><div class="sub">Technician Onboarding</div></div>
 </header>
-
 <div class="strip">
   <div class="strip-icon">🔧</div>
   <div class="strip-title">Issue Technician Pass</div>
-  <div class="strip-sub">Creates a wallet pass with scanner access · All future capabilities pre-loaded · Scanner launches automatically after issue</div>
+  <div class="strip-sub">Creates a wallet pass with scanner access · Identity pre-loaded into scanner on launch</div>
 </div>
 
 <div class="container">
-
-  <!-- ── FORM VIEW ──────────────────────────────────────── -->
   <div id="form-view">
-
     <div class="card">
       <div class="card-title">Technician Details</div>
-      <p class="required-note">Fields marked * are required</p>
-
       <div class="field">
         <label>Full Name *</label>
         <input id="f-name" type="text" placeholder="e.g. Ali Hassan" autocomplete="name">
       </div>
-
       <div class="field-row">
         <div class="field">
           <label>Employee ID</label>
-          <input id="f-empid" type="text" placeholder="Leave blank to auto-generate">
+          <input id="f-empid" type="text" placeholder="Auto-generated if blank">
         </div>
         <div class="field">
           <label>Role</label>
@@ -117,18 +106,14 @@ footer a{color:#22c55e;text-decoration:none}
           </select>
         </div>
       </div>
-
       <div class="field-row">
         <div class="field">
           <label>Zone / Area</label>
           <select id="f-zone">
             <option value="">— All zones —</option>
-            <option>North</option>
-            <option>South</option>
-            <option>East</option>
-            <option>West</option>
-            <option>Central</option>
-            <option>North-East</option>
+            <option>North</option><option>South</option>
+            <option>East</option><option>West</option>
+            <option>Central</option><option>North-East</option>
           </select>
         </div>
         <div class="field">
@@ -143,11 +128,11 @@ footer a{color:#22c55e;text-decoration:none}
       <div class="field-row">
         <div class="field">
           <label>Mobile</label>
-          <input id="f-phone" type="tel" placeholder="+65 9xxx xxxx" autocomplete="tel">
+          <input id="f-phone" type="tel" placeholder="+65 9xxx xxxx">
         </div>
         <div class="field">
           <label>Email</label>
-          <input id="f-email" type="email" placeholder="tech@sinchewalarm.com" autocomplete="email">
+          <input id="f-email" type="email" placeholder="tech@sinchewalarm.com">
         </div>
       </div>
       <div class="field">
@@ -165,21 +150,15 @@ footer a{color:#22c55e;text-decoration:none}
     </div>
 
     <div id="err" class="err"></div>
-    <button class="btn green" id="submit-btn" onclick="onboard()">
-      Issue Technician Pass 🔧
-    </button>
+    <button class="btn green" id="submit-btn" onclick="onboard()">Issue Technician Pass 🔧</button>
   </div>
 
-  <!-- ── SUCCESS VIEW ───────────────────────────────────── -->
   <div id="success-view">
-
-    <!-- Primary CTA: scanner with countdown -->
     <div class="launch-card">
       <div class="launch-icon">✅</div>
       <div class="launch-name" id="s-name"></div>
       <div class="launch-role" id="s-role"></div>
       <div class="launch-emp" id="s-emp"></div>
-
       <div class="countdown-wrap">
         <div class="ring">
           <svg viewBox="0 0 48 48" width="54" height="54">
@@ -193,12 +172,10 @@ footer a{color:#22c55e;text-decoration:none}
           Scanner launches with this tech's identity pre-loaded
         </div>
       </div>
-
       <button class="btn-launch" onclick="goToScanner()">🔧 Launch Scanner Now</button>
       <button class="btn-cancel" onclick="cancelCountdown()">Cancel auto-launch</button>
     </div>
 
-    <!-- Secondary: pass details, wallet, QR -->
     <div class="details-card">
       <div class="card-title">Pass Details</div>
       <div class="info-grid" id="s-info"></div>
@@ -220,35 +197,29 @@ footer a{color:#22c55e;text-decoration:none}
       <button class="btn-another" onclick="resetForm()">+ Onboard another technician</button>
     </div>
   </div>
-
 </div>
-<footer>
-  <a href="./">← Home</a> &nbsp;·&nbsp;
-  <a href="onboard.html">Customer Onboarding</a> &nbsp;·&nbsp;
-  © 2026 Sin Chew Alarm Pte Ltd
-</footer>
+
+<footer><a href="./">← Home</a> &nbsp;·&nbsp; <a href="onboard.html">Customer Onboarding</a> &nbsp;·&nbsp; © 2026 Sin Chew Alarm Pte Ltd</footer>
 
 <script>
 const TECH_URL  = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/sinchew-tech-onboard';
 const ADMIN_KEY = 'demo:demo';
 const COUNTDOWN = 5;
-const CIRC      = 2 * Math.PI * 22; // 138.23
+const CIRC      = 2 * Math.PI * 22;
 
 let scannerUrl = null, timer = null, secs = COUNTDOWN;
 
 function g(id) { return document.getElementById(id); }
 function v(id) { const e = g(id); return e ? e.value.trim() : ''; }
 
-// Set today as default start date
 window.addEventListener('DOMContentLoaded', () => {
   g('f-start').value = new Date().toLocaleDateString('en-CA');
 });
 
-// ── Issue pass ────────────────────────────────────────────────────────────────
 async function onboard() {
   const errEl = g('err'), btn = g('submit-btn');
   if (!v('f-name')) {
-    errEl.textContent = 'Please enter the technician\'s full name.';
+    errEl.textContent = "Please enter the technician's full name.";
     errEl.style.display = 'block';
     g('f-name').focus();
     return;
@@ -257,13 +228,11 @@ async function onboard() {
   btn.disabled = true;
   btn.innerHTML = '<span class="spin"></span> Issuing pass…';
 
-  const certs = v('f-certs')
-    ? v('f-certs').split('\n').map(s => s.trim()).filter(Boolean)
-    : [];
+  const certs = v('f-certs') ? v('f-certs').split('\n').map(s => s.trim()).filter(Boolean) : [];
 
   try {
     const res = await fetch(TECH_URL, {
-      method:  'POST',
+      method: 'POST',
       headers: { 'content-type': 'application/json', 'x-admin-key': ADMIN_KEY },
       body: JSON.stringify({
         tech_name:      v('f-name'),
@@ -278,7 +247,7 @@ async function onboard() {
       }),
     });
     const data = await res.json();
-    if (!res.ok || !data.success) throw new Error(data.error || 'Failed to issue pass');
+    if (!res.ok || !data.success) throw new Error(data.error || JSON.stringify(data.detail) || 'Failed to issue pass');
     showSuccess(data);
   } catch(e) {
     errEl.textContent = e.message;
@@ -288,14 +257,11 @@ async function onboard() {
   }
 }
 
-// ── Show success ──────────────────────────────────────────────────────────────
 function showSuccess(data) {
   scannerUrl = data.scanner_url;
-
   g('s-name').textContent = data.tech_name;
   g('s-role').textContent = [data.role, data.zone].filter(Boolean).join(' · ');
   g('s-emp').textContent  = data.employee_id;
-
   g('s-info').innerHTML = [
     ['Employee ID', data.employee_id],
     ['Role',        data.role],
@@ -305,43 +271,28 @@ function showSuccess(data) {
   ].filter(Boolean).map(([l, val]) =>
     `<div class="ig-row"><span class="ig-lbl">${l}</span><span class="ig-val">${val}</span></div>`
   ).join('');
-
   g('s-apple').href  = data.apple_url;
   g('s-google').href = data.google_url;
   g('s-wa').href     = data.whatsapp_url;
   g('s-view').href   = data.public_url;
-
   g('qr').innerHTML = '';
   if (window.QRCode) {
-    new QRCode(g('qr'), {
-      text: data.scanner_url, width: 180, height: 180,
-      colorDark: '#064e3b', colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.M,
-    });
+    new QRCode(g('qr'), { text: data.scanner_url, width: 180, height: 180, colorDark: '#064e3b', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
   }
-
   g('form-view').style.display    = 'none';
   g('success-view').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
   startCountdown();
 }
 
-// ── Countdown ─────────────────────────────────────────────────────────────────
 function startCountdown() {
-  secs = COUNTDOWN;
-  updateRing();
-  timer = setInterval(() => {
-    secs--;
-    updateRing();
-    if (secs <= 0) { clearInterval(timer); goToScanner(); }
-  }, 1000);
+  secs = COUNTDOWN; updateRing();
+  timer = setInterval(() => { secs--; updateRing(); if (secs <= 0) { clearInterval(timer); goToScanner(); } }, 1000);
 }
-
 function updateRing() {
   g('ring-num').textContent = secs;
   g('ring-fill').style.strokeDashoffset = CIRC * (1 - secs / COUNTDOWN);
 }
-
 function cancelCountdown() {
   clearInterval(timer); timer = null;
   g('ring-num').textContent = '—';
@@ -349,27 +300,20 @@ function cancelCountdown() {
   g('countdown-label').textContent = 'Ready when you are';
   event.target.style.display = 'none';
 }
-
 function goToScanner() {
   if (!scannerUrl) return;
   clearInterval(timer);
   window.location.href = scannerUrl;
 }
-
-// ── Reset ─────────────────────────────────────────────────────────────────────
 function resetForm() {
-  clearInterval(timer);
-  scannerUrl = null;
+  clearInterval(timer); scannerUrl = null;
   g('success-view').style.display = 'none';
   g('form-view').style.display    = '';
   g('submit-btn').disabled = false;
   g('submit-btn').innerHTML = 'Issue Technician Pass 🔧';
   g('err').style.display = 'none';
   g('qr').innerHTML = '';
-  // Clear form fields
-  ['f-name','f-empid','f-phone','f-email','f-vehicle','f-certs'].forEach(id => {
-    const e = g(id); if (e) e.value = '';
-  });
+  ['f-name','f-empid','f-phone','f-email','f-vehicle','f-certs'].forEach(id => { const e = g(id); if (e) e.value = ''; });
   g('f-role').selectedIndex = 0;
   g('f-zone').selectedIndex = 0;
   g('f-start').value = new Date().toLocaleDateString('en-CA');
