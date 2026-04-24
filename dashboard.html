@@ -40,13 +40,11 @@ header{background:#1F3A5F;padding:14px 22px;display:flex;align-items:center;just
 .feed-time{font-size:11px;color:#4b5563;white-space:nowrap}
 .feed-empty{padding:28px;text-align:center;color:#374151;font-size:13px}
 .right-col{display:flex;flex-direction:column;gap:16px}
-/* Due soon panel */
 .due-item{display:flex;align-items:flex-start;gap:10px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.04)}
 .due-dot{width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0;margin-top:5px}
 .due-name{font-size:13px;font-weight:700}
 .due-date{font-size:11px;color:#f59e0b;margin-top:2px}
 .due-addr{font-size:10px;color:#4b5563;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
-/* Svc type bars */
 .svc-list{padding:14px 18px;display:grid;gap:10px}
 .svc-row{display:flex;flex-direction:column;gap:4px}
 .svc-header{display:flex;justify-content:space-between;align-items:center}
@@ -96,7 +94,12 @@ footer a{color:#CC0000;text-decoration:none}
     </div>
   </div>
 </div>
-<footer><a href="./">← Portal</a> &nbsp;·&nbsp; <a href="scan.html">Scanner</a> &nbsp;·&nbsp; &copy; 2026 Sin Chew Alarm Pte Ltd</footer>
+<footer>
+  <a href="./">← Portal</a> &nbsp;·&nbsp;
+  <a href="scan.html">Scanner</a> &nbsp;·&nbsp;
+  <a href="geofence.html">📍 Geo-fences</a> &nbsp;·&nbsp;
+  © 2026 Sin Chew Alarm Pte Ltd
+</footer>
 
 <script>
 const STATS_URL = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/sinchew-stats';
