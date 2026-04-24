@@ -15,8 +15,6 @@ header{background:#1F3A5F;padding:13px 18px;display:flex;align-items:center;gap:
 .strip-icon{font-size:28px}
 .strip-title{color:#fff;font-size:17px;font-weight:800;margin-top:5px}
 .strip-sub{color:rgba(255,255,255,.6);font-size:12px;margin-top:3px}
-
-/* ── Shared ─────────────────────────────────── */
 .container{max-width:520px;margin:18px auto;padding:0 14px 60px}
 .card{background:#fff;border-radius:13px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:13px}
 .card-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#CC0000;font-weight:700;margin-bottom:13px}
@@ -30,14 +28,11 @@ header{background:#1F3A5F;padding:13px 18px;display:flex;align-items:center;gap:
 .btn:hover{opacity:.88}
 .btn:disabled{opacity:.4;cursor:default}
 .btn.navy{background:#1F3A5F}
-.btn.green{background:#16a34a}
 .btn-ghost{width:100%;padding:11px;border:1.5px solid #d1d5db;border-radius:10px;font-size:13px;color:#6b7280;background:transparent;cursor:pointer;transition:border-color .2s}
 .btn-ghost:hover{border-color:#1F3A5F;color:#1F3A5F}
 .err{color:#c0392b;font-size:12px;padding:7px 11px;background:#fdf2f2;border-radius:7px;border-left:3px solid #c0392b;display:none;margin-bottom:8px}
 .spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* ── Customer info card ─────────────────────── */
 .ci-card{background:#f0f6ff;border:1px solid #bfdbfe;border-radius:12px;padding:14px 16px;margin-bottom:13px}
 .ci-name{font-size:17px;font-weight:800;color:#1F3A5F}
 .ci-row{display:flex;gap:8px;align-items:center;margin-top:5px;font-size:12px;color:#4b5563}
@@ -45,16 +40,12 @@ header{background:#1F3A5F;padding:13px 18px;display:flex;align-items:center;gap:
 .pill-premium{background:#CC0000;color:#fff}
 .pill-standard{background:#1F3A5F;color:#fff}
 .pill-basic{background:#6b7280;color:#fff}
-
-/* ── Entry view ─────────────────────────────── */
 .entry-hero{text-align:center;padding:32px 0 20px}
 .entry-icon{font-size:44px;margin-bottom:10px}
 .entry-title{font-size:20px;font-weight:800;color:#1F3A5F;margin-bottom:5px}
 .entry-sub{font-size:13px;color:#6b7280;line-height:1.6}
 .divider-or{display:flex;align-items:center;gap:10px;color:#d1d5db;font-size:11px;margin:14px 0}
 .divider-or::before,.divider-or::after{content:'';flex:1;height:1px;background:#e5e7eb}
-
-/* ── Confirm view ───────────────────────────── */
 .confirm-card{background:#fff;border-radius:16px;padding:32px 20px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.09)}
 .conf-icon{font-size:52px;margin-bottom:10px}
 .conf-title{font-size:22px;font-weight:800;color:#1F3A5F;margin-bottom:6px}
@@ -65,8 +56,6 @@ header{background:#1F3A5F;padding:13px 18px;display:flex;align-items:center;gap:
 .cs-row:last-child{border-bottom:none}
 .cs-lbl{color:#6b7280;font-size:11px}
 .cs-val{font-weight:700;color:#1F3A5F}
-
-/* ── Login modal ────────────────────────────── */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:center;justify-content:center;padding:16px}
 .modal-bg.open{display:flex}
 .modal{background:#fff;border-radius:16px;padding:26px 22px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:pop .2s cubic-bezier(.34,1.56,.64,1)}
@@ -76,8 +65,6 @@ header{background:#1F3A5F;padding:13px 18px;display:flex;align-items:center;gap:
 .modal .field{margin-bottom:10px}
 .modal-actions{display:flex;gap:8px;margin-top:14px}
 .modal-err{font-size:12px;color:#CC0000;min-height:18px;margin-bottom:4px}
-
-/* ── Admin layout ───────────────────────────── */
 .admin-wrap{display:flex;gap:0;min-height:calc(100vh - 110px)}
 .admin-left{width:280px;flex-shrink:0;background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column}
 .admin-right{flex:1;overflow-y:auto;padding:16px}
@@ -98,16 +85,12 @@ header{background:#1F3A5F;padding:13px 18px;display:flex;align-items:center;gap:
 .sel-card .sc-name{font-weight:800;color:#1F3A5F;font-size:15px}
 .sel-card .sc-meta{font-size:12px;color:#4b5563;margin-top:4px}
 .sel-placeholder{background:#f9fafb;border:1.5px dashed #d1d5db;border-radius:10px;padding:20px;text-align:center;color:#9ca3af;font-size:13px;margin-bottom:14px}
-
-/* ── Bookings table ─────────────────────────── */
 .bk-row{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px 14px;margin-bottom:8px}
 .bk-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .bk-ref{font-family:monospace;font-size:11px;font-weight:700;color:#CC0000;background:#fff0f0;padding:2px 7px;border-radius:4px}
 .bk-name{font-size:13px;font-weight:700;color:#1a1a1a}
 .bk-type{font-size:12px;color:#4b5563}
 .bk-bot{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
-.bk-date{font-size:11px;color:#9ca3af}
-.bk-created{font-size:11px;color:#9ca3af}
 .status-badge{font-size:10px;font-weight:700;padding:2px 9px;border-radius:12px;letter-spacing:.3px}
 .sb-pending{background:#fef9c3;color:#854d0e}
 .sb-scheduled{background:#dbeafe;color:#1e40af}
@@ -115,20 +98,13 @@ header{background:#1F3A5F;padding:13px 18px;display:flex;align-items:center;gap:
 .sb-cancelled{background:#f3f4f6;color:#6b7280}
 .status-sel{border:1px solid #d1d5db;border-radius:6px;padding:4px 8px;font-size:11px;background:#fff;cursor:pointer;color:#374151;outline:none}
 .empty-state{text-align:center;padding:40px 20px;color:#9ca3af;font-size:13px}
-
-/* ── History badge ──────────────────────────── */
 .hist-wrap{margin-top:14px}
 .hist-title{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#9ca3af;margin-bottom:8px;font-weight:700}
 .hist-item{background:#f9fafb;border-radius:8px;padding:8px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
 .hi-ref{font-family:monospace;font-size:11px;color:#CC0000;font-weight:700}
 .hi-type{font-size:12px;color:#374151}
 .hi-status{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px}
-
-@media(max-width:640px){
-  .admin-wrap{flex-direction:column}
-  .admin-left{width:100%;max-height:240px;border-right:none;border-bottom:1px solid #e5e7eb}
-  .field-row{grid-template-columns:1fr}
-}
+@media(max-width:640px){.admin-wrap{flex-direction:column}.admin-left{width:100%;max-height:240px;border-right:none;border-bottom:1px solid #e5e7eb}.field-row{grid-template-columns:1fr}}
 footer{text-align:center;padding:18px;font-size:11px;color:#9ca3af}
 footer a{color:#CC0000;text-decoration:none}
 </style>
@@ -141,7 +117,7 @@ footer a{color:#CC0000;text-decoration:none}
 </header>
 
 <!-- ── View: Entry ─────────────────────────────── -->
-<div id="view-entry">
+<div id="view-entry" style="display:none">
   <div class="strip">
     <div class="strip-icon">🔧</div>
     <div class="strip-title">Book a Service</div>
@@ -196,14 +172,8 @@ footer a{color:#CC0000;text-decoration:none}
         <textarea id="b-desc" placeholder="e.g. Motion sensor not triggering, need battery replaced in zone 3…"></textarea>
       </div>
       <div class="field-row">
-        <div class="field">
-          <label>Preferred Date</label>
-          <input id="b-date" type="date">
-        </div>
-        <div class="field">
-          <label>Contact Number</label>
-          <input id="b-phone" type="tel" placeholder="+65 9123 4567">
-        </div>
+        <div class="field"><label>Preferred Date</label><input id="b-date" type="date"></div>
+        <div class="field"><label>Contact Number</label><input id="b-phone" type="tel" placeholder="+65 9123 4567"></div>
       </div>
       <div id="b-err" class="err"></div>
       <button class="btn" id="b-btn" onclick="submitCustomerBooking()">Submit Request 📋</button>
@@ -224,7 +194,7 @@ footer a{color:#CC0000;text-decoration:none}
       <div class="conf-ref" id="conf-ref"></div>
       <div class="conf-note">Our team will contact you within 1 business day to confirm the visit.</div>
       <div class="conf-summary" id="conf-summary"></div>
-      <button class="btn navy" onclick="showView('view-entry');document.getElementById('e-code').value=''">Done</button>
+      <button class="btn navy" onclick="showView('view-entry')">Done</button>
     </div>
   </div>
 </div>
@@ -232,18 +202,13 @@ footer a{color:#CC0000;text-decoration:none}
 <!-- ── View: Admin Dashboard ──────────────────── -->
 <div id="view-admin" style="display:none">
   <div class="admin-wrap">
-    <!-- Left: Customer list -->
     <div class="admin-left">
       <div class="admin-header">
         <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6b7280;margin-bottom:7px">Customers</div>
         <input class="admin-search" id="a-search" placeholder="Search by name…" oninput="searchCustomers(this.value)">
       </div>
-      <div class="cust-list" id="a-cust-list">
-        <div class="empty-state">Loading customers…</div>
-      </div>
+      <div class="cust-list" id="a-cust-list"><div class="empty-state">Loading…</div></div>
     </div>
-
-    <!-- Right: Booking form + history -->
     <div class="admin-right">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
         <div style="font-size:15px;font-weight:800;color:#1F3A5F">Admin Panel</div>
@@ -253,8 +218,6 @@ footer a{color:#CC0000;text-decoration:none}
         <button class="tab active" id="tab-new-btn" onclick="setTab('new')">New Booking</button>
         <button class="tab" id="tab-hist-btn" onclick="setTab('hist')">All Bookings</button>
       </div>
-
-      <!-- Tab: New Booking -->
       <div id="tab-new">
         <div id="a-sel-placeholder" class="sel-placeholder">← Select a customer to create a booking</div>
         <div id="a-sel-card" class="sel-card" style="display:none">
@@ -264,8 +227,7 @@ footer a{color:#CC0000;text-decoration:none}
         <input type="hidden" id="a-code-hidden">
         <div class="card">
           <div class="card-title">Booking Details</div>
-          <div class="field">
-            <label>Service Type *</label>
+          <div class="field"><label>Service Type *</label>
             <select id="a-type">
               <option value="">— Select —</option>
               <option value="Fault / Alarm Issue">⚠️ Fault / Alarm Issue</option>
@@ -277,10 +239,7 @@ footer a{color:#CC0000;text-decoration:none}
               <option value="General Enquiry">💬 General Enquiry</option>
             </select>
           </div>
-          <div class="field">
-            <label>Notes / Description</label>
-            <textarea id="a-desc" placeholder="Internal notes or customer-reported issue…"></textarea>
-          </div>
+          <div class="field"><label>Notes / Description</label><textarea id="a-desc" placeholder="Internal notes or customer-reported issue…"></textarea></div>
           <div class="field-row">
             <div class="field"><label>Preferred Date</label><input id="a-date" type="date"></div>
             <div class="field"><label>Contact Number</label><input id="a-phone" type="tel" placeholder="+65 9123 4567"></div>
@@ -289,15 +248,13 @@ footer a{color:#CC0000;text-decoration:none}
           <button class="btn navy" id="a-btn" onclick="submitAdminBooking()">Create Booking</button>
         </div>
       </div>
-
-      <!-- Tab: All Bookings -->
       <div id="tab-hist" style="display:none">
         <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
           <button class="btn-ghost" style="width:auto;padding:6px 14px;font-size:11px" onclick="loadBookings(null)">All</button>
           <button class="btn-ghost" style="width:auto;padding:6px 14px;font-size:11px" onclick="loadBookings('pending')">Pending</button>
           <button class="btn-ghost" style="width:auto;padding:6px 14px;font-size:11px" onclick="loadBookings('scheduled')">Scheduled</button>
           <button class="btn-ghost" style="width:auto;padding:6px 14px;font-size:11px" onclick="loadBookings('completed')">Completed</button>
-          <button class="btn-ghost" style="width:auto;padding:6px 14px;font-size:11px;margin-left:auto" onclick="loadBookings(null)">↻ Refresh</button>
+          <button class="btn-ghost" style="width:auto;padding:6px 14px;font-size:11px;margin-left:auto" onclick="loadBookings(null)">↻</button>
         </div>
         <div id="a-bookings"><div class="empty-state">Loading bookings…</div></div>
       </div>
@@ -333,26 +290,34 @@ let searchDebounce  = null;
 
 // ── Init ─────────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
-  const p   = new URLSearchParams(location.search);
+  const p    = new URLSearchParams(location.search);
   const code = p.get('code');
   const adm  = p.get('admin');
 
+  // Always set min dates
+  const today = new Date().toLocaleDateString('en-CA');
+  document.getElementById('b-date').min = today;
+  document.getElementById('a-date').min = today;
   document.getElementById('admin-link').style.display = '';
 
-  // Restore admin session
   const saved = sessionStorage.getItem('sc_admin_key');
   if (saved === ADMIN_KEY) { adminAuthed = true; }
 
   if (adminAuthed && adm !== null) {
     loadAdminView();
   } else if (code) {
+    // Pass code in URL — show customer view immediately with loading state.
+    // Do NOT show entry form (avoids flash + forces no manual input needed).
+    document.getElementById('e-code').value = code; // pre-fill as fallback
+    document.getElementById('ci-card').innerHTML =
+      '<div style="display:flex;align-items:center;gap:10px;padding:6px 0;color:#4b5563">' +
+      '<span class="spin" style="border-color:rgba(31,58,95,.15);border-top-color:#1F3A5F;flex-shrink:0"></span>' +
+      '<span>Loading your details…</span></div>';
+    document.getElementById('b-btn').disabled = true;
+    showView('view-customer');
     lookupCode(code);
   } else {
     showView('view-entry');
-    // Set min date for booking
-    const today = new Date().toLocaleDateString('en-CA');
-    document.getElementById('b-date').min = today;
-    document.getElementById('a-date').min = today;
   }
 });
 
@@ -361,22 +326,27 @@ function showView(id) {
   ['view-entry','view-customer','view-confirm','view-admin'].forEach(v => {
     document.getElementById(v).style.display = v === id ? '' : 'none';
   });
-  document.getElementById('page-footer').style.display =
-    id === 'view-admin' ? 'none' : '';
+  document.getElementById('page-footer').style.display = id === 'view-admin' ? 'none' : '';
 }
 
 // ── Customer flow ─────────────────────────────────────────────────────────────
 async function lookupCode(codeOverride) {
+  // fromUrl: called with a code argument AND customer view is already showing
+  const fromUrl = codeOverride !== undefined &&
+    document.getElementById('view-customer').style.display !== 'none';
   const code = (codeOverride || document.getElementById('e-code').value.trim()).toUpperCase();
-  const err  = document.getElementById('e-err');
-  const btn  = document.getElementById('e-btn');
 
-  if (!code.startsWith('PASS-')) {
-    err.textContent = 'Enter a valid pass code (PASS-XXXXXXXX)';
-    err.style.display = 'block'; return;
+  const eErr = document.getElementById('e-err');
+  const eBtn = document.getElementById('e-btn');
+
+  if (!fromUrl) {
+    if (!code.startsWith('PASS-')) {
+      eErr.textContent = 'Enter a valid pass code (PASS-XXXXXXXX)';
+      eErr.style.display = 'block'; return;
+    }
+    eErr.style.display = 'none';
+    eBtn.disabled = true; eBtn.innerHTML = '<span class="spin"></span> Looking up…';
   }
-  err.style.display = 'none';
-  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Looking up…';
 
   try {
     const res  = await fetch(`${BOOK_URL}?code=${encodeURIComponent(code)}`);
@@ -387,10 +357,13 @@ async function lookupCode(codeOverride) {
     renderCustomerView(data);
     showView('view-customer');
   } catch(e) {
-    err.textContent = e.message;
-    err.style.display = 'block';
+    // Always fall back to entry view on error so customer can retry
+    eErr.textContent = e.message;
+    eErr.style.display = 'block';
+    showView('view-entry');
   } finally {
-    btn.disabled = false; btn.textContent = 'Continue →';
+    eBtn.disabled = false; eBtn.textContent = 'Continue →';
+    document.getElementById('b-btn').disabled = false;
   }
 }
 
@@ -406,7 +379,6 @@ function renderCustomerView(info) {
   `;
   if (info.contact_phone) document.getElementById('b-phone').value = info.contact_phone;
 
-  // Recent booking history
   const hist = document.getElementById('hist-wrap');
   if (info.recent_bookings && info.recent_bookings.length > 0) {
     hist.style.display = '';
@@ -419,9 +391,7 @@ function renderCustomerView(info) {
         <span class="hi-status sb-${b.status}">${b.status}</span>
       </div>
     `).join('');
-  } else {
-    hist.style.display = 'none';
-  }
+  } else { hist.style.display = 'none'; }
 }
 
 async function submitCustomerBooking() {
@@ -431,11 +401,9 @@ async function submitCustomerBooking() {
   if (!serviceType) { err.textContent = 'Please select a service type.'; err.style.display = 'block'; return; }
   err.style.display = 'none';
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Submitting…';
-
   try {
     const res  = await fetch(BOOK_URL, {
-      method:  'POST',
-      headers: { 'content-type': 'application/json' },
+      method: 'POST', headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
         code:           currentPassCode,
         service_type:   serviceType,
@@ -447,13 +415,10 @@ async function submitCustomerBooking() {
     });
     const data = await res.json();
     if (!res.ok || !data.success) throw new Error(data.error || 'Booking failed');
-    showConfirmation(data.reference, serviceType,
-      document.getElementById('b-date').value, currentCustomer);
+    showConfirmation(data.reference, serviceType, document.getElementById('b-date').value, currentCustomer);
   } catch(e) {
     err.textContent = e.message; err.style.display = 'block';
-  } finally {
-    btn.disabled = false; btn.innerHTML = 'Submit Request 📋';
-  }
+  } finally { btn.disabled = false; btn.innerHTML = 'Submit Request 📋'; }
 }
 
 function showConfirmation(reference, serviceType, preferredDate, customer) {
@@ -474,50 +439,33 @@ function showLoginModal() {
   document.getElementById('modal-bg').classList.add('open');
   setTimeout(() => document.getElementById('l-user').focus(), 50);
 }
-
-function hideLoginModal() {
-  document.getElementById('modal-bg').classList.remove('open');
-}
-
-function clearLoginErr() {
-  document.getElementById('l-err').textContent = '';
-}
+function hideLoginModal() { document.getElementById('modal-bg').classList.remove('open'); }
+function clearLoginErr()  { document.getElementById('l-err').textContent = ''; }
 
 async function doLogin() {
-  const user = document.getElementById('l-user').value.trim();
-  const pass = document.getElementById('l-pass').value;
-  const key  = `${user}:${pass}`;
-  const btn  = document.getElementById('l-btn');
+  const user  = document.getElementById('l-user').value.trim();
+  const pass  = document.getElementById('l-pass').value;
+  const key   = `${user}:${pass}`;
+  const btn   = document.getElementById('l-btn');
   const errEl = document.getElementById('l-err');
-
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span>';
-
   try {
-    const res = await fetch(`${BOOK_URL}?list=passes`, {
-      headers: { 'x-admin-key': key },
-    });
-    if (!res.ok) throw new Error('Invalid credentials');
+    const res = await fetch(`${BOOK_URL}?list=passes`, { headers: { 'x-admin-key': key } });
+    if (!res.ok) throw new Error();
     const data = await res.json();
     adminAuthed = true;
     sessionStorage.setItem('sc_admin_key', key);
     hideLoginModal();
     loadAdminView(data.data);
-  } catch {
-    errEl.textContent = 'Invalid username or password';
-  } finally {
-    btn.disabled = false; btn.textContent = 'Login →';
-  }
+  } catch { errEl.textContent = 'Invalid username or password'; }
+  finally { btn.disabled = false; btn.textContent = 'Login →'; }
 }
 
 async function loadAdminView(passesData) {
   showView('view-admin');
-  const today = new Date().toLocaleDateString('en-CA');
-  document.getElementById('a-date').min = today;
-
   if (!passesData) {
     const res  = await fetch(`${BOOK_URL}?list=passes`, { headers: { 'x-admin-key': ADMIN_KEY } });
-    const data = await res.json();
-    passesData = data.data;
+    passesData = (await res.json()).data;
   }
   renderCustomerList(passesData);
   loadBookings(null);
@@ -525,19 +473,14 @@ async function loadAdminView(passesData) {
 
 function renderCustomerList(passes) {
   const el = document.getElementById('a-cust-list');
-  if (!passes || passes.length === 0) {
-    el.innerHTML = '<div class="empty-state">No customers found</div>'; return;
-  }
+  if (!passes || passes.length === 0) { el.innerHTML = '<div class="empty-state">No customers found</div>'; return; }
   el.innerHTML = passes.map(p => {
     const tier = p.data?.plan_tier || '';
     const addr = (p.data?.service_address || '').split(',')[0];
-    const planClass = {Premium:'pill-premium',Standard:'pill-standard',Basic:'pill-basic'}[tier]||'pill-basic';
-    return `<div class="cust-row" data-code="${esc(p.code)}" onclick="selectCustomer(this,'${esc(p.code)}','${esc(p.holder_name||'')}','${esc(tier)}','${esc(p.data?.service_address||'')}','${esc(p.data?.contact_phone||'')}')">
+    const pc   = {Premium:'pill-premium',Standard:'pill-standard',Basic:'pill-basic'}[tier]||'pill-basic';
+    return `<div class="cust-row" onclick="selectCustomer(this,'${esc(p.code)}','${esc(p.holder_name||'')}','${esc(tier)}','${esc(p.data?.service_address||'')}','${esc(p.data?.contact_phone||'')}')">
       <div class="cr-name">${esc(p.holder_name||'Unknown')}</div>
-      <div class="cr-meta">
-        ${tier ? `<span class="plan-pill ${planClass}" style="font-size:9px">${esc(tier)}</span>` : ''}
-        <span class="cr-addr">${esc(addr)}</span>
-      </div>
+      <div class="cr-meta">${tier?`<span class="plan-pill ${pc}" style="font-size:9px">${esc(tier)}</span>`:''}<span class="cr-addr">${esc(addr)}</span></div>
     </div>`;
   }).join('');
 }
@@ -557,11 +500,8 @@ function selectCustomer(el, code, name, plan, address, phone) {
 function searchCustomers(q) {
   clearTimeout(searchDebounce);
   searchDebounce = setTimeout(async () => {
-    const res  = await fetch(`${BOOK_URL}?list=passes&q=${encodeURIComponent(q)}`, {
-      headers: { 'x-admin-key': ADMIN_KEY },
-    });
-    const data = await res.json();
-    renderCustomerList(data.data);
+    const res  = await fetch(`${BOOK_URL}?list=passes&q=${encodeURIComponent(q)}`, { headers:{'x-admin-key':ADMIN_KEY} });
+    renderCustomerList((await res.json()).data);
   }, 300);
 }
 
@@ -569,62 +509,50 @@ async function submitAdminBooking() {
   const code = document.getElementById('a-code-hidden').value;
   const err  = document.getElementById('a-err');
   const btn  = document.getElementById('a-btn');
-  const serviceType = document.getElementById('a-type').value;
-
-  if (!code) { err.textContent = 'Select a customer first.'; err.style.display = 'block'; return; }
-  if (!serviceType) { err.textContent = 'Select a service type.'; err.style.display = 'block'; return; }
+  const st   = document.getElementById('a-type').value;
+  if (!code) { err.textContent='Select a customer first.'; err.style.display='block'; return; }
+  if (!st)   { err.textContent='Select a service type.';  err.style.display='block'; return; }
   err.style.display = 'none';
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Creating…';
-
   try {
     const res = await fetch(BOOK_URL, {
-      method:  'POST',
-      headers: { 'content-type': 'application/json', 'x-admin-key': ADMIN_KEY },
+      method: 'POST',
+      headers: { 'content-type':'application/json', 'x-admin-key':ADMIN_KEY },
       body: JSON.stringify({
-        code,
-        service_type:   serviceType,
+        code, service_type: st,
         description:    document.getElementById('a-desc').value.trim() || undefined,
         preferred_date: document.getElementById('a-date').value || undefined,
         contact_phone:  document.getElementById('a-phone').value.trim() || undefined,
-        created_by:     'admin',
+        created_by: 'admin',
       }),
     });
     const data = await res.json();
     if (!res.ok || !data.success) throw new Error(data.error || 'Failed');
-
-    // Clear form, show success, reload bookings
-    ['a-type','a-desc','a-date','a-phone'].forEach(id => { document.getElementById(id).value = ''; });
+    ['a-type','a-desc','a-date','a-phone'].forEach(id => { document.getElementById(id).value=''; });
     document.getElementById('a-sel-card').style.display = 'none';
     document.getElementById('a-sel-placeholder').style.display = '';
     document.getElementById('a-code-hidden').value = '';
     document.querySelectorAll('.cust-row').forEach(r => r.classList.remove('sel'));
     btn.innerHTML = `✅ Created: ${data.reference}`;
-    setTimeout(() => { btn.disabled = false; btn.textContent = 'Create Booking'; }, 3000);
-    setTab('hist');
-    loadBookings(null);
-  } catch(e) {
-    err.textContent = e.message; err.style.display = 'block';
-    btn.disabled = false; btn.textContent = 'Create Booking';
-  }
+    setTimeout(() => { btn.disabled=false; btn.textContent='Create Booking'; }, 3000);
+    setTab('hist'); loadBookings(null);
+  } catch(e) { err.textContent=e.message; err.style.display='block'; btn.disabled=false; btn.textContent='Create Booking'; }
 }
 
 async function loadBookings(statusFilter) {
-  const el  = document.getElementById('a-bookings');
-  const qs  = statusFilter ? `&status=${statusFilter}` : '';
+  const el = document.getElementById('a-bookings');
   el.innerHTML = '<div class="empty-state">Loading…</div>';
   try {
-    const res  = await fetch(`${BOOK_URL}?list=bookings${qs}`, { headers: { 'x-admin-key': ADMIN_KEY } });
-    const data = await res.json();
-    renderBookings(data.data);
-  } catch { el.innerHTML = '<div class="empty-state">Failed to load bookings</div>'; }
+    const qs  = statusFilter ? `&status=${statusFilter}` : '';
+    const res = await fetch(`${BOOK_URL}?list=bookings${qs}`, { headers:{'x-admin-key':ADMIN_KEY} });
+    renderBookings((await res.json()).data);
+  } catch { el.innerHTML = '<div class="empty-state">Failed to load</div>'; }
 }
 
 function renderBookings(bookings) {
   const el = document.getElementById('a-bookings');
-  if (!bookings || bookings.length === 0) {
-    el.innerHTML = '<div class="empty-state">No bookings yet</div>'; return;
-  }
-  const sbMap = { pending:'sb-pending', scheduled:'sb-scheduled', completed:'sb-completed', cancelled:'sb-cancelled' };
+  if (!bookings || bookings.length === 0) { el.innerHTML='<div class="empty-state">No bookings yet</div>'; return; }
+  const sbMap = {pending:'sb-pending',scheduled:'sb-scheduled',completed:'sb-completed',cancelled:'sb-cancelled'};
   el.innerHTML = bookings.map(b => `
     <div class="bk-row">
       <div class="bk-top">
@@ -632,14 +560,14 @@ function renderBookings(bookings) {
         <span class="bk-name">${esc(b.holder_name||'-')}</span>
         <span class="bk-type">${esc(b.service_type)}</span>
         <span class="status-badge ${sbMap[b.status]||''}">${b.status}</span>
-        ${b.created_by==='admin' ? '<span style="font-size:10px;color:#9ca3af;background:#f3f4f6;padding:2px 7px;border-radius:10px">admin</span>' : ''}
+        ${b.created_by==='admin'?'<span style="font-size:10px;color:#9ca3af;background:#f3f4f6;padding:2px 7px;border-radius:10px">admin</span>':''}
       </div>
-      ${b.service_address ? `<div style="font-size:11px;color:#9ca3af;margin-top:4px">${esc(b.service_address)}</div>` : ''}
-      ${b.description ? `<div style="font-size:12px;color:#4b5563;margin-top:5px;font-style:italic">"${esc(b.description.slice(0,100))}${b.description.length>100?'…':''}"</div>` : ''}
+      ${b.service_address?`<div style="font-size:11px;color:#9ca3af;margin-top:4px">${esc(b.service_address)}</div>`:''}
+      ${b.description?`<div style="font-size:12px;color:#4b5563;margin-top:5px;font-style:italic">"${esc(b.description.slice(0,100))}${b.description.length>100?'…':''}"</div>`:''}
       <div class="bk-bot">
-        <span class="bk-date">${b.preferred_date ? '📅 ' + esc(b.preferred_date) : 'ASAP'}</span>
-        <span class="bk-created">Created: ${new Date(b.created_at).toLocaleDateString('en-SG')}</span>
-        ${b.contact_phone ? `<span style="font-size:11px;color:#4b5563">📞 ${esc(b.contact_phone)}</span>` : ''}
+        <span style="font-size:11px;color:#9ca3af">${b.preferred_date?'📅 '+esc(b.preferred_date):'ASAP'}</span>
+        <span style="font-size:11px;color:#9ca3af">Created: ${new Date(b.created_at).toLocaleDateString('en-SG')}</span>
+        ${b.contact_phone?`<span style="font-size:11px;color:#4b5563">📞 ${esc(b.contact_phone)}</span>`:''}
         <select class="status-sel" onchange="updateBookingStatus('${b.id}',this.value)" style="margin-left:auto">
           <option value="pending"   ${b.status==='pending'   ?'selected':''}>Pending</option>
           <option value="scheduled" ${b.status==='scheduled' ?'selected':''}>Scheduled</option>
@@ -653,29 +581,23 @@ function renderBookings(bookings) {
 
 async function updateBookingStatus(id, status) {
   await fetch(`${BOOK_URL}?id=${id}`, {
-    method:  'PATCH',
-    headers: { 'content-type': 'application/json', 'x-admin-key': ADMIN_KEY },
-    body:    JSON.stringify({ status }),
+    method:'PATCH', headers:{'content-type':'application/json','x-admin-key':ADMIN_KEY},
+    body: JSON.stringify({ status }),
   });
-  // Reload after short delay to let DB settle
   setTimeout(() => loadBookings(null), 400);
 }
 
 function setTab(name) {
-  document.getElementById('tab-new').style.display    = name === 'new'  ? '' : 'none';
-  document.getElementById('tab-hist').style.display   = name === 'hist' ? '' : 'none';
-  document.getElementById('tab-new-btn').classList.toggle('active',  name === 'new');
-  document.getElementById('tab-hist-btn').classList.toggle('active', name === 'hist');
+  document.getElementById('tab-new').style.display    = name==='new'  ? '' : 'none';
+  document.getElementById('tab-hist').style.display   = name==='hist' ? '' : 'none';
+  document.getElementById('tab-new-btn').classList.toggle('active',  name==='new');
+  document.getElementById('tab-hist-btn').classList.toggle('active', name==='hist');
 }
 
-function logout() {
-  sessionStorage.removeItem('sc_admin_key');
-  adminAuthed = false;
-  showView('view-entry');
-}
+function logout() { sessionStorage.removeItem('sc_admin_key'); adminAuthed=false; showView('view-entry'); }
 
 function esc(str) {
-  return String(str||'').replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'})[c]);
+  return String(str||'').replace(/[<>&"']/g, c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'})[c]);
 }
 </script>
 </body>
