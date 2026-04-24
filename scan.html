@@ -12,8 +12,6 @@ header{background:#1F3A5F;padding:12px 18px;display:flex;align-items:center;gap:
 header .logo{width:34px;height:34px;flex-shrink:0}
 header h1{color:#fff;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700}
 header p{color:rgba(255,255,255,.5);font-size:10px;margin-top:1px}
-
-/* ── Tech identity banner ── */
 #tech-banner{background:#064e3b;border-bottom:1px solid #065f46;padding:8px 18px;display:none;align-items:center;gap:10px}
 #tech-banner.show{display:flex}
 .tb-dot{width:8px;height:8px;background:#22c55e;border-radius:50%;flex-shrink:0;box-shadow:0 0 6px #22c55e}
@@ -21,13 +19,10 @@ header p{color:rgba(255,255,255,.5);font-size:10px;margin-top:1px}
 .tb-name{font-size:12px;font-weight:700;color:#d1fae5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tb-id{font-size:10px;color:#6ee7b7;margin-top:1px}
 .tb-change{font-size:10px;color:#6ee7b7;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:5px;padding:3px 9px;cursor:pointer;white-space:nowrap}
-
-/* ── Tech setup prompt (shown before identity set) ── */
 #tech-setup-bar{background:#451a03;border-bottom:1px solid #92400e;padding:10px 18px;display:none;align-items:center;gap:10px}
 #tech-setup-bar.show{display:flex}
 .tsb-text{flex:1;font-size:12px;color:#fcd34d}
 .tsb-btn{background:#f59e0b;color:#1a0e00;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
-
 .container{max-width:480px;margin:0 auto;padding:16px}
 .scan-card{background:#111827;border:1px solid #1f2937;border-radius:16px;overflow:hidden;margin-bottom:14px}
 .scan-header{background:#1F3A5F;padding:12px 16px;display:flex;align-items:center;gap:10px}
@@ -77,7 +72,9 @@ header p{color:rgba(255,255,255,.5);font-size:10px;margin-top:1px}
 .modal-plan{display:inline-block;font-size:10px;font-weight:800;padding:2px 9px;border-radius:20px;margin-top:5px;letter-spacing:.5px}
 .modal-body{background:#071829;padding:0 22px 6px;display:grid;gap:8px}
 .modal-row{display:flex;align-items:flex-start;gap:12px;padding:9px 12px;background:rgba(255,255,255,.05);border-radius:9px}
+.modal-row.booking-alert{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3)}
 .modal-row .lbl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#6b7280;width:88px;flex-shrink:0;padding-top:2px}
+.modal-row.booking-alert .lbl{color:#f59e0b}
 .modal-row .val{font-size:13px;font-weight:700;word-break:break-word;flex:1}
 .push-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:5px 12px;border-radius:20px;font-weight:700;margin:6px 22px 0}
 .push-ok{background:#064e3b;color:#6ee7b7}
@@ -91,7 +88,6 @@ header p{color:rgba(255,255,255,.5);font-size:10px;margin-top:1px}
 .modal-dismiss:hover{border-color:rgba(255,255,255,.4)}
 .modal.invalid .modal-header{background:#450a0a}.modal.invalid .modal-body{background:#1a0808}
 .modal.warn .modal-header{background:#451a03}.modal.warn .modal-body{background:#1a0e05}
-/* Tech identity modal */
 .tech-modal{background:#0f172a;border:1px solid #1f2937;border-radius:20px;padding:0;overflow:hidden;width:100%;max-width:360px}
 .tech-modal-head{background:#064e3b;padding:18px 20px}
 .tech-modal-head h3{font-size:16px;font-weight:800;color:#d1fae5;margin-bottom:3px}
@@ -120,13 +116,9 @@ footer a{color:#CC0000;text-decoration:none}
 </head>
 <body>
 
-<!-- Tech identity modal -->
 <div class="modal-backdrop" id="tech-modal-backdrop">
   <div class="tech-modal">
-    <div class="tech-modal-head">
-      <h3>🔧 Identify yourself</h3>
-      <p>Scan or enter your own technician pass code to sign your jobs</p>
-    </div>
+    <div class="tech-modal-head"><h3>🔧 Identify yourself</h3><p>Scan or enter your own technician pass code to sign your jobs</p></div>
     <div class="tech-modal-body">
       <input type="text" id="tech-code-input" placeholder="Your pass code: PASS-XXXXXXXX" maxlength="14" autocomplete="off" spellcheck="false" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9-]/g,'')">
       <div class="tech-err" id="tech-err"></div>
@@ -135,21 +127,13 @@ footer a{color:#CC0000;text-decoration:none}
   </div>
 </div>
 
-<!-- Scan result modal -->
 <div class="modal-backdrop" id="modal-backdrop">
   <div class="modal" id="modal">
-    <div class="modal-header">
-      <div class="modal-icon" id="m-icon"></div>
-      <div>
-        <div class="modal-title" id="m-title"></div>
-        <div class="modal-code" id="m-code"></div>
-        <span class="modal-plan" id="m-plan" style="display:none"></span>
-      </div>
-    </div>
+    <div class="modal-header"><div class="modal-icon" id="m-icon"></div><div><div class="modal-title" id="m-title"></div><div class="modal-code" id="m-code"></div><span class="modal-plan" id="m-plan" style="display:none"></span></div></div>
     <div class="modal-body" id="m-body"></div>
     <div id="m-push"></div>
     <div id="m-booking-closed" style="display:none" class="booking-closed-badge">📋 Pending booking auto-closed</div>
-    <div id="m-tech-sig" style="display:none" class="push-badge" style="background:#0c2a47"></div>
+    <div id="m-tech-sig" style="display:none" class="push-badge"></div>
     <button class="complete-btn" id="complete-btn" style="display:none" onclick="completeService()">🔧 Complete Service &amp; Update Pass</button>
     <button class="modal-dismiss" id="m-dismiss" onclick="dismissModal()">Dismiss &amp; Scan Next</button>
   </div>
@@ -157,28 +141,15 @@ footer a{color:#CC0000;text-decoration:none}
 
 <header>
   <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="100" fill="#1F3A5F"/><circle cx="100" cy="100" r="92" fill="none" stroke="#CC0000" stroke-width="3"/><rect x="70" y="55" width="60" height="90" rx="4" fill="#CC0000"/><rect x="80" y="65" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="102" y="65" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="80" y="88" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="102" y="88" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="85" y="111" width="30" height="34" rx="2" fill="#1F3A5F"/><text x="100" y="170" font-family="Arial,sans-serif" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle" letter-spacing="2">SIN CHEW ALARM</text></svg></div>
-  <div style="flex:1"><h1>Sin Chew Alarm</h1><p>Technician Scanner</p></div>
+  <div style="flex:1"><h1>Sin Chew Alarm</h1><p id="scan-sub">Technician Scanner</p></div>
 </header>
 
-<!-- Tech identity banner -->
-<div id="tech-banner">
-  <div class="tb-dot"></div>
-  <div class="tb-info">
-    <div class="tb-name" id="tb-name"></div>
-    <div class="tb-id" id="tb-id"></div>
-  </div>
-  <button class="tb-change" onclick="changeTechIdentity()">Change</button>
-</div>
-
-<!-- Setup prompt (shown if no identity) -->
-<div id="tech-setup-bar">
-  <div class="tsb-text">⚠️ Set your technician identity to sign jobs</div>
-  <button class="tsb-btn" onclick="showTechModal()">Set up →</button>
-</div>
+<div id="tech-banner"><div class="tb-dot"></div><div class="tb-info"><div class="tb-name" id="tb-name"></div><div class="tb-id" id="tb-id"></div></div><button class="tb-change" onclick="changeTechIdentity()">Change</button></div>
+<div id="tech-setup-bar"><div class="tsb-text">⚠️ Set your technician identity to sign jobs</div><button class="tsb-btn" onclick="showTechModal()">Set up →</button></div>
 
 <div class="container">
   <div class="scan-card">
-    <div class="scan-header"><div class="icon">🔧</div><div><h2>Technician Scanner</h2><p id="scan-sub">Scan customer pass QR code</p></div></div>
+    <div class="scan-header"><div class="icon">🔧</div><div><h2>Technician Scanner</h2><p>Scan customer pass QR code</p></div></div>
     <div id="reader-wrap">
       <div id="reader"></div>
       <div class="scan-overlay"><div class="scan-frame"></div><div class="scan-corners"><span></span></div><div class="scan-line"></div></div>
@@ -195,13 +166,7 @@ footer a{color:#CC0000;text-decoration:none}
       </select>
       <button class="btn-cam active" id="cam-btn" onclick="toggleCam()">Stop Cam</button>
     </div>
-    <div class="manual">
-      <label>Manual code entry</label>
-      <div class="manual-row">
-        <input type="text" id="code-input" placeholder="PASS-XXXXXXXX" maxlength="14" autocomplete="off" autocorrect="off" spellcheck="false" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9-]/g,'')">
-        <button class="btn-scan" id="scan-btn" onclick="submitCode()">Scan</button>
-      </div>
-    </div>
+    <div class="manual"><label>Manual code entry</label><div class="manual-row"><input type="text" id="code-input" placeholder="PASS-XXXXXXXX" maxlength="14" autocomplete="off" autocorrect="off" spellcheck="false" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9-]/g,'')"><button class="btn-scan" id="scan-btn" onclick="submitCode()">Scan</button></div></div>
   </div>
   <div id="history-wrap"><div class="history-title">Service History (This Session)</div><div id="history"></div></div>
 </div>
@@ -210,154 +175,76 @@ footer a{color:#CC0000;text-decoration:none}
 <script>
 const SCAN_URL = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/sinchew-scan';
 const BOOK_URL = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/sinchew-book';
-
 let scanner = null, camRunning = false, modalOpen = false, processing = false;
 let currentPassId = null, currentCode = null;
-let techIdentity = null;  // { code, name, employee_id, role }
+let techIdentity = null;
 const scanHistory = [];
 
-// ── Init ─────────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
   const params = new URLSearchParams(location.search);
   const techParam = params.get('tech');
-
-  // Priority 1: URL param (from pass back card scanner_url)
-  if (techParam && techParam.startsWith('PASS-')) {
-    await loadTechIdentity(techParam, true); // save to storage
-  }
-
-  // Priority 2: localStorage
-  if (!techIdentity) {
-    const saved = localStorage.getItem('sc_tech');
-    if (saved) {
-      try { techIdentity = JSON.parse(saved); } catch {}
-    }
-  }
-
+  if (techParam && techParam.startsWith('PASS-')) await loadTechIdentity(techParam, true);
+  if (!techIdentity) { const saved = localStorage.getItem('sc_tech'); if (saved) { try { techIdentity = JSON.parse(saved); } catch {} } }
   renderTechBanner();
   startCam();
 });
 
-// ── Tech identity ─────────────────────────────────────────────────────────────
 function renderTechBanner() {
-  const banner   = document.getElementById('tech-banner');
+  const banner = document.getElementById('tech-banner');
   const setupBar = document.getElementById('tech-setup-bar');
   if (techIdentity) {
-    banner.classList.add('show');
-    setupBar.classList.remove('show');
+    banner.classList.add('show'); setupBar.classList.remove('show');
     document.getElementById('tb-name').textContent = techIdentity.name || 'Technician';
-    document.getElementById('tb-id').textContent =
-      [techIdentity.employee_id, techIdentity.role, techIdentity.zone].filter(Boolean).join(' · ');
-    document.getElementById('scan-sub').textContent =
-      `Scanning as ${techIdentity.name || 'Technician'}`;
+    document.getElementById('tb-id').textContent = [techIdentity.employee_id, techIdentity.role, techIdentity.zone].filter(Boolean).join(' · ');
+    document.getElementById('scan-sub').textContent = `Scanning as ${techIdentity.name || 'Technician'}`;
   } else {
-    banner.classList.remove('show');
-    setupBar.classList.add('show');
+    banner.classList.remove('show'); setupBar.classList.add('show');
     document.getElementById('scan-sub').textContent = 'Scan customer pass QR code';
   }
 }
 
-function showTechModal() {
-  document.getElementById('tech-modal-backdrop').classList.add('open');
-  setTimeout(() => document.getElementById('tech-code-input').focus(), 80);
-}
-
-function changeTechIdentity() {
-  localStorage.removeItem('sc_tech');
-  techIdentity = null;
-  renderTechBanner();
-  showTechModal();
-}
-
+function showTechModal() { document.getElementById('tech-modal-backdrop').classList.add('open'); setTimeout(() => document.getElementById('tech-code-input').focus(), 80); }
+function changeTechIdentity() { localStorage.removeItem('sc_tech'); techIdentity = null; renderTechBanner(); showTechModal(); }
 async function confirmTechIdentity() {
   const code = document.getElementById('tech-code-input').value.trim().toUpperCase();
-  const err  = document.getElementById('tech-err');
-  const btn  = document.getElementById('tech-confirm-btn');
+  const err = document.getElementById('tech-err'), btn = document.getElementById('tech-confirm-btn');
   err.textContent = '';
-
   if (!code.startsWith('PASS-')) { err.textContent = 'Enter your technician pass code'; return; }
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span>';
-
   try {
     await loadTechIdentity(code, true);
-    if (techIdentity) {
-      document.getElementById('tech-modal-backdrop').classList.remove('open');
-      document.getElementById('tech-code-input').value = '';
-      renderTechBanner();
-    } else {
-      err.textContent = 'Pass not found or not a technician pass';
-    }
-  } catch(e) {
-    err.textContent = e.message || 'Failed to verify pass';
-  } finally {
-    btn.disabled = false; btn.textContent = 'Confirm identity →';
-  }
+    if (techIdentity) { document.getElementById('tech-modal-backdrop').classList.remove('open'); document.getElementById('tech-code-input').value = ''; renderTechBanner(); }
+    else err.textContent = 'Pass not found';
+  } catch(e) { err.textContent = e.message || 'Failed to verify'; }
+  finally { btn.disabled = false; btn.textContent = 'Confirm identity →'; }
 }
-
 async function loadTechIdentity(code, save = false) {
-  const res  = await fetch(`${BOOK_URL}?code=${encodeURIComponent(code)}`);
-  const data = await res.json();
+  const res = await fetch(`${BOOK_URL}?code=${encodeURIComponent(code)}`); const data = await res.json();
   if (!res.ok || !data.holder_name) throw new Error(data.error || 'Pass not found');
-
-  // Accept both technician passes and any valid pass as tech identity
-  // (admin may not have issued a formal tech pass yet)
-  techIdentity = {
-    code,
-    name:        data.holder_name,
-    employee_id: data.employee_id || null,
-    role:        data.role        || 'Technician',
-    zone:        data.zone        || null,
-  };
+  techIdentity = { code, name: data.holder_name, employee_id: data.employee_id || null, role: data.role || 'Technician', zone: data.zone || null };
   if (save) localStorage.setItem('sc_tech', JSON.stringify(techIdentity));
 }
 
-// ── Camera ────────────────────────────────────────────────────────────────────
 async function startCam() {
   try {
     scanner = new Html5Qrcode('reader');
     await scanner.start({ facingMode: 'environment' }, { fps: 10, qrbox: { width: 220, height: 220 }, aspectRatio: 1.0 }, onQRDetected, () => {});
-    camRunning = true;
-    document.getElementById('cam-btn').textContent = 'Stop Cam';
-    document.getElementById('cam-btn').classList.add('active');
-  } catch {
-    document.getElementById('reader-wrap').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:200px;color:#4b5563;font-size:13px;text-align:center;padding:20px">Camera not available.<br>Use manual entry below.</div>';
-    document.getElementById('cam-btn').style.display = 'none';
-  }
+    camRunning = true; document.getElementById('cam-btn').textContent = 'Stop Cam'; document.getElementById('cam-btn').classList.add('active');
+  } catch { document.getElementById('reader-wrap').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:200px;color:#4b5563;font-size:13px;text-align:center;padding:20px">Camera not available.<br>Use manual entry below.</div>'; document.getElementById('cam-btn').style.display = 'none'; }
 }
-async function stopCam() {
-  if (scanner && camRunning) {
-    await scanner.stop(); scanner = null; camRunning = false;
-    document.getElementById('cam-btn').textContent = 'Start Cam';
-    document.getElementById('cam-btn').classList.remove('active');
-  }
-}
+async function stopCam() { if (scanner && camRunning) { await scanner.stop(); scanner = null; camRunning = false; document.getElementById('cam-btn').textContent = 'Start Cam'; document.getElementById('cam-btn').classList.remove('active'); } }
 async function toggleCam() { if (camRunning) await stopCam(); else await startCam(); }
+async function onQRDetected(code) { if (modalOpen || processing || !code.startsWith('PASS-')) return; if (techIdentity && code === techIdentity.code) return; document.getElementById('code-input').value = code; await submitCode(code); }
 
-async function onQRDetected(code) {
-  if (modalOpen || processing || !code.startsWith('PASS-')) return;
-  // Ignore our own tech code if scanned by accident
-  if (techIdentity && code === techIdentity.code) return;
-  document.getElementById('code-input').value = code;
-  await submitCode(code);
-}
-
-// ── Scan ──────────────────────────────────────────────────────────────────────
 async function submitCode(codeOverride) {
   if (modalOpen || processing) return;
   const code = (codeOverride || document.getElementById('code-input').value).trim().toUpperCase();
   if (!code || !code.startsWith('PASS-')) { openErrorModal('Enter a valid pass code (PASS-XXXXXXXX)'); return; }
-
   processing = true; lockUI(true);
-  const svc  = document.getElementById('svc-sel').value;
-
-  const payload = { code, service_type: svc };
+  const payload = { code, service_type: document.getElementById('svc-sel').value };
   if (techIdentity?.code) payload.tech_code = techIdentity.code;
-
   try {
-    const res  = await fetch(SCAN_URL, {
-      method: 'POST', headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+    const res = await fetch(SCAN_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
     const data = await res.json();
     currentCode = code; currentPassId = data.pass_id || null;
     buildModal(code, data);
@@ -368,61 +255,55 @@ async function submitCode(codeOverride) {
 function buildModal(code, data) {
   if (!data.success) {
     const expired = data.status === 'expired', revoked = data.status === 'revoked';
-    const theme = (expired || revoked) ? 'invalid' : 'warn';
-    openModal(theme, expired ? '⏰' : revoked ? '🚫' : '❌',
-      expired ? 'Pass Expired' : revoked ? 'Pass Revoked' : 'Invalid Pass', code,
-      [['Reason', data.error || data.status || 'Unknown']]
-        .concat(data.holder_name ? [['Customer', data.holder_name]] : []),
+    openModal(expired?'invalid':revoked?'invalid':'warn', expired?'⏰':revoked?'🚫':'❌',
+      expired?'Pass Expired':revoked?'Pass Revoked':'Invalid Pass', code,
+      [['Reason', data.error||data.status||'Unknown']].concat(data.holder_name?[['Customer',data.holder_name]]:[]),
       '', false, '', data);
-    addHistory(code, data.holder_name || 'Unknown', 'fail'); return;
+    addHistory(code, data.holder_name||'Unknown', 'fail'); return;
   }
   const rows = [];
-  if (data.plan_tier)          rows.push(['Plan',         data.plan_tier]);
-  if (data.next_service_date)  rows.push(['Next Service', data.next_service_date]);
-  if (data.service_address)    rows.push(['Address',      data.service_address]);
-  if (data.account_manager)    rows.push(['Acct Mgr',     data.account_manager]);
-  if (data.contract_expiry)    rows.push(['Contract',     'Expires ' + data.contract_expiry]);
-  const svcParts = (data.last_service || '').split(' · ');
+  if (data.plan_tier)         rows.push(['Plan',         data.plan_tier]);
+  if (data.next_service_date) rows.push(['Next Service', data.next_service_date]);
+  if (data.service_address)   rows.push(['Address',      data.service_address]);
+  if (data.account_manager)   rows.push(['Acct Mgr',     data.account_manager]);
+  if (data.contract_expiry)   rows.push(['Contract',     'Expires ' + data.contract_expiry]);
+  // FIX 3: show pending booking reference if one exists
+  if (data.pending_booking)   rows.push(['_BOOKING_ALERT_', data.pending_booking]);
+  const svcParts = (data.last_service||'').split(' · ');
   if (svcParts[1]) rows.push(['Time', svcParts.slice(1).join(' · ')]);
-  rows.push(['Scans', String(data.scan_sequence || 1)]);
+  rows.push(['Scans', String(data.scan_sequence||1)]);
   const pushHtml = data.push?.succeeded > 0
-    ? `<div class="push-badge push-ok">📱 Wallet updated · ${data.push.succeeded} device${data.push.succeeded > 1 ? 's' : ''}</div>`
+    ? `<div class="push-badge push-ok">📱 Wallet updated · ${data.push.succeeded} device${data.push.succeeded>1?'s':''}</div>`
     : `<div class="push-badge push-none">📱 No wallet devices registered</div>`;
-  openModal('valid', '✅', data.holder_name || 'Valid Pass', code, rows, pushHtml, true, data.plan_tier, data);
-  addHistory(code, data.holder_name || 'Unknown', 'ok');
+  openModal('valid', '✅', data.holder_name||'Valid Pass', code, rows, pushHtml, true, data.plan_tier, data);
+  addHistory(code, data.holder_name||'Unknown', 'ok');
 }
 
-function openModal(theme, icon, title, code, rows, extraHtml = '', showComplete = false, planTier = '', scanData = {}) {
+function openModal(theme, icon, title, code, rows, extraHtml='', showComplete=false, planTier='', scanData={}) {
   const modal = document.getElementById('modal');
   modal.className = 'modal' + (theme !== 'valid' ? ' ' + theme : '');
   document.getElementById('m-icon').textContent  = icon;
   document.getElementById('m-title').textContent = title;
   document.getElementById('m-code').textContent  = code;
-
   const planEl = document.getElementById('m-plan');
   if (planTier) {
     planEl.textContent = planTier; planEl.style.display = 'inline-block';
-    const colors = { Premium: ['#CC0000','#fff'], Standard: ['#1F3A5F','#fff'], Basic: ['#374151','#fff'] };
-    const [bg, fg] = colors[planTier] || ['#374151','#fff'];
+    const colors = { Premium:['#CC0000','#fff'], Standard:['#1F3A5F','#fff'], Basic:['#374151','#fff'] };
+    const [bg,fg] = colors[planTier]||['#374151','#fff'];
     planEl.style.background = bg; planEl.style.color = fg;
   } else { planEl.style.display = 'none'; }
 
-  document.getElementById('m-body').innerHTML =
-    rows.map(([l,v]) => `<div class="modal-row"><span class="lbl">${l}</span><span class="val">${v}</span></div>`).join('');
+  document.getElementById('m-body').innerHTML = rows.map(([l,v]) => {
+    if (l === '_BOOKING_ALERT_') return `<div class="modal-row booking-alert"><span class="lbl">📌 Pending</span><span class="val">${v}<br><span style="font-size:11px;color:#fbbf24;font-weight:400">Customer has an outstanding service request</span></span></div>`;
+    return `<div class="modal-row"><span class="lbl">${l}</span><span class="val">${v}</span></div>`;
+  }).join('');
   document.getElementById('m-push').innerHTML = extraHtml;
 
-  // Tech signature
   const techSig = document.getElementById('m-tech-sig');
-  if (techIdentity?.name) {
-    techSig.style.display = 'inline-flex';
-    techSig.style.background = '#0c2a47'; techSig.style.color = '#93c5fd';
-    techSig.textContent = `🔧 ${techIdentity.name}${techIdentity.employee_id ? ' · ' + techIdentity.employee_id : ''}`;
-  } else { techSig.style.display = 'none'; }
+  if (techIdentity?.name) { techSig.style.display='inline-flex'; techSig.style.background='#0c2a47'; techSig.style.color='#93c5fd'; techSig.textContent=`🔧 ${techIdentity.name}${techIdentity.employee_id?' · '+techIdentity.employee_id:''}`; }
+  else { techSig.style.display='none'; }
 
-  // Booking closed indicator
-  const bkEl = document.getElementById('m-booking-closed');
-  bkEl.style.display = scanData.booking_closed ? 'inline-flex' : 'none';
-
+  document.getElementById('m-booking-closed').style.display = scanData.booking_closed ? 'inline-flex' : 'none';
   const completeBtn = document.getElementById('complete-btn');
   completeBtn.style.display = showComplete ? 'flex' : 'none';
   completeBtn.disabled = false; completeBtn.className = 'complete-btn';
@@ -433,85 +314,43 @@ function openModal(theme, icon, title, code, rows, extraHtml = '', showComplete 
   setTimeout(() => document.getElementById('m-dismiss').focus(), 50);
 }
 
-function openErrorModal(msg) {
-  openModal('warn','⚠️','Scanner Error','—',[['Detail',msg]],'',false);
-}
+function openErrorModal(msg) { openModal('warn','⚠️','Scanner Error','—',[['Detail',msg]],'',false); }
 
 async function completeService() {
   if (!currentCode) return;
   const btn = document.getElementById('complete-btn');
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Updating pass…';
-  const svc = document.getElementById('svc-sel').value;
-
-  const payload = { code: currentCode, service_type: svc, complete_service: true };
+  const payload = { code: currentCode, service_type: document.getElementById('svc-sel').value, complete_service: true };
   if (techIdentity?.code) payload.tech_code = techIdentity.code;
-
   try {
-    const res  = await fetch(SCAN_URL, {
-      method: 'POST', headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+    const res = await fetch(SCAN_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
     const data = await res.json();
     if (data.success) {
       btn.className = 'complete-btn done';
-      const nextDate = data.new_next_service || 'updated';
-      btn.innerHTML = `✅ Service complete! Next: ${nextDate}`;
-
-      // Update rows
+      btn.innerHTML = `✅ Service complete! Next: ${data.new_next_service || 'updated'}`;
       document.getElementById('m-body').querySelectorAll('.modal-row').forEach(r => {
-        if (r.querySelector('.lbl')?.textContent === 'Next Service' && data.new_next_service)
-          r.querySelector('.val').textContent = data.new_next_service;
+        if (r.querySelector('.lbl')?.textContent === 'Next Service' && data.new_next_service) r.querySelector('.val').textContent = data.new_next_service;
       });
-
-      // Update push badge
       document.getElementById('m-push').innerHTML = data.push?.succeeded > 0
         ? `<div class="push-badge push-ok">📱 Pass updated on ${data.push.succeeded} device${data.push.succeeded>1?'s':''} — customer sees new date</div>`
         : `<div class="push-badge push-none">📱 No wallet devices registered</div>`;
-
-      // Booking closed
-      if (data.booking_closed) {
-        document.getElementById('m-booking-closed').style.display = 'inline-flex';
-      }
-
+      if (data.booking_closed) document.getElementById('m-booking-closed').style.display = 'inline-flex';
       addHistory(currentCode, document.getElementById('m-title').textContent, 'done');
-    } else {
-      btn.innerHTML = '⚠️ Update failed — check logs';
-    }
+    } else { btn.innerHTML = '⚠️ Update failed — check logs'; }
   } catch(e) { btn.innerHTML = '⚠️ ' + e.message; }
 }
 
-function dismissModal() {
-  document.getElementById('modal-backdrop').classList.remove('open');
-  modalOpen = false; showLockBanner(false); lockUI(false);
-  currentPassId = null; currentCode = null;
-}
-document.getElementById('modal-backdrop').addEventListener('click', function(e) { if (e.target === this) dismissModal(); });
-
-function lockUI(lock) {
-  const btn = document.getElementById('scan-btn');
-  btn.disabled = lock; btn.textContent = lock ? 'Scanning…' : 'Scan';
-  document.getElementById('code-input').disabled = lock;
-  document.getElementById('svc-sel').disabled = lock;
-}
-function showLockBanner(show) {
-  document.getElementById('lock-banner').classList.toggle('show', show);
-  document.getElementById('reader-wrap').classList.toggle('locked', show);
-}
-
+function dismissModal() { document.getElementById('modal-backdrop').classList.remove('open'); modalOpen=false; showLockBanner(false); lockUI(false); currentPassId=null; currentCode=null; }
+document.getElementById('modal-backdrop').addEventListener('click', function(e){ if(e.target===this) dismissModal(); });
+function lockUI(lock) { const btn=document.getElementById('scan-btn'); btn.disabled=lock; btn.textContent=lock?'Scanning…':'Scan'; document.getElementById('code-input').disabled=lock; document.getElementById('svc-sel').disabled=lock; }
+function showLockBanner(show) { document.getElementById('lock-banner').classList.toggle('show',show); document.getElementById('reader-wrap').classList.toggle('locked',show); }
 function addHistory(code, name, type) {
-  const now = new Date().toLocaleTimeString('en-SG', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Singapore' });
-  const labels = { ok: 'Scanned', done: '✅ Completed', fail: 'Failed' };
-  scanHistory.unshift({ code, name, type, time: now, label: labels[type] || '', tech: techIdentity?.name || null });
+  const now = new Date().toLocaleTimeString('en-SG', { hour:'2-digit', minute:'2-digit', timeZone:'Asia/Singapore' });
+  const labels = { ok:'Scanned', done:'✅ Completed', fail:'Failed' };
+  scanHistory.unshift({ code, name, type, time:now, label:labels[type]||'', tech:techIdentity?.name||null });
   if (scanHistory.length > 20) scanHistory.pop();
   document.getElementById('history').innerHTML = scanHistory.map(h =>
-    `<div class="history-item">
-      <div class="hi-dot ${h.type}"></div>
-      <div class="hi-name">${h.name}</div>
-      <div style="font-size:10px;color:${h.type==='done'?'#f59e0b':'#6b7280'}">${h.label}</div>
-      <div class="hi-code">${h.code}</div>
-      <div class="hi-time">${h.time}</div>
-      ${h.tech ? `<div class="hi-tech">🔧 ${h.tech}</div>` : ''}
-    </div>`
+    `<div class="history-item"><div class="hi-dot ${h.type}"></div><div class="hi-name">${h.name}</div><div style="font-size:10px;color:${h.type==='done'?'#f59e0b':'#6b7280'}">${h.label}</div><div class="hi-code">${h.code}</div><div class="hi-time">${h.time}</div>${h.tech?`<div class="hi-tech">🔧 ${h.tech}</div>`:''}</div>`
   ).join('');
 }
 </script>

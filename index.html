@@ -36,15 +36,22 @@ header .logo{width:48px;height:48px;flex-shrink:0}
 .card-icon{font-size:28px;margin-bottom:10px}
 .card-title{font-size:15px;font-weight:800;color:#1F3A5F;margin-bottom:6px}
 .card-desc{font-size:12px;color:#666;line-height:1.6}
-.card-cta{padding:12px 22px;border-top:1px solid #f0f0f0;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#CC0000}
-.staff-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
-@media(max-width:600px){.staff-row{grid-template-columns:1fr}}
-.staff-card{background:#1F3A5F;border-radius:14px;padding:24px;display:flex;align-items:center;gap:16px;text-decoration:none}
-.staff-card:hover .staff-btn{opacity:.85}
-.staff-icon{font-size:32px;flex-shrink:0}
-.staff-text h3{color:#fff;font-size:14px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+/* FIX 5: updated staff grid — 3 columns */
+.staff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+@media(max-width:800px){.staff-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.staff-grid{grid-template-columns:1fr}}
+.staff-card{border-radius:14px;padding:20px;display:flex;align-items:center;gap:14px;text-decoration:none;transition:opacity .2s}
+.staff-card:hover{opacity:.88}
+.staff-card.red{background:#CC0000}
+.staff-card.navy{background:#1F3A5F}
+.staff-card.green{background:#064e3b}
+.staff-card.teal{background:#0f766e}
+.staff-card.amber{background:#92400e}
+.staff-card.indigo{background:#312e81}
+.staff-icon{font-size:28px;flex-shrink:0}
+.staff-text h3{color:#fff;font-size:13px;font-weight:700;letter-spacing:.3px}
 .staff-text p{color:rgba(255,255,255,.6);font-size:11px;margin-top:3px}
-.staff-btn{margin-left:auto;color:#1F3A5F;border:none;border-radius:8px;padding:9px 18px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:opacity .2s}
+.staff-btn{margin-left:auto;background:rgba(255,255,255,.15);color:#fff;border:none;border-radius:7px;padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0}
 .info-section{background:white;border-radius:14px;padding:28px;box-shadow:0 2px 14px rgba(0,0,0,.06);margin-top:28px;border-left:4px solid #1F3A5F}
 .info-section h3{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#1F3A5F;margin-bottom:10px}
 .info-section code{background:#f4f6f9;border-radius:8px;padding:12px 14px;display:block;font-size:12px;line-height:1.9;color:#333;font-family:monospace}
@@ -69,10 +76,10 @@ footer span{color:rgba(255,255,255,.7)}
     <div class="hero-tag">📋 Proof of Concept · April 2026</div>
     <h2>Your customers carry<br>their <span>service record</span><br>in their wallet.</h2>
     <div class="hero-line"></div>
-    <p>Every Sin Chew customer gets a digital membership pass that lives in Apple Wallet — showing their next service date, account manager, and one-tap booking. When a technician completes a job, the pass updates silently on the customer's phone.</p>
+    <p>Every Sin Chew customer gets a digital membership pass in Apple or Google Wallet — showing their next service date, account manager, and one-tap booking. When a technician completes a job, the pass updates silently on the customer’s phone.</p>
     <div class="hero-cta">
       <a class="btn-primary" href="onboard.html">🚀 Onboard a Customer</a>
-      <a class="btn-outline" href="scan.html">🔧 Technician Scanner</a>
+      <a class="btn-outline" href="dashboard.html">📊 View Dashboard</a>
     </div>
   </div>
 </div>
@@ -80,54 +87,57 @@ footer span{color:rgba(255,255,255,.7)}
 <div class="section">
   <div class="poc-badge">
     <div class="poc-badge-icon">💡</div>
-    <div><h4>How this demo works</h4><p>Use "Onboard a Customer" to issue a real wallet pass — it lands in Apple Wallet in seconds. Then use the Technician Scanner to simulate a site visit. Hit "Complete Service" and watch the next service date update live on the phone. No app. No SMS. No login.</p></div>
+    <div><h4>Full service round-trip — demo flow</h4><p>Onboard a customer → they get a wallet pass → they tap “Book a Service” → admin sees the request → tech scans on site (identity signed) → marks complete → pass auto-updates. No app. No SMS. No login for the customer.</p></div>
   </div>
 
-  <div class="section-tag">Customer Journey</div>
+  <div class="section-tag">Staff Portal</div>
+  <div class="section-title">All tools in one place</div>
+
+  <!-- FIX 5: All 6 pages linked -->
+  <div class="staff-grid">
+    <a class="staff-card red" href="onboard.html">
+      <div class="staff-icon">📋</div>
+      <div class="staff-text"><h3>Customer Onboarding</h3><p>Issue wallet pass · WhatsApp link</p></div>
+      <div class="staff-btn">Open →</div>
+    </a>
+    <a class="staff-card green" href="tech-onboard.html">
+      <div class="staff-icon">🔧</div>
+      <div class="staff-text"><h3>Tech Onboarding</h3><p>Issue technician pass · Scanner QR</p></div>
+      <div class="staff-btn">Open →</div>
+    </a>
+    <a class="staff-card teal" href="book.html?admin=1">
+      <div class="staff-icon">🗓️</div>
+      <div class="staff-text"><h3>Service Booking</h3><p>Create · schedule · manage requests</p></div>
+      <div class="staff-btn">Open →</div>
+    </a>
+    <a class="staff-card navy" href="scan.html">
+      <div class="staff-icon">🔍</div>
+      <div class="staff-text"><h3>Tech Scanner</h3><p>Scan pass · sign job · complete service</p></div>
+      <div class="staff-btn">Open →</div>
+    </a>
+    <a class="staff-card amber" href="dashboard.html">
+      <div class="staff-icon">📊</div>
+      <div class="staff-text"><h3>Dashboard</h3><p>Live feed · bookings · due for service</p></div>
+      <div class="staff-btn">Open →</div>
+    </a>
+    <a class="staff-card indigo" href="geofence.html">
+      <div class="staff-icon">📍</div>
+      <div class="staff-text"><h3>Geo-fence Manager</h3><p>Location triggers · lock screen alerts</p></div>
+      <div class="staff-btn">Open →</div>
+    </a>
+  </div>
+
+  <div class="section-tag" style="margin-top:40px">Customer Journey</div>
   <div class="section-title">Three steps, zero friction</div>
   <div class="cards">
-    <div class="card">
-      <div class="card-band" style="background:#1F3A5F"></div>
-      <div class="card-body">
-        <div class="card-icon">📋</div>
-        <div class="card-title">1. Contract Signed</div>
-        <div class="card-desc">Customer signs annual maintenance contract. Staff enters details — name, address, plan tier, account manager.</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-band" style="background:#CC0000"></div>
-      <div class="card-body">
-        <div class="card-icon">📲</div>
-        <div class="card-title">2. Pass Delivered</div>
-        <div class="card-desc">Customer receives SMS/WhatsApp link. Taps once to add to Apple Wallet. No app, no password, no account.</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-band" style="background:#22c55e"></div>
-      <div class="card-body">
-        <div class="card-icon">🔧</div>
-        <div class="card-title">3. Service &amp; Update</div>
-        <div class="card-desc">Technician scans QR on-site. After service, taps "Complete" — next service date advances one year. Customer's phone updates silently.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="staff-row">
-    <a class="staff-card" href="scan.html">
-      <div class="staff-icon">🔧</div>
-      <div class="staff-text"><h3>Technician Scanner</h3><p>Scan customer pass · Log service type · Complete &amp; advance date</p></div>
-      <div class="staff-btn" style="background:#CC0000;color:white">Open →</div>
-    </a>
-    <a class="staff-card" href="dashboard.html">
-      <div class="staff-icon">📊</div>
-      <div class="staff-text"><h3>Service Dashboard</h3><p>Live activity · Due for service · Completion rate</p></div>
-      <div class="staff-btn" style="background:#6ee7b7;color:#022c22">View →</div>
-    </a>
+    <div class="card"><div class="card-band" style="background:#1F3A5F"></div><div class="card-body"><div class="card-icon">📋</div><div class="card-title">1. Contract Signed</div><div class="card-desc">Staff enters details. Customer gets a WhatsApp link with their Apple/Google Wallet pass. No app, no account.</div></div></div>
+    <div class="card"><div class="card-band" style="background:#CC0000"></div><div class="card-body"><div class="card-icon">🔧</div><div class="card-title">2. Service &amp; Booking</div><div class="card-desc">Customer taps "Book a Service" on their pass → request goes straight to the admin booking panel. Tech gets signed job records.</div></div></div>
+    <div class="card"><div class="card-band" style="background:#22c55e"></div><div class="card-body"><div class="card-icon">📱</div><div class="card-title">3. Auto-update</div><div class="card-desc">After the visit, next service date advances one year. Customer’s wallet updates silently. Full audit trail, no paperwork.</div></div></div>
   </div>
 
   <div class="info-section">
     <h3>MCP Integration — Demo Commands</h3>
-    <code>"Issue a Sin Chew Premium customer pass for Tan Ah Kow, 123 Bukit Timah Road #05-12, account manager Jason Lim"<br>"Update next service date for PASS-XXXXXXXX to June 15 2026"<br>"Show all Sin Chew passes due for service this month"</code>
+    <code>"Issue a Sin Chew Premium customer pass for Tan Ah Kow, 123 Bukit Timah Road #05-12, account manager Jason Lim"<br>"Issue a technician pass for Ali Hassan, Senior Technician, North zone"<br>"Show all pending service requests"<br>"Update next service date for PASS-XXXXXXXX to June 15 2026"</code>
   </div>
 </div>
 
