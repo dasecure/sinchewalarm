@@ -12,44 +12,34 @@ header{background:#1F3A5F;padding:13px 18px;display:flex;align-items:center;gap:
 .logo{width:34px;height:34px;flex-shrink:0}
 .brand{color:#fff;font-size:12px;font-weight:700;letter-spacing:.5px}
 .sub{color:rgba(255,255,255,.45);font-size:10px;margin-top:1px}
-.strip{background:linear-gradient(135deg,#064e3b,#065f46);padding:20px 18px}
-.strip-icon{font-size:26px}
-.strip-title{color:#fff;font-size:16px;font-weight:800;margin-top:5px}
+.strip{background:linear-gradient(135deg,#064e3b,#065f46);padding:22px 18px 18px}
+.strip-icon{font-size:28px}
+.strip-title{color:#fff;font-size:17px;font-weight:800;margin-top:6px}
 .strip-sub{color:rgba(255,255,255,.55);font-size:12px;margin-top:3px}
-
-/* Login */
-#login-wall{display:flex;align-items:center;justify-content:center;min-height:60vh;padding:24px}
-.login-card{background:#111827;border:1px solid #1f2937;border-radius:16px;padding:28px 24px;width:100%;max-width:340px}
-.login-card h3{font-size:17px;font-weight:800;color:#d1fae5;margin-bottom:4px}
-.login-card p{font-size:12px;color:#6b7280;margin-bottom:20px}
-
-/* Form */
-.container{max-width:520px;margin:18px auto;padding:0 14px 60px;display:none}
+.container{max-width:540px;margin:18px auto;padding:0 14px 60px}
 .card{background:#111827;border:1px solid #1f2937;border-radius:13px;padding:18px;margin-bottom:13px}
 .card-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#22c55e;font-weight:700;margin-bottom:13px}
-.field{margin-bottom:11px}
+.field{margin-bottom:12px}
 .field label{display:block;font-size:10px;font-weight:700;color:#6b7280;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
 .field input,.field select,.field textarea{width:100%;border:1.5px solid #1f2937;border-radius:8px;padding:10px 12px;font-size:14px;background:#0d1117;color:#fff;outline:none;-webkit-appearance:none}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.12)}
-.field textarea{min-height:60px;resize:vertical;font-family:inherit}
+.field textarea{min-height:72px;resize:vertical;font-family:inherit}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.field-hint{font-size:11px;color:#4b5563;margin-top:3px}
-.btn{width:100%;padding:13px;border:none;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.field-hint{font-size:11px;color:#4b5563;margin-top:4px}
+.required-note{font-size:11px;color:#4b5563;margin-bottom:14px}
+.btn{width:100%;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:800;cursor:pointer;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn.green{background:#22c55e;color:#052e16}
-.btn.ghost{background:transparent;border:1.5px solid #374151;color:#9ca3af}
+.btn:hover{opacity:.88}
 .btn:disabled{opacity:.4;cursor:default}
-.err{color:#f87171;font-size:12px;padding:7px 11px;background:rgba(239,68,68,.1);border-radius:7px;border-left:3px solid #ef4444;display:none;margin-bottom:8px}
+.err{color:#f87171;font-size:12px;padding:8px 12px;background:rgba(239,68,68,.1);border-radius:7px;border-left:3px solid #ef4444;display:none;margin-bottom:10px}
 
-/* ── Success screen ───────────────────────────────── */
-.success-wrap{display:none}
-
-/* Big scanner launch card — primary CTA */
+/* ── Success ────────────────────────────── */
+#success-view{display:none}
 .launch-card{background:linear-gradient(135deg,#064e3b,#065f46);border:2px solid #22c55e;border-radius:16px;padding:28px 22px;text-align:center;margin-bottom:14px}
 .launch-icon{font-size:52px;margin-bottom:10px}
 .launch-name{font-size:22px;font-weight:800;color:#d1fae5;margin-bottom:4px}
 .launch-role{font-size:13px;color:#6ee7b7;margin-bottom:12px}
 .launch-emp{display:inline-block;font-family:monospace;font-size:14px;font-weight:700;letter-spacing:2px;color:#22c55e;background:rgba(34,197,94,.12);border:1.5px solid rgba(34,197,94,.4);border-radius:8px;padding:5px 14px;margin-bottom:18px}
-/* Countdown ring */
 .countdown-wrap{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:18px}
 .ring{position:relative;width:54px;height:54px;flex-shrink:0}
 .ring svg{transform:rotate(-90deg)}
@@ -58,14 +48,10 @@ header{background:#1F3A5F;padding:13px 18px;display:flex;align-items:center;gap:
 .ring-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#d1fae5}
 .countdown-text{font-size:13px;color:#6ee7b7;text-align:left;line-height:1.5}
 .countdown-text strong{color:#fff;display:block;font-size:15px;margin-bottom:2px}
-.btn-launch{width:100%;padding:16px;border:none;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;background:#22c55e;color:#052e16;display:flex;align-items:center;justify-content:center;gap:10px;transition:opacity .2s;margin-bottom:10px}
+.btn-launch{width:100%;padding:16px;border:none;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;background:#22c55e;color:#052e16;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px}
 .btn-launch:hover{opacity:.88}
-.btn-cancel-countdown{width:100%;padding:9px;border:1px solid rgba(255,255,255,.15);border-radius:8px;font-size:12px;color:rgba(255,255,255,.5);background:transparent;cursor:pointer}
-.btn-cancel-countdown:hover{color:rgba(255,255,255,.8)}
-
-/* Pass details card */
+.btn-cancel{width:100%;padding:9px;border:1px solid rgba(255,255,255,.15);border-radius:8px;font-size:12px;color:rgba(255,255,255,.5);background:transparent;cursor:pointer}
 .details-card{background:#111827;border:1px solid #1f2937;border-radius:13px;padding:18px;margin-bottom:13px}
-.details-card .card-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#22c55e;font-weight:700;margin-bottom:13px}
 .info-grid{background:#0d1117;border:1px solid #1f2937;border-radius:10px;padding:12px 14px;margin-bottom:14px}
 .ig-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #1f2937;font-size:13px}
 .ig-row:last-child{border-bottom:none}
@@ -73,21 +59,19 @@ header{background:#1F3A5F;padding:13px 18px;display:flex;align-items:center;gap:
 .ig-val{font-weight:700;color:#e5e7eb;font-family:monospace;font-size:12px}
 .qr-wrap{display:flex;justify-content:center;margin-bottom:8px;padding:14px;background:#fff;border-radius:12px}
 .qr-hint{font-size:11px;color:#6b7280;margin-bottom:14px;text-align:center}
-
-/* Wallet / secondary buttons */
-.wallet-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:11px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;margin-bottom:8px;transition:opacity .2s;color:#fff}
+.wallet-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:11px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;margin-bottom:8px;color:#fff}
 .wallet-btn:hover{opacity:.88}
 .wallet-btn.apple{background:#000}
 .wallet-btn.google{background:#1a73e8}
 .wallet-btn.wa{background:#25D366}
 .view-link{display:block;font-size:12px;color:#6b7280;text-decoration:none;margin-bottom:14px;text-align:center}
-.view-link:hover{color:#9ca3af}
 .btn-another{width:100%;padding:11px;border:1.5px solid #374151;border-radius:10px;font-size:13px;color:#9ca3af;background:transparent;cursor:pointer}
 
 .spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(0,0,0,.2);border-top-color:currentColor;border-radius:50%;animation:spin .6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 footer{text-align:center;padding:18px;font-size:11px;color:#374151}
 footer a{color:#22c55e;text-decoration:none}
+@media(max-width:480px){.field-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -100,32 +84,30 @@ footer a{color:#22c55e;text-decoration:none}
 <div class="strip">
   <div class="strip-icon">🔧</div>
   <div class="strip-title">Issue Technician Pass</div>
-  <div class="strip-sub">Issue pass · Identity loads into scanner automatically</div>
+  <div class="strip-sub">Creates a wallet pass with scanner access · All future capabilities pre-loaded · Scanner launches automatically after issue</div>
 </div>
 
-<!-- Login wall -->
-<div id="login-wall">
-  <div class="login-card">
-    <h3>Staff Login</h3>
-    <p>Access restricted to Sin Chew admin team</p>
-    <div class="field"><label>Username</label><input id="l-user" type="text" placeholder="Username" autocomplete="username"></div>
-    <div class="field"><label>Password</label><input id="l-pass" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()"></div>
-    <div id="l-err" style="font-size:12px;color:#f87171;min-height:16px;margin-bottom:8px"></div>
-    <button class="btn green" id="l-btn" onclick="doLogin()">Login →</button>
-  </div>
-</div>
+<div class="container">
 
-<!-- Main form -->
-<div class="container" id="main-wrap">
-
-  <!-- Issue form -->
+  <!-- ── FORM VIEW ──────────────────────────────────────── -->
   <div id="form-view">
+
     <div class="card">
       <div class="card-title">Technician Details</div>
-      <div class="field"><label>Full Name *</label><input id="f-name" type="text" placeholder="e.g. Ali Hassan"></div>
+      <p class="required-note">Fields marked * are required</p>
+
+      <div class="field">
+        <label>Full Name *</label>
+        <input id="f-name" type="text" placeholder="e.g. Ali Hassan" autocomplete="name">
+      </div>
+
       <div class="field-row">
-        <div class="field"><label>Employee ID</label><input id="f-empid" type="text" placeholder="Auto-generated"></div>
-        <div class="field"><label>Role</label>
+        <div class="field">
+          <label>Employee ID</label>
+          <input id="f-empid" type="text" placeholder="Leave blank to auto-generate">
+        </div>
+        <div class="field">
+          <label>Role</label>
           <select id="f-role">
             <option value="Technician">Technician</option>
             <option value="Senior Technician">Senior Technician</option>
@@ -135,44 +117,63 @@ footer a{color:#22c55e;text-decoration:none}
           </select>
         </div>
       </div>
+
       <div class="field-row">
-        <div class="field"><label>Zone / Area</label>
+        <div class="field">
+          <label>Zone / Area</label>
           <select id="f-zone">
             <option value="">— All zones —</option>
-            <option>North</option><option>South</option>
-            <option>East</option><option>West</option>
-            <option>Central</option><option>North-East</option>
+            <option>North</option>
+            <option>South</option>
+            <option>East</option>
+            <option>West</option>
+            <option>Central</option>
+            <option>North-East</option>
           </select>
         </div>
-        <div class="field"><label>Start Date</label><input id="f-start" type="date"></div>
+        <div class="field">
+          <label>Start Date</label>
+          <input id="f-start" type="date">
+        </div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">Contact</div>
       <div class="field-row">
-        <div class="field"><label>Mobile</label><input id="f-phone" type="tel" placeholder="+65 9xxx xxxx"></div>
-        <div class="field"><label>Email</label><input id="f-email" type="email" placeholder="tech@sinchewalarm.com"></div>
+        <div class="field">
+          <label>Mobile</label>
+          <input id="f-phone" type="tel" placeholder="+65 9xxx xxxx" autocomplete="tel">
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input id="f-email" type="email" placeholder="tech@sinchewalarm.com" autocomplete="email">
+        </div>
       </div>
-      <div class="field"><label>Vehicle Number</label><input id="f-vehicle" type="text" placeholder="SGxxxxX (optional)"></div>
+      <div class="field">
+        <label>Vehicle Number</label>
+        <input id="f-vehicle" type="text" placeholder="SGxxxxX (optional)">
+      </div>
     </div>
 
     <div class="card">
-      <div class="card-title">Certifications (optional)</div>
+      <div class="card-title">Certifications</div>
       <div class="field">
         <textarea id="f-certs" placeholder="One per line, e.g.&#10;SCDF Alarm Installation&#10;CCTV Systems&#10;Access Control"></textarea>
-        <div class="field-hint">Leave blank if none yet</div>
+        <div class="field-hint">Optional — leave blank if none yet</div>
       </div>
     </div>
 
     <div id="err" class="err"></div>
-    <button class="btn green" id="submit-btn" onclick="onboard()">Issue Technician Pass 🔧</button>
+    <button class="btn green" id="submit-btn" onclick="onboard()">
+      Issue Technician Pass 🔧
+    </button>
   </div>
 
-  <!-- Success + scanner launch -->
-  <div id="success-view" class="success-wrap">
+  <!-- ── SUCCESS VIEW ───────────────────────────────────── -->
+  <div id="success-view">
 
-    <!-- PRIMARY: scanner launch card with countdown -->
+    <!-- Primary CTA: scanner with countdown -->
     <div class="launch-card">
       <div class="launch-icon">✅</div>
       <div class="launch-name" id="s-name"></div>
@@ -188,23 +189,21 @@ footer a{color:#22c55e;text-decoration:none}
           <div class="ring-num" id="ring-num">5</div>
         </div>
         <div class="countdown-text">
-          <strong>Opening scanner…</strong>
-          Scanner will launch with this tech's identity pre-loaded
+          <strong id="countdown-label">Opening scanner…</strong>
+          Scanner launches with this tech's identity pre-loaded
         </div>
       </div>
 
-      <button class="btn-launch" id="launch-btn" onclick="goToScanner()">
-        🔧 Launch Scanner Now
-      </button>
-      <button class="btn-cancel-countdown" onclick="cancelCountdown()">Cancel auto-launch</button>
+      <button class="btn-launch" onclick="goToScanner()">🔧 Launch Scanner Now</button>
+      <button class="btn-cancel" onclick="cancelCountdown()">Cancel auto-launch</button>
     </div>
 
-    <!-- SECONDARY: pass details + wallet buttons -->
+    <!-- Secondary: pass details, wallet, QR -->
     <div class="details-card">
       <div class="card-title">Pass Details</div>
       <div class="info-grid" id="s-info"></div>
       <div class="qr-wrap"><div id="qr"></div></div>
-      <div class="qr-hint">QR links to scanner — save or print for the tech</div>
+      <div class="qr-hint">Scanner QR — save or print for the technician</div>
       <a class="wallet-btn apple" id="s-apple" href="#" target="_blank">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
         Add to Apple Wallet
@@ -223,43 +222,47 @@ footer a{color:#22c55e;text-decoration:none}
   </div>
 
 </div>
-<footer><a href="./">← Home</a> &nbsp;·&nbsp; <a href="onboard.html">Customer Onboarding</a> &nbsp;·&nbsp; © 2026 Sin Chew Alarm Pte Ltd</footer>
+<footer>
+  <a href="./">← Home</a> &nbsp;·&nbsp;
+  <a href="onboard.html">Customer Onboarding</a> &nbsp;·&nbsp;
+  © 2026 Sin Chew Alarm Pte Ltd
+</footer>
 
 <script>
 const TECH_URL  = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/sinchew-tech-onboard';
 const ADMIN_KEY = 'demo:demo';
 const COUNTDOWN = 5;
+const CIRC      = 2 * Math.PI * 22; // 138.23
 
-let scannerUrl    = null;
-let countdownTimer = null;
-let secondsLeft   = COUNTDOWN;
+let scannerUrl = null, timer = null, secs = COUNTDOWN;
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-function v(id) { const e = document.getElementById(id); return e ? e.value.trim() : ''; }
-function el(id) { return document.getElementById(id); }
+function g(id) { return document.getElementById(id); }
+function v(id) { const e = g(id); return e ? e.value.trim() : ''; }
 
-// ── Login ─────────────────────────────────────────────────────────────────────
-function doLogin() {
-  if (v('l-user') === 'demo' && el('l-pass').value === 'demo') {
-    el('login-wall').style.display = 'none';
-    el('main-wrap').style.display  = '';
-    el('f-start').value = new Date().toLocaleDateString('en-CA');
-  } else {
-    el('l-err').textContent = 'Invalid credentials';
-  }
-}
+// Set today as default start date
+window.addEventListener('DOMContentLoaded', () => {
+  g('f-start').value = new Date().toLocaleDateString('en-CA');
+});
 
 // ── Issue pass ────────────────────────────────────────────────────────────────
 async function onboard() {
-  const errEl = el('err'), btn = el('submit-btn');
-  if (!v('f-name')) { errEl.textContent = 'Please enter technician name.'; errEl.style.display = 'block'; return; }
+  const errEl = g('err'), btn = g('submit-btn');
+  if (!v('f-name')) {
+    errEl.textContent = 'Please enter the technician\'s full name.';
+    errEl.style.display = 'block';
+    g('f-name').focus();
+    return;
+  }
   errEl.style.display = 'none';
-  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Issuing pass…';
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span> Issuing pass…';
 
-  const certs = v('f-certs') ? v('f-certs').split('\n').map(s => s.trim()).filter(Boolean) : [];
+  const certs = v('f-certs')
+    ? v('f-certs').split('\n').map(s => s.trim()).filter(Boolean)
+    : [];
 
   try {
-    const res  = await fetch(TECH_URL, {
+    const res = await fetch(TECH_URL, {
       method:  'POST',
       headers: { 'content-type': 'application/json', 'x-admin-key': ADMIN_KEY },
       body: JSON.stringify({
@@ -278,22 +281,22 @@ async function onboard() {
     if (!res.ok || !data.success) throw new Error(data.error || 'Failed to issue pass');
     showSuccess(data);
   } catch(e) {
-    errEl.textContent = e.message; errEl.style.display = 'block';
-    btn.disabled = false; btn.textContent = 'Issue Technician Pass 🔧';
+    errEl.textContent = e.message;
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.innerHTML = 'Issue Technician Pass 🔧';
   }
 }
 
-// ── Show success + start countdown ────────────────────────────────────────────
+// ── Show success ──────────────────────────────────────────────────────────────
 function showSuccess(data) {
   scannerUrl = data.scanner_url;
 
-  // Populate launch card
-  el('s-name').textContent = data.tech_name;
-  el('s-role').textContent = [data.role, data.zone].filter(Boolean).join(' · ');
-  el('s-emp').textContent  = data.employee_id;
+  g('s-name').textContent = data.tech_name;
+  g('s-role').textContent = [data.role, data.zone].filter(Boolean).join(' · ');
+  g('s-emp').textContent  = data.employee_id;
 
-  // Populate details card
-  el('s-info').innerHTML = [
+  g('s-info').innerHTML = [
     ['Employee ID', data.employee_id],
     ['Role',        data.role],
     data.zone ? ['Zone', data.zone] : null,
@@ -303,81 +306,73 @@ function showSuccess(data) {
     `<div class="ig-row"><span class="ig-lbl">${l}</span><span class="ig-val">${val}</span></div>`
   ).join('');
 
-  el('s-apple').href  = data.apple_url;
-  el('s-google').href = data.google_url;
-  el('s-wa').href     = data.whatsapp_url;
-  el('s-view').href   = data.public_url;
+  g('s-apple').href  = data.apple_url;
+  g('s-google').href = data.google_url;
+  g('s-wa').href     = data.whatsapp_url;
+  g('s-view').href   = data.public_url;
 
-  // QR code of scanner URL
-  el('qr').innerHTML = '';
+  g('qr').innerHTML = '';
   if (window.QRCode) {
-    new QRCode(el('qr'), {
+    new QRCode(g('qr'), {
       text: data.scanner_url, width: 180, height: 180,
       colorDark: '#064e3b', colorLight: '#ffffff',
       correctLevel: QRCode.CorrectLevel.M,
     });
   }
 
-  // Show success, hide form
-  el('form-view').style.display    = 'none';
-  el('success-view').style.display = 'block';
+  g('form-view').style.display    = 'none';
+  g('success-view').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  // Start countdown
   startCountdown();
 }
 
-// ── Countdown ring ────────────────────────────────────────────────────────────
-const CIRCUMFERENCE = 2 * Math.PI * 22; // r=22 → 138.23
-
+// ── Countdown ─────────────────────────────────────────────────────────────────
 function startCountdown() {
-  secondsLeft = COUNTDOWN;
+  secs = COUNTDOWN;
   updateRing();
-  countdownTimer = setInterval(() => {
-    secondsLeft--;
+  timer = setInterval(() => {
+    secs--;
     updateRing();
-    if (secondsLeft <= 0) {
-      clearInterval(countdownTimer);
-      goToScanner();
-    }
+    if (secs <= 0) { clearInterval(timer); goToScanner(); }
   }, 1000);
 }
 
 function updateRing() {
-  el('ring-num').textContent = secondsLeft;
-  const offset = CIRCUMFERENCE * (1 - secondsLeft / COUNTDOWN);
-  el('ring-fill').style.strokeDashoffset = offset;
+  g('ring-num').textContent = secs;
+  g('ring-fill').style.strokeDashoffset = CIRC * (1 - secs / COUNTDOWN);
 }
 
 function cancelCountdown() {
-  clearInterval(countdownTimer);
-  countdownTimer = null;
-  // Replace countdown UI with a simple "ready" state
-  el('ring-num').textContent = '—';
-  el('ring-fill').style.strokeDashoffset = CIRCUMFERENCE;
-  document.querySelector('.countdown-text').innerHTML =
-    '<strong>Auto-launch cancelled</strong>Tap the button whenever you\'re ready';
-  el('btn-cancel-countdown').style.display = 'none';
+  clearInterval(timer); timer = null;
+  g('ring-num').textContent = '—';
+  g('ring-fill').style.strokeDashoffset = CIRC;
+  g('countdown-label').textContent = 'Ready when you are';
+  event.target.style.display = 'none';
 }
 
-// ── Navigate to scanner ───────────────────────────────────────────────────────
 function goToScanner() {
   if (!scannerUrl) return;
-  clearInterval(countdownTimer);
-  // Replace current page — tech is now in the scanner with identity pre-loaded
+  clearInterval(timer);
   window.location.href = scannerUrl;
 }
 
-// ── Reset form ────────────────────────────────────────────────────────────────
+// ── Reset ─────────────────────────────────────────────────────────────────────
 function resetForm() {
-  clearInterval(countdownTimer);
+  clearInterval(timer);
   scannerUrl = null;
-  el('success-view').style.display = 'none';
-  el('form-view').style.display    = '';
-  el('submit-btn').disabled = false;
-  el('submit-btn').textContent = 'Issue Technician Pass 🔧';
-  el('err').style.display = 'none';
-  el('qr').innerHTML = '';
+  g('success-view').style.display = 'none';
+  g('form-view').style.display    = '';
+  g('submit-btn').disabled = false;
+  g('submit-btn').innerHTML = 'Issue Technician Pass 🔧';
+  g('err').style.display = 'none';
+  g('qr').innerHTML = '';
+  // Clear form fields
+  ['f-name','f-empid','f-phone','f-email','f-vehicle','f-certs'].forEach(id => {
+    const e = g(id); if (e) e.value = '';
+  });
+  g('f-role').selectedIndex = 0;
+  g('f-zone').selectedIndex = 0;
+  g('f-start').value = new Date().toLocaleDateString('en-CA');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
