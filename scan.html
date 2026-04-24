@@ -40,39 +40,51 @@ header p{color:rgba(255,255,255,.5);font-size:10px;margin-top:1px}
 }
 #reader-wrap.locked{opacity:.35;pointer-events:none}
 
-/* html5-qrcode injects children — force them to fill and hide library chrome */
+/* Force library container to fill absolutely */
 #reader{
-  position:absolute;
-  inset:0;
+  position:absolute!important;
+  inset:0!important;
   width:100%!important;
   height:100%!important;
+  overflow:hidden!important;
 }
-/* The actual scan region div the library creates */
+/* The scan region div */
 #reader__scan_region{
   position:absolute!important;
   inset:0!important;
   width:100%!important;
   height:100%!important;
+  overflow:hidden!important;
 }
+/* Live video — fills and crops */
 #reader__scan_region video{
   position:absolute!important;
   inset:0!important;
   width:100%!important;
   height:100%!important;
   object-fit:cover!important;
+  transform:none!important;
 }
-/* Hide library's own shaded-box canvas — we draw our own overlay */
-#reader__scan_region canvas{
+/* KILL all canvases the library injects — the shaded qrbox overlay */
+#reader canvas,
+#reader__scan_region canvas,
+#reader__scan_region img{
   display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
 }
-/* Hide dashboard controls and status text the library injects */
+/* Hide every library UI element */
 #reader__dashboard,
+#reader__dashboard_section,
+#reader__dashboard_section_swaplink,
 #reader__header_message,
-#reader__status_span{
+#reader__status_span,
+#reader__filescan_input{
   display:none!important;
 }
 
-/* ── OUR OVERLAY (sits above the video) ── */
+/* ── OUR OVERLAY (above the video, pointer-events:none) ── */
 .scan-overlay{
   position:absolute;
   inset:0;
@@ -82,26 +94,18 @@ header p{color:rgba(255,255,255,.5);font-size:10px;margin-top:1px}
   align-items:center;
   justify-content:center;
 }
-/* dark vignette around the target box */
-.scan-vignette{
-  position:absolute;
-  inset:0;
-  box-shadow:inset 0 0 0 9999px rgba(0,0,0,.50);
-  /* the "hole" is cut by the border-radius trick below */
-}
+/* dark surround — box-shadow punches the clear window */
 .scan-frame{
   position:absolute;
-  /* size is set to 55% via JS once container is measured */
-  width:55%;
+  width:58%;
   aspect-ratio:1;
   border-radius:6px;
-  /* punches through the vignette */
   box-shadow:0 0 0 9999px rgba(0,0,0,.50);
 }
-/* corner brackets */
+/* corner brackets exactly match .scan-frame size */
 .scan-corners{
   position:absolute;
-  width:55%;
+  width:58%;
   aspect-ratio:1;
 }
 .scan-corners::before,.scan-corners::after,
@@ -112,19 +116,19 @@ header p{color:rgba(255,255,255,.5);font-size:10px;margin-top:1px}
 .scan-corners::after{top:0;right:0;border-width:3px 3px 0 0;border-radius:0 4px 0 0}
 .scan-corners span::before{bottom:0;left:0;border-width:0 0 3px 3px;border-radius:0 0 0 4px}
 .scan-corners span::after{bottom:0;right:0;border-width:0 3px 3px 0;border-radius:0 0 4px 0}
-/* animated scan line confined to the target box */
+/* scan line confined to the frame */
 .scan-line{
   position:absolute;
-  width:55%;
+  width:58%;
   height:2px;
   background:linear-gradient(90deg,transparent,#CC0000,transparent);
   animation:scanline 2.5s ease-in-out infinite;
   z-index:11;
 }
 @keyframes scanline{
-  0%,100%{top:calc(50% - 27.5% + 0px);opacity:0}
+  0%,100%{top:calc(50% - 29%);opacity:0}
   10%,90%{opacity:1}
-  50%{top:calc(50% + 27.5% - 2px)}
+  50%{top:calc(50% + 29% - 2px)}
 }
 
 .lock-banner{
@@ -243,9 +247,7 @@ footer a{color:#CC0000;text-decoration:none}
   <div class="scan-card">
     <div class="scan-header"><div class="icon">🔧</div><div><h2>Technician Scanner</h2><p>Scan customer pass QR code</p></div></div>
     <div id="reader-wrap">
-      <!-- html5-qrcode mounts here -->
       <div id="reader"></div>
-      <!-- Our overlay — z-index:10, pointer-events:none -->
       <div class="scan-overlay">
         <div class="scan-frame"></div>
         <div class="scan-corners"><span></span></div>
@@ -274,11 +276,26 @@ footer a{color:#CC0000;text-decoration:none}
 const SCAN_URL = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/sinchew-scan';
 const BOOK_URL = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/sinchew-book';
 let scanner = null, camRunning = false, modalOpen = false, processing = false;
-let currentPassId = null, currentCode = null;
-let techIdentity = null;
+let currentPassId = null, currentCode = null, techIdentity = null;
 const scanHistory = [];
 
+// Aggressively nuke any canvas/img the library injects — run repeatedly
+function nukeLibraryOverlay() {
+  const targets = [
+    ...document.querySelectorAll('#reader canvas'),
+    ...document.querySelectorAll('#reader__scan_region canvas'),
+    ...document.querySelectorAll('#reader__scan_region img'),
+    document.getElementById('reader__dashboard'),
+    document.getElementById('reader__header_message'),
+    document.getElementById('reader__status_span'),
+  ];
+  targets.forEach(el => { if (el) { el.style.cssText = 'display:none!important;visibility:hidden!important;opacity:0!important;'; } });
+}
+// Observe DOM changes and nuke on any addition inside #reader
+const nukeObserver = new MutationObserver(nukeLibraryOverlay);
+
 window.addEventListener('DOMContentLoaded', async () => {
+  nukeObserver.observe(document.getElementById('reader'), { childList: true, subtree: true, attributes: true });
   const params = new URLSearchParams(location.search);
   const techParam = params.get('tech');
   if (techParam && techParam.startsWith('PASS-')) await loadTechIdentity(techParam, true);
@@ -288,8 +305,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 });
 
 function renderTechBanner() {
-  const banner = document.getElementById('tech-banner');
-  const setupBar = document.getElementById('tech-setup-bar');
+  const banner = document.getElementById('tech-banner'), setupBar = document.getElementById('tech-setup-bar');
   if (techIdentity) {
     banner.classList.add('show'); setupBar.classList.remove('show');
     document.getElementById('tb-name').textContent = techIdentity.name || 'Technician';
@@ -317,8 +333,7 @@ async function confirmTechIdentity() {
   finally { btn.disabled = false; btn.textContent = 'Confirm identity →'; }
 }
 async function loadTechIdentity(code, save = false) {
-  const res = await fetch(`${BOOK_URL}?code=${encodeURIComponent(code)}`);
-  const data = await res.json();
+  const res = await fetch(`${BOOK_URL}?code=${encodeURIComponent(code)}`); const data = await res.json();
   if (!res.ok || !data.holder_name) throw new Error(data.error || 'Pass not found');
   techIdentity = { code, name: data.holder_name, employee_id: data.employee_id || null, role: data.role || 'Technician', zone: data.zone || null };
   if (save) localStorage.setItem('sc_tech', JSON.stringify(techIdentity));
@@ -326,59 +341,30 @@ async function loadTechIdentity(code, save = false) {
 
 async function startCam() {
   const wrap = document.getElementById('reader-wrap');
-  // Measure the container so qrbox returns exact pixel values
   const side = wrap.offsetWidth || 360;
-  const boxSize = Math.round(side * 0.55);
-
+  // qrbox exactly matches our 58% CSS overlay
+  const boxSize = Math.round(side * 0.58);
   try {
     scanner = new Html5Qrcode('reader', { verbose: false });
     await scanner.start(
       { facingMode: 'environment' },
-      {
-        fps: 12,
-        // qrbox as function — returns pixel size matching our 55%-wide CSS overlay
-        qrbox: () => ({ width: boxSize, height: boxSize }),
-        aspectRatio: 1.0,
-        disableFlip: false,
-        experimentalFeatures: { useBarCodeDetectorIfSupported: true },
-      },
-      onQRDetected,
-      () => {}
+      { fps: 12, qrbox: () => ({ width: boxSize, height: boxSize }), aspectRatio: 1.0, disableFlip: false },
+      onQRDetected, () => {}
     );
     camRunning = true;
     document.getElementById('cam-btn').textContent = 'Stop Cam';
     document.getElementById('cam-btn').classList.add('active');
-    // Force library's scan_region to fill the wrap after it mounts
-    requestAnimationFrame(fixReaderLayout);
+    // Nuke once after lib settles, then let MutationObserver handle the rest
+    setTimeout(nukeLibraryOverlay, 300);
+    setTimeout(nukeLibraryOverlay, 800);
+    setTimeout(nukeLibraryOverlay, 1500);
   } catch {
     wrap.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:200px;color:#4b5563;font-size:13px;text-align:center;padding:20px">Camera not available.<br>Use manual entry below.</div>';
     document.getElementById('cam-btn').style.display = 'none';
   }
 }
-
-function fixReaderLayout() {
-  // Ensure library-injected elements don't introduce scroll/overflow
-  const region = document.getElementById('reader__scan_region');
-  if (region) {
-    region.style.cssText = 'position:absolute!important;inset:0!important;width:100%!important;height:100%!important;overflow:hidden!important;';
-    const vid = region.querySelector('video');
-    if (vid) vid.style.cssText = 'position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;';
-  }
-  // Hide library dashboard / controls if injected
-  ['reader__dashboard','reader__header_message','reader__status_span'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = 'none';
-  });
-}
-
 async function stopCam() {
-  if (scanner && camRunning) {
-    await scanner.stop();
-    scanner = null;
-    camRunning = false;
-    document.getElementById('cam-btn').textContent = 'Start Cam';
-    document.getElementById('cam-btn').classList.remove('active');
-  }
+  if (scanner && camRunning) { await scanner.stop(); scanner = null; camRunning = false; document.getElementById('cam-btn').textContent = 'Start Cam'; document.getElementById('cam-btn').classList.remove('active'); }
 }
 async function toggleCam() { if (camRunning) await stopCam(); else await startCam(); }
 async function onQRDetected(code) {
@@ -461,7 +447,6 @@ function openModal(theme, icon, title, code, rows, extraHtml='', showComplete=fa
   document.getElementById('code-input').value = '';
   setTimeout(() => document.getElementById('m-dismiss').focus(), 50);
 }
-
 function openErrorModal(msg) { openModal('warn','⚠️','Scanner Error','—',[['Detail',msg]],'',false); }
 
 async function completeService() {
