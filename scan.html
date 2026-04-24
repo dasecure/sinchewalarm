@@ -29,24 +29,113 @@ header p{color:rgba(255,255,255,.5);font-size:10px;margin-top:1px}
 .scan-header .icon{font-size:20px}
 .scan-header h2{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff}
 .scan-header p{font-size:11px;color:rgba(255,255,255,.5);margin-top:1px}
-#reader-wrap{position:relative;background:#000;aspect-ratio:1;overflow:hidden;transition:opacity .3s}
+
+/* ── CAMERA VIEWPORT ── */
+#reader-wrap{
+  position:relative;
+  width:100%;
+  aspect-ratio:1;
+  background:#000;
+  overflow:hidden;
+}
 #reader-wrap.locked{opacity:.35;pointer-events:none}
-#reader{width:100%!important}
-#reader video{width:100%!important;height:100%!important;object-fit:cover}
-.scan-overlay{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center}
-.scan-frame{width:55%;aspect-ratio:1;border-radius:6px;box-shadow:0 0 0 9999px rgba(0,0,0,0.55)}
-.scan-corners{position:absolute;width:55%;aspect-ratio:1}
-.scan-corners::before,.scan-corners::after,.scan-corners span::before,.scan-corners span::after{content:'';position:absolute;width:22px;height:22px;border-color:#CC0000;border-style:solid}
+
+/* html5-qrcode injects children — force them to fill and hide library chrome */
+#reader{
+  position:absolute;
+  inset:0;
+  width:100%!important;
+  height:100%!important;
+}
+/* The actual scan region div the library creates */
+#reader__scan_region{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+}
+#reader__scan_region video{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
+/* Hide library's own shaded-box canvas — we draw our own overlay */
+#reader__scan_region canvas{
+  display:none!important;
+}
+/* Hide dashboard controls and status text the library injects */
+#reader__dashboard,
+#reader__header_message,
+#reader__status_span{
+  display:none!important;
+}
+
+/* ── OUR OVERLAY (sits above the video) ── */
+.scan-overlay{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+/* dark vignette around the target box */
+.scan-vignette{
+  position:absolute;
+  inset:0;
+  box-shadow:inset 0 0 0 9999px rgba(0,0,0,.50);
+  /* the "hole" is cut by the border-radius trick below */
+}
+.scan-frame{
+  position:absolute;
+  /* size is set to 55% via JS once container is measured */
+  width:55%;
+  aspect-ratio:1;
+  border-radius:6px;
+  /* punches through the vignette */
+  box-shadow:0 0 0 9999px rgba(0,0,0,.50);
+}
+/* corner brackets */
+.scan-corners{
+  position:absolute;
+  width:55%;
+  aspect-ratio:1;
+}
+.scan-corners::before,.scan-corners::after,
+.scan-corners span::before,.scan-corners span::after{
+  content:'';position:absolute;width:22px;height:22px;border-color:#CC0000;border-style:solid;
+}
 .scan-corners::before{top:0;left:0;border-width:3px 0 0 3px;border-radius:4px 0 0 0}
 .scan-corners::after{top:0;right:0;border-width:3px 3px 0 0;border-radius:0 4px 0 0}
 .scan-corners span::before{bottom:0;left:0;border-width:0 0 3px 3px;border-radius:0 0 0 4px}
 .scan-corners span::after{bottom:0;right:0;border-width:0 3px 3px 0;border-radius:0 0 4px 0}
-.scan-line{position:absolute;width:55%;height:2px;background:linear-gradient(90deg,transparent,#CC0000,transparent);animation:scanline 2.5s ease-in-out infinite}
-@keyframes scanline{0%,100%{top:22.5%;opacity:0}10%,90%{opacity:1}50%{top:77.5%}}
-.lock-banner{display:none;position:absolute;inset:0;background:rgba(0,0,0,.72);flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:2}
+/* animated scan line confined to the target box */
+.scan-line{
+  position:absolute;
+  width:55%;
+  height:2px;
+  background:linear-gradient(90deg,transparent,#CC0000,transparent);
+  animation:scanline 2.5s ease-in-out infinite;
+  z-index:11;
+}
+@keyframes scanline{
+  0%,100%{top:calc(50% - 27.5% + 0px);opacity:0}
+  10%,90%{opacity:1}
+  50%{top:calc(50% + 27.5% - 2px)}
+}
+
+.lock-banner{
+  display:none;position:absolute;inset:0;
+  background:rgba(0,0,0,.72);
+  flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:20;
+}
 .lock-banner.show{display:flex}
 .lock-banner span{font-size:28px}
 .lock-banner p{font-size:13px;color:#aab8d0}
+
 .scan-controls{padding:14px 16px;display:flex;gap:8px;align-items:center}
 .svc-select{flex:1;background:#1f2937;border:1px solid #374151;border-radius:8px;color:#fff;padding:9px 11px;font-size:13px;outline:none}
 .svc-select:focus{border-color:#CC0000}
@@ -61,6 +150,7 @@ header p{color:rgba(255,255,255,.5);font-size:10px;margin-top:1px}
 .manual input:focus{border-color:#CC0000}
 .btn-scan{background:#CC0000;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .2s}
 .btn-scan:disabled{opacity:.4;cursor:default}
+
 .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;padding:16px}
 .modal-backdrop.open{display:flex}
 .modal{width:100%;max-width:420px;border-radius:20px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.8);animation:modal-in .22s cubic-bezier(.34,1.56,.64,1)}
@@ -88,6 +178,7 @@ header p{color:rgba(255,255,255,.5);font-size:10px;margin-top:1px}
 .modal-dismiss:hover{border-color:rgba(255,255,255,.4)}
 .modal.invalid .modal-header{background:#450a0a}.modal.invalid .modal-body{background:#1a0808}
 .modal.warn .modal-header{background:#451a03}.modal.warn .modal-body{background:#1a0e05}
+
 .tech-modal{background:#0f172a;border:1px solid #1f2937;border-radius:20px;padding:0;overflow:hidden;width:100%;max-width:360px}
 .tech-modal-head{background:#064e3b;padding:18px 20px}
 .tech-modal-head h3{font-size:16px;font-weight:800;color:#d1fae5;margin-bottom:3px}
@@ -99,6 +190,7 @@ header p{color:rgba(255,255,255,.5);font-size:10px;margin-top:1px}
 .tech-err{font-size:12px;color:#f87171;min-height:16px;margin-bottom:8px}
 .btn-tech{width:100%;padding:11px;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;background:#22c55e;color:#052e16}
 .btn-tech:disabled{opacity:.4}
+
 #history-wrap{margin-top:6px}
 .history-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#4b5563;margin-bottom:8px}
 .history-item{background:#111827;border:1px solid #1f2937;border-radius:10px;padding:10px 14px;margin-bottom:6px;display:flex;align-items:center;gap:10px;font-size:12px;flex-wrap:wrap}
@@ -151,8 +243,14 @@ footer a{color:#CC0000;text-decoration:none}
   <div class="scan-card">
     <div class="scan-header"><div class="icon">🔧</div><div><h2>Technician Scanner</h2><p>Scan customer pass QR code</p></div></div>
     <div id="reader-wrap">
+      <!-- html5-qrcode mounts here -->
       <div id="reader"></div>
-      <div class="scan-overlay"><div class="scan-frame"></div><div class="scan-corners"><span></span></div><div class="scan-line"></div></div>
+      <!-- Our overlay — z-index:10, pointer-events:none -->
+      <div class="scan-overlay">
+        <div class="scan-frame"></div>
+        <div class="scan-corners"><span></span></div>
+        <div class="scan-line"></div>
+      </div>
       <div class="lock-banner" id="lock-banner"><span>🔒</span><p>Dismiss result to scan next pass</p></div>
     </div>
     <div class="scan-controls">
@@ -219,22 +317,76 @@ async function confirmTechIdentity() {
   finally { btn.disabled = false; btn.textContent = 'Confirm identity →'; }
 }
 async function loadTechIdentity(code, save = false) {
-  const res = await fetch(`${BOOK_URL}?code=${encodeURIComponent(code)}`); const data = await res.json();
+  const res = await fetch(`${BOOK_URL}?code=${encodeURIComponent(code)}`);
+  const data = await res.json();
   if (!res.ok || !data.holder_name) throw new Error(data.error || 'Pass not found');
   techIdentity = { code, name: data.holder_name, employee_id: data.employee_id || null, role: data.role || 'Technician', zone: data.zone || null };
   if (save) localStorage.setItem('sc_tech', JSON.stringify(techIdentity));
 }
 
 async function startCam() {
+  const wrap = document.getElementById('reader-wrap');
+  // Measure the container so qrbox returns exact pixel values
+  const side = wrap.offsetWidth || 360;
+  const boxSize = Math.round(side * 0.55);
+
   try {
-    scanner = new Html5Qrcode('reader');
-    await scanner.start({ facingMode: 'environment' }, { fps: 10, qrbox: { width: 220, height: 220 }, aspectRatio: 1.0 }, onQRDetected, () => {});
-    camRunning = true; document.getElementById('cam-btn').textContent = 'Stop Cam'; document.getElementById('cam-btn').classList.add('active');
-  } catch { document.getElementById('reader-wrap').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:200px;color:#4b5563;font-size:13px;text-align:center;padding:20px">Camera not available.<br>Use manual entry below.</div>'; document.getElementById('cam-btn').style.display = 'none'; }
+    scanner = new Html5Qrcode('reader', { verbose: false });
+    await scanner.start(
+      { facingMode: 'environment' },
+      {
+        fps: 12,
+        // qrbox as function — returns pixel size matching our 55%-wide CSS overlay
+        qrbox: () => ({ width: boxSize, height: boxSize }),
+        aspectRatio: 1.0,
+        disableFlip: false,
+        experimentalFeatures: { useBarCodeDetectorIfSupported: true },
+      },
+      onQRDetected,
+      () => {}
+    );
+    camRunning = true;
+    document.getElementById('cam-btn').textContent = 'Stop Cam';
+    document.getElementById('cam-btn').classList.add('active');
+    // Force library's scan_region to fill the wrap after it mounts
+    requestAnimationFrame(fixReaderLayout);
+  } catch {
+    wrap.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:200px;color:#4b5563;font-size:13px;text-align:center;padding:20px">Camera not available.<br>Use manual entry below.</div>';
+    document.getElementById('cam-btn').style.display = 'none';
+  }
 }
-async function stopCam() { if (scanner && camRunning) { await scanner.stop(); scanner = null; camRunning = false; document.getElementById('cam-btn').textContent = 'Start Cam'; document.getElementById('cam-btn').classList.remove('active'); } }
+
+function fixReaderLayout() {
+  // Ensure library-injected elements don't introduce scroll/overflow
+  const region = document.getElementById('reader__scan_region');
+  if (region) {
+    region.style.cssText = 'position:absolute!important;inset:0!important;width:100%!important;height:100%!important;overflow:hidden!important;';
+    const vid = region.querySelector('video');
+    if (vid) vid.style.cssText = 'position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;';
+  }
+  // Hide library dashboard / controls if injected
+  ['reader__dashboard','reader__header_message','reader__status_span'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+}
+
+async function stopCam() {
+  if (scanner && camRunning) {
+    await scanner.stop();
+    scanner = null;
+    camRunning = false;
+    document.getElementById('cam-btn').textContent = 'Start Cam';
+    document.getElementById('cam-btn').classList.remove('active');
+  }
+}
 async function toggleCam() { if (camRunning) await stopCam(); else await startCam(); }
-async function onQRDetected(code) { if (modalOpen || processing || !code.startsWith('PASS-')) return; if (techIdentity && code === techIdentity.code) return; document.getElementById('code-input').value = code; await submitCode(code); }
+async function onQRDetected(code) {
+  if (modalOpen || processing || !code.startsWith('PASS-')) return;
+  if (techIdentity && code === techIdentity.code) return;
+  document.getElementById('code-input').value = code;
+  await submitCode(code);
+}
 
 async function submitCode(codeOverride) {
   if (modalOpen || processing) return;
@@ -255,7 +407,7 @@ async function submitCode(codeOverride) {
 function buildModal(code, data) {
   if (!data.success) {
     const expired = data.status === 'expired', revoked = data.status === 'revoked';
-    openModal(expired?'invalid':revoked?'invalid':'warn', expired?'⏰':revoked?'🚫':'❌',
+    openModal(expired||revoked?'invalid':'warn', expired?'⏰':revoked?'🚫':'❌',
       expired?'Pass Expired':revoked?'Pass Revoked':'Invalid Pass', code,
       [['Reason', data.error||data.status||'Unknown']].concat(data.holder_name?[['Customer',data.holder_name]]:[]),
       '', false, '', data);
@@ -267,7 +419,6 @@ function buildModal(code, data) {
   if (data.service_address)   rows.push(['Address',      data.service_address]);
   if (data.account_manager)   rows.push(['Acct Mgr',     data.account_manager]);
   if (data.contract_expiry)   rows.push(['Contract',     'Expires ' + data.contract_expiry]);
-  // FIX 3: show pending booking reference if one exists
   if (data.pending_booking)   rows.push(['_BOOKING_ALERT_', data.pending_booking]);
   const svcParts = (data.last_service||'').split(' · ');
   if (svcParts[1]) rows.push(['Time', svcParts.slice(1).join(' · ')]);
@@ -292,17 +443,14 @@ function openModal(theme, icon, title, code, rows, extraHtml='', showComplete=fa
     const [bg,fg] = colors[planTier]||['#374151','#fff'];
     planEl.style.background = bg; planEl.style.color = fg;
   } else { planEl.style.display = 'none'; }
-
   document.getElementById('m-body').innerHTML = rows.map(([l,v]) => {
     if (l === '_BOOKING_ALERT_') return `<div class="modal-row booking-alert"><span class="lbl">📌 Pending</span><span class="val">${v}<br><span style="font-size:11px;color:#fbbf24;font-weight:400">Customer has an outstanding service request</span></span></div>`;
     return `<div class="modal-row"><span class="lbl">${l}</span><span class="val">${v}</span></div>`;
   }).join('');
   document.getElementById('m-push').innerHTML = extraHtml;
-
   const techSig = document.getElementById('m-tech-sig');
   if (techIdentity?.name) { techSig.style.display='inline-flex'; techSig.style.background='#0c2a47'; techSig.style.color='#93c5fd'; techSig.textContent=`🔧 ${techIdentity.name}${techIdentity.employee_id?' · '+techIdentity.employee_id:''}`; }
   else { techSig.style.display='none'; }
-
   document.getElementById('m-booking-closed').style.display = scanData.booking_closed ? 'inline-flex' : 'none';
   const completeBtn = document.getElementById('complete-btn');
   completeBtn.style.display = showComplete ? 'flex' : 'none';
@@ -354,4 +502,5 @@ function addHistory(code, name, type) {
   ).join('');
 }
 </script>
-</body></html>
+</body>
+</html>
