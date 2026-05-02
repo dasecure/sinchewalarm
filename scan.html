@@ -30,84 +30,30 @@ header p{color:rgba(255,255,255,.5);font-size:10px;margin-top:1px}
 .scan-header .icon{font-size:20px}
 .scan-header h2{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff}
 .scan-header p{font-size:11px;color:rgba(255,255,255,.5);margin-top:1px}
-
-/* ── VIEWPORT ── */
-#cam-wrap{
-  position:relative;
-  width:100%;
-  aspect-ratio:1;
-  background:#000;
-  overflow:hidden;
-}
+#cam-wrap{position:relative;width:100%;aspect-ratio:1;background:#000;overflow:hidden;}
 #cam-wrap.locked{opacity:.35;pointer-events:none}
-
-/* Native video — we control this directly */
-#cam-video{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-/* Hidden canvas used only for jsQR pixel sampling */
+#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 #cam-canvas{ display:none; }
-
-/* Permission / loading state */
-#cam-state{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  gap:12px;background:#000;z-index:5;
-}
+#cam-state{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#000;z-index:5;}
 #cam-state.hidden{display:none}
 #cam-state-icon{font-size:36px}
 #cam-state-text{font-size:13px;color:#6b7280;text-align:center;padding:0 20px;line-height:1.5}
 .cam-state-btn{background:#CC0000;color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;display:none}
 .cam-state-btn.show{display:block}
-
-/* ── OVERLAY ── */
-.scan-overlay{
-  position:absolute;inset:0;
-  pointer-events:none;z-index:10;
-  display:flex;align-items:center;justify-content:center;
-}
-.scan-frame{
-  position:absolute;
-  width:58%;aspect-ratio:1;
-  border-radius:6px;
-  box-shadow:0 0 0 9999px rgba(0,0,0,.50);
-}
+.scan-overlay{position:absolute;inset:0;pointer-events:none;z-index:10;display:flex;align-items:center;justify-content:center;}
+.scan-frame{position:absolute;width:58%;aspect-ratio:1;border-radius:6px;box-shadow:0 0 0 9999px rgba(0,0,0,.50);}
 .scan-corners{position:absolute;width:58%;aspect-ratio:1}
-.scan-corners::before,.scan-corners::after,
-.scan-corners span::before,.scan-corners span::after{
-  content:'';position:absolute;width:22px;height:22px;
-  border-color:#CC0000;border-style:solid;
-}
+.scan-corners::before,.scan-corners::after,.scan-corners span::before,.scan-corners span::after{content:'';position:absolute;width:22px;height:22px;border-color:#CC0000;border-style:solid;}
 .scan-corners::before{top:0;left:0;border-width:3px 0 0 3px;border-radius:4px 0 0 0}
 .scan-corners::after{top:0;right:0;border-width:3px 3px 0 0;border-radius:0 4px 0 0}
 .scan-corners span::before{bottom:0;left:0;border-width:0 0 3px 3px;border-radius:0 0 0 4px}
 .scan-corners span::after{bottom:0;right:0;border-width:0 3px 3px 0;border-radius:0 0 4px 0}
-.scan-line{
-  position:absolute;width:58%;height:2px;
-  background:linear-gradient(90deg,transparent,#CC0000,transparent);
-  animation:scanline 2.5s ease-in-out infinite;z-index:11;
-}
-@keyframes scanline{
-  0%,100%{top:calc(50% - 29%);opacity:0}
-  10%,90%{opacity:1}
-  50%{top:calc(50% + 27%)}
-}
-
-.lock-banner{
-  display:none;position:absolute;inset:0;
-  background:rgba(0,0,0,.72);
-  flex-direction:column;align-items:center;justify-content:center;
-  gap:10px;z-index:20;
-}
+.scan-line{position:absolute;width:58%;height:2px;background:linear-gradient(90deg,transparent,#CC0000,transparent);animation:scanline 2.5s ease-in-out infinite;z-index:11;}
+@keyframes scanline{0%,100%{top:calc(50% - 29%);opacity:0}10%,90%{opacity:1}50%{top:calc(50% + 27%)}}
+.lock-banner{display:none;position:absolute;inset:0;background:rgba(0,0,0,.72);flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:20;}
 .lock-banner.show{display:flex}
 .lock-banner span{font-size:28px}
 .lock-banner p{font-size:13px;color:#aab8d0}
-
 .scan-controls{padding:14px 16px;display:flex;gap:8px;align-items:center}
 .svc-select{flex:1;background:#1f2937;border:1px solid #374151;border-radius:8px;color:#fff;padding:9px 11px;font-size:13px;outline:none}
 .svc-select:focus{border-color:#CC0000}
@@ -121,8 +67,6 @@ header p{color:rgba(255,255,255,.5);font-size:10px;margin-top:1px}
 .manual input:focus{border-color:#CC0000}
 .btn-scan{background:#CC0000;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer}
 .btn-scan:disabled{opacity:.4;cursor:default}
-
-/* modals */
 .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;padding:16px}
 .modal-backdrop.open{display:flex}
 .modal{width:100%;max-width:420px;border-radius:20px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.8);animation:modal-in .22s cubic-bezier(.34,1.56,.64,1)}
@@ -176,7 +120,6 @@ footer a{color:#CC0000;text-decoration:none}
 </head>
 <body>
 
-<!-- Tech identity modal -->
 <div class="modal-backdrop" id="tech-modal-backdrop">
   <div class="tech-modal">
     <div class="tech-modal-head"><h3>🔧 Identify yourself</h3><p>Enter your technician pass code to sign your jobs</p></div>
@@ -188,7 +131,6 @@ footer a{color:#CC0000;text-decoration:none}
   </div>
 </div>
 
-<!-- Scan result modal -->
 <div class="modal-backdrop" id="modal-backdrop">
   <div class="modal" id="modal">
     <div class="modal-header"><div class="modal-icon" id="m-icon"></div><div><div class="modal-title" id="m-title"></div><div class="modal-code" id="m-code"></div><span class="modal-plan" id="m-plan" style="display:none"></span></div></div>
@@ -213,19 +155,13 @@ footer a{color:#CC0000;text-decoration:none}
     <div class="scan-header"><div class="icon">🔧</div><div><h2>Technician Scanner</h2><p id="decoder-label">Scan customer pass QR code</p></div></div>
 
     <div id="cam-wrap">
-      <!-- Native video — we own this, no library -->
       <video id="cam-video" autoplay playsinline muted></video>
-      <!-- Hidden canvas for jsQR pixel sampling -->
       <canvas id="cam-canvas"></canvas>
-
-      <!-- Permission / error state overlay -->
       <div id="cam-state">
         <div id="cam-state-icon">📷</div>
         <div id="cam-state-text">Tap to start camera</div>
         <button class="cam-state-btn show" id="cam-state-btn" onclick="startCam()">Start Camera</button>
       </div>
-
-      <!-- Our visual overlay — pure CSS, no library involvement -->
       <div class="scan-overlay">
         <div class="scan-frame"></div>
         <div class="scan-corners"><span></span></div>
@@ -252,19 +188,18 @@ footer a{color:#CC0000;text-decoration:none}
 <footer><a href="./">← Portal</a> &nbsp;·&nbsp; <a href="dashboard.html">Dashboard</a> &nbsp;·&nbsp; © 2026 Sin Chew Alarm</footer>
 
 <script>
-const SCAN_URL = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/sinchew-scan';
-const BOOK_URL = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/sinchew-book';
+// Multi-tenant edge functions. The pass code in the body resolves the
+// business + API key server-side, so no API key is needed in this page.
+const SCAN_URL = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/pass-scan';
+const BOOK_URL = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/service-requests';
 
-// ── STATE ──────────────────────────────────────────────
 let stream = null, camRunning = false, rafId = null;
 let barcodeDetector = null, useNativeDetector = false;
 let modalOpen = false, processing = false, lastCode = '', lastCodeTs = 0;
 let currentCode = null, techIdentity = null;
 const scanHistory = [];
 
-// ── INIT ───────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
-  // Check for native BarcodeDetector
   if ('BarcodeDetector' in window) {
     try {
       const formats = await BarcodeDetector.getSupportedFormats();
@@ -278,8 +213,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   if (!useNativeDetector) {
     document.getElementById('decoder-label').textContent = 'jsQR · Scan customer pass';
   }
-
-  // Load tech identity
   const params = new URLSearchParams(location.search);
   const techParam = params.get('tech');
   if (techParam?.startsWith('PASS-')) await loadTechIdentity(techParam, true).catch(() => {});
@@ -288,21 +221,17 @@ window.addEventListener('DOMContentLoaded', async () => {
     if (saved) try { techIdentity = JSON.parse(saved); } catch {}
   }
   renderTechBanner();
-  // Don't auto-start — let user tap. Avoids the iOS permission-then-freeze bug.
 });
 
-// ── CAMERA ─────────────────────────────────────────────
 async function startCam() {
   const stateEl  = document.getElementById('cam-state');
   const stateBtn = document.getElementById('cam-state-btn');
   const stateIcon= document.getElementById('cam-state-icon');
   const stateTxt = document.getElementById('cam-state-text');
   const video    = document.getElementById('cam-video');
-
   stateIcon.textContent = '⏳';
   stateTxt.textContent  = 'Requesting camera…';
   stateBtn.classList.remove('show');
-
   try {
     stream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 1280 } },
@@ -310,7 +239,7 @@ async function startCam() {
     });
     video.srcObject = stream;
     await video.play();
-    stateEl.classList.add('hidden');  // hide the overlay — video is live
+    stateEl.classList.add('hidden');
     camRunning = true;
     document.getElementById('cam-btn').textContent = 'Stop Cam';
     document.getElementById('cam-btn').classList.add('active');
@@ -333,7 +262,6 @@ async function stopCam() {
   camRunning = false;
   document.getElementById('cam-btn').textContent = 'Start Cam';
   document.getElementById('cam-btn').classList.remove('active');
-  // Show the start state again
   const stateEl = document.getElementById('cam-state');
   document.getElementById('cam-state-icon').textContent = '📷';
   document.getElementById('cam-state-text').textContent  = 'Camera stopped';
@@ -346,35 +274,27 @@ async function toggleCam() {
   if (camRunning) await stopCam(); else await startCam();
 }
 
-// ── DECODE LOOP ────────────────────────────────────────
 function startDecodeLoop() {
   const video  = document.getElementById('cam-video');
   const canvas = document.getElementById('cam-canvas');
   const ctx    = canvas.getContext('2d', { willReadFrequently: true });
-
   async function tick() {
     if (!camRunning || modalOpen) { rafId = requestAnimationFrame(tick); return; }
     if (video.readyState < 2)    { rafId = requestAnimationFrame(tick); return; }
-
     const w = video.videoWidth, h = video.videoHeight;
     if (!w || !h)                { rafId = requestAnimationFrame(tick); return; }
-
     if (useNativeDetector) {
-      // BarcodeDetector works directly on the video element — no canvas needed
       try {
         const results = await barcodeDetector.detect(video);
         if (results.length > 0) handleDetected(results[0].rawValue);
       } catch {}
-      // Native detector is fast; throttle to ~15fps
       await new Promise(r => setTimeout(r, 66));
     } else {
-      // jsQR: draw frame to canvas, sample pixels
       canvas.width = w; canvas.height = h;
       ctx.drawImage(video, 0, 0, w, h);
       const imageData = ctx.getImageData(0, 0, w, h);
       const result = jsQR(imageData.data, w, h, { inversionAttempts: 'dontInvert' });
       if (result) handleDetected(result.data);
-      // jsQR is CPU-heavy; throttle to ~10fps
       await new Promise(r => setTimeout(r, 100));
     }
     rafId = requestAnimationFrame(tick);
@@ -386,14 +306,12 @@ function handleDetected(raw) {
   if (!raw || !raw.startsWith('PASS-')) return;
   if (techIdentity && raw === techIdentity.code) return;
   const now = Date.now();
-  // Debounce: ignore same code within 3 seconds
   if (raw === lastCode && now - lastCodeTs < 3000) return;
   lastCode = raw; lastCodeTs = now;
   document.getElementById('code-input').value = raw;
   submitCode(raw);
 }
 
-// ── TECH IDENTITY ──────────────────────────────────────
 function renderTechBanner() {
   const banner   = document.getElementById('tech-banner');
   const setupBar = document.getElementById('tech-setup-bar');
@@ -425,6 +343,7 @@ async function confirmTechIdentity() {
   finally { btn.disabled = false; btn.textContent = 'Confirm identity →'; }
 }
 async function loadTechIdentity(code, save = false) {
+  // service-requests GET ?code=X returns the pass + technician fields (employee_id, role, zone, ...)
   const res  = await fetch(`${BOOK_URL}?code=${encodeURIComponent(code)}`);
   const data = await res.json();
   if (!res.ok || !data.holder_name) throw new Error(data.error || 'Pass not found');
@@ -432,7 +351,6 @@ async function loadTechIdentity(code, save = false) {
   if (save) localStorage.setItem('sc_tech', JSON.stringify(techIdentity));
 }
 
-// ── SUBMIT / MODAL ─────────────────────────────────────
 async function submitCode(codeOverride) {
   if (modalOpen || processing) return;
   const code = (codeOverride || document.getElementById('code-input').value).trim().toUpperCase();
@@ -530,7 +448,7 @@ async function completeService() {
 function dismissModal() {
   document.getElementById('modal-backdrop').classList.remove('open');
   modalOpen = false; showLockBanner(false); lockUI(false); currentCode = null;
-  lastCode = ''; lastCodeTs = 0;  // allow re-scanning same pass immediately
+  lastCode = ''; lastCodeTs = 0;
 }
 document.getElementById('modal-backdrop').addEventListener('click', e => { if (e.target === e.currentTarget) dismissModal(); });
 function lockUI(lock) { const b=document.getElementById('scan-btn'); b.disabled=lock; b.textContent=lock?'Scanning…':'Scan'; document.getElementById('code-input').disabled=lock; }
