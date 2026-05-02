@@ -42,14 +42,12 @@ header{background:#1F3A5F;padding:14px 22px;display:flex;align-items:center;just
 .feed-time{font-size:11px;color:#4b5563;white-space:nowrap}
 .feed-empty{padding:28px;text-align:center;color:#374151;font-size:13px}
 .right-col{display:flex;flex-direction:column;gap:16px}
-/* Pending bookings */
 .bk-item{display:flex;align-items:flex-start;gap:10px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.04)}
 .bk-ref{font-family:monospace;font-size:10px;color:#f59e0b;font-weight:700;white-space:nowrap}
 .bk-name{font-size:13px;font-weight:700;color:#f1f5f9}
 .bk-type{font-size:11px;color:#6b7280;margin-top:2px}
 .bk-date{font-size:10px;color:#4b5563;margin-top:1px}
 .bk-by{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;background:rgba(59,130,246,.15);color:#93c5fd;white-space:nowrap;flex-shrink:0}
-/* Due soon */
 .due-item{display:flex;align-items:flex-start;gap:10px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.04)}
 .due-dot{width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0;margin-top:5px}
 .due-name{font-size:13px;font-weight:700}
@@ -64,7 +62,6 @@ header{background:#1F3A5F;padding:14px 22px;display:flex;align-items:center;just
 .svc-bar-fill{height:100%;border-radius:3px;transition:width .6s;background:linear-gradient(90deg,#CC0000,#ff6b6b)}
 .refresh-bar{height:2px;background:#1f2937}
 .refresh-fill{height:100%;background:#CC0000;transition:width linear;width:100%}
-.pending-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;background:rgba(245,158,11,.15);color:#f59e0b;letter-spacing:.3px}
 .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.15);border-top-color:#CC0000;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
 footer{text-align:center;padding:16px;font-size:11px;color:#374151;margin-top:16px}
@@ -82,7 +79,6 @@ footer a{color:#CC0000;text-decoration:none}
 <div class="refresh-bar"><div class="refresh-fill" id="rfill"></div></div>
 
 <div class="container">
-  <!-- FIX 6: 4 stat cards, Pending Requests replaces the old "Due Within 30 Days" -->
   <div class="stats-bar">
     <div class="stat-card"><div class="stat-label">Services Today</div><div class="stat-value s-red" id="s-today">—</div><div class="stat-sub" id="s-today-sub">loading</div></div>
     <div class="stat-card"><div class="stat-label">Completed Today</div><div class="stat-value s-green" id="s-done">—</div><div class="stat-sub">service visits closed</div></div>
@@ -91,30 +87,22 @@ footer a{color:#CC0000;text-decoration:none}
   </div>
 
   <div class="main-grid">
-    <!-- Live scan feed -->
     <div class="panel">
       <div class="panel-header"><span class="panel-title">Live Service Feed</span><span class="panel-count" id="feed-count">—</span></div>
       <div class="feed-list" id="feed"><div class="feed-empty"><span class="spin"></span></div></div>
     </div>
-
-    <!-- Right column -->
     <div class="right-col">
-      <!-- FIX 6: Pending bookings panel -->
       <div class="panel">
         <div class="panel-header">
           <span class="panel-title">🗓️ Pending Requests</span>
-          <a href="book.html?admin=1" style="font-size:10px;color:rgba(255,255,255,.5);text-decoration:none" id="bk-manage">manage →</a>
+          <a href="book.html?admin=1" style="font-size:10px;color:rgba(255,255,255,.5);text-decoration:none">manage →</a>
         </div>
         <div id="bk-list"><div class="feed-empty" style="padding:18px;font-size:12px">No pending requests</div></div>
       </div>
-
-      <!-- Due for service -->
       <div class="panel">
         <div class="panel-header"><span class="panel-title">⚠️ Due for Service</span><span class="panel-count" id="due-count">—</span></div>
         <div id="due-list"><div class="feed-empty" style="padding:18px;font-size:12px">No upcoming services</div></div>
       </div>
-
-      <!-- Service type breakdown -->
       <div class="panel">
         <div class="panel-header"><span class="panel-title">Today by Service Type</span></div>
         <div class="svc-list" id="svc-list"><div style="color:#4b5563;font-size:12px">Loading…</div></div>
@@ -131,12 +119,14 @@ footer a{color:#CC0000;text-decoration:none}
 </footer>
 
 <script>
-const STATS_URL = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/sinchew-stats';
+// Multi-tenant pass-stats. ?include= surfaces the Sin Chew-specific extras
+// (service_requests + due_soon). Bearer api_key required (admin dashboard).
+const STATS_URL  = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/pass-stats?include=service_requests,due_soon';
+const SC_API_KEY = 'pqr_sinchew_a8f3d92c1e6b74051f9d3c8e27ab10d4';
 const REFRESH_MS = 10000;
 
 function fmtTime(iso) { return new Date(iso).toLocaleTimeString('en-SG', { hour:'2-digit', minute:'2-digit', second:'2-digit', timeZone:'Asia/Singapore' }); }
 
-// FIX 6: tech name in feed items
 function renderFeed(feed) {
   const el = document.getElementById('feed');
   document.getElementById('feed-count').textContent = feed.length + ' records';
@@ -160,7 +150,6 @@ function renderFeed(feed) {
   }).join('');
 }
 
-// FIX 6: pending bookings panel
 function renderPendingBookings(bookings) {
   const el = document.getElementById('bk-list');
   if (!bookings || bookings.length === 0) {
@@ -200,18 +189,18 @@ function renderSvcTypes(bySvc) {
 
 async function refresh() {
   try {
-    const res  = await fetch(STATS_URL);
+    const res  = await fetch(STATS_URL, { headers: { 'Authorization': `Bearer ${SC_API_KEY}` } });
     const data = await res.json();
     const now  = new Date();
     document.getElementById('live-status').textContent = 'LIVE · ' + now.toLocaleTimeString('en-SG', { timeZone:'Asia/Singapore' });
     const s = data.stats || {};
     document.getElementById('s-today').textContent   = s.scans_today     ?? 0;
     document.getElementById('s-done').textContent    = s.completed_today  ?? 0;
-    document.getElementById('s-pending').textContent = s.pending_bookings ?? 0;  // FIX 6
+    document.getElementById('s-pending').textContent = s.pending_bookings ?? 0;
     document.getElementById('s-total').textContent   = s.total_passes     ?? 0;
     document.getElementById('s-today-sub').textContent = `${s.scans_today ?? 0} site visits logged`;
     renderFeed(data.feed || []);
-    renderPendingBookings(data.pending_bookings || []);  // FIX 6
+    renderPendingBookings(data.pending_bookings || []);
     renderDue(data.due_soon || []);
     renderSvcTypes(s.by_service_type || {});
     startProgress();
