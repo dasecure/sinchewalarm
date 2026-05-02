@@ -116,7 +116,6 @@ footer a{color:#CC0000;text-decoration:none}
   <button id="admin-link" onclick="showLoginModal()" style="background:none;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.7);border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;display:none">Staff</button>
 </header>
 
-<!-- ── View: Entry ─────────────────────────────── -->
 <div id="view-entry" style="display:none">
   <div class="strip">
     <div class="strip-icon">🔧</div>
@@ -142,7 +141,6 @@ footer a{color:#CC0000;text-decoration:none}
   </div>
 </div>
 
-<!-- ── View: Customer Booking Form ────────────── -->
 <div id="view-customer" style="display:none">
   <div class="strip" style="padding:14px 18px">
     <div style="display:flex;align-items:center;gap:8px">
@@ -185,7 +183,6 @@ footer a{color:#CC0000;text-decoration:none}
   </div>
 </div>
 
-<!-- ── View: Confirmation ──────────────────────── -->
 <div id="view-confirm" style="display:none">
   <div class="container" style="padding-top:28px">
     <div class="confirm-card">
@@ -199,7 +196,6 @@ footer a{color:#CC0000;text-decoration:none}
   </div>
 </div>
 
-<!-- ── View: Admin Dashboard ──────────────────── -->
 <div id="view-admin" style="display:none">
   <div class="admin-wrap">
     <div class="admin-left">
@@ -262,7 +258,6 @@ footer a{color:#CC0000;text-decoration:none}
   </div>
 </div>
 
-<!-- ── Login Modal ─────────────────────────────── -->
 <div class="modal-bg" id="modal-bg">
   <div class="modal">
     <h3>🔐 Staff Login</h3>
@@ -280,35 +275,36 @@ footer a{color:#CC0000;text-decoration:none}
 <footer id="page-footer"><a href="./">← Home</a> &nbsp;·&nbsp; <a href="scan.html">Scan</a> &nbsp;·&nbsp; &copy; 2026 Sin Chew Alarm Pte Ltd</footer>
 
 <script>
-const BOOK_URL  = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/sinchew-book';
-const ADMIN_KEY = 'demo:demo';
+// Multi-tenant service-requests endpoint.
+// Customer endpoints (GET ?code=, POST booking) work in anonymous mode (the
+// pass code is the credential). Admin endpoints (?list=, PATCH ?id=) require
+// Bearer auth using the Sin Chew API key.
+const BOOK_URL    = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/service-requests';
+const SC_API_KEY  = 'pqr_sinchew_a8f3d92c1e6b74051f9d3c8e27ab10d4';
+const ADMIN_AUTH  = { 'Authorization': `Bearer ${SC_API_KEY}` };
 
 let currentPassCode = null;
 let currentCustomer = null;
 let adminAuthed     = false;
 let searchDebounce  = null;
 
-// ── Init ─────────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
   const p    = new URLSearchParams(location.search);
   const code = p.get('code');
   const adm  = p.get('admin');
 
-  // Always set min dates
   const today = new Date().toLocaleDateString('en-CA');
   document.getElementById('b-date').min = today;
   document.getElementById('a-date').min = today;
   document.getElementById('admin-link').style.display = '';
 
-  const saved = sessionStorage.getItem('sc_admin_key');
-  if (saved === ADMIN_KEY) { adminAuthed = true; }
+  // Login state is purely client-side UI gate. All admin API calls use Bearer.
+  if (sessionStorage.getItem('sc_admin_ok') === '1') { adminAuthed = true; }
 
   if (adminAuthed && adm !== null) {
     loadAdminView();
   } else if (code) {
-    // Pass code in URL — show customer view immediately with loading state.
-    // Do NOT show entry form (avoids flash + forces no manual input needed).
-    document.getElementById('e-code').value = code; // pre-fill as fallback
+    document.getElementById('e-code').value = code;
     document.getElementById('ci-card').innerHTML =
       '<div style="display:flex;align-items:center;gap:10px;padding:6px 0;color:#4b5563">' +
       '<span class="spin" style="border-color:rgba(31,58,95,.15);border-top-color:#1F3A5F;flex-shrink:0"></span>' +
@@ -321,7 +317,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// ── View switcher ─────────────────────────────────────────────────────────────
 function showView(id) {
   ['view-entry','view-customer','view-confirm','view-admin'].forEach(v => {
     document.getElementById(v).style.display = v === id ? '' : 'none';
@@ -329,9 +324,7 @@ function showView(id) {
   document.getElementById('page-footer').style.display = id === 'view-admin' ? 'none' : '';
 }
 
-// ── Customer flow ─────────────────────────────────────────────────────────────
 async function lookupCode(codeOverride) {
-  // fromUrl: called with a code argument AND customer view is already showing
   const fromUrl = codeOverride !== undefined &&
     document.getElementById('view-customer').style.display !== 'none';
   const code = (codeOverride || document.getElementById('e-code').value.trim()).toUpperCase();
@@ -349,6 +342,7 @@ async function lookupCode(codeOverride) {
   }
 
   try {
+    // Anonymous mode: GET ?code= works without auth (pass code is credential)
     const res  = await fetch(`${BOOK_URL}?code=${encodeURIComponent(code)}`);
     const data = await res.json();
     if (!res.ok || !data.holder_name) throw new Error(data.error || 'Pass not found');
@@ -357,7 +351,6 @@ async function lookupCode(codeOverride) {
     renderCustomerView(data);
     showView('view-customer');
   } catch(e) {
-    // Always fall back to entry view on error so customer can retry
     eErr.textContent = e.message;
     eErr.style.display = 'block';
     showView('view-entry');
@@ -402,6 +395,7 @@ async function submitCustomerBooking() {
   err.style.display = 'none';
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Submitting…';
   try {
+    // Anonymous mode: POST without auth, server resolves business from pass code
     const res  = await fetch(BOOK_URL, {
       method: 'POST', headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
@@ -434,7 +428,6 @@ function showConfirmation(reference, serviceType, preferredDate, customer) {
   showView('view-confirm');
 }
 
-// ── Admin flow ────────────────────────────────────────────────────────────────
 function showLoginModal() {
   document.getElementById('modal-bg').classList.add('open');
   setTimeout(() => document.getElementById('l-user').focus(), 50);
@@ -442,29 +435,37 @@ function showLoginModal() {
 function hideLoginModal() { document.getElementById('modal-bg').classList.remove('open'); }
 function clearLoginErr()  { document.getElementById('l-err').textContent = ''; }
 
+// Login is a client-side UI gate. The actual API auth uses the embedded
+// Bearer token regardless. Demo creds: demo / demo.
 async function doLogin() {
   const user  = document.getElementById('l-user').value.trim();
   const pass  = document.getElementById('l-pass').value;
-  const key   = `${user}:${pass}`;
   const btn   = document.getElementById('l-btn');
   const errEl = document.getElementById('l-err');
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span>';
-  try {
-    const res = await fetch(`${BOOK_URL}?list=passes`, { headers: { 'x-admin-key': key } });
-    if (!res.ok) throw new Error();
-    const data = await res.json();
-    adminAuthed = true;
-    sessionStorage.setItem('sc_admin_key', key);
-    hideLoginModal();
-    loadAdminView(data.data);
-  } catch { errEl.textContent = 'Invalid username or password'; }
-  finally { btn.disabled = false; btn.textContent = 'Login →'; }
+  if (user === 'demo' && pass === 'demo') {
+    // Verify the API key actually works before accepting login
+    try {
+      const res = await fetch(`${BOOK_URL}?list=passes`, { headers: ADMIN_AUTH });
+      if (!res.ok) throw new Error(`API returned ${res.status}`);
+      const data = await res.json();
+      adminAuthed = true;
+      sessionStorage.setItem('sc_admin_ok', '1');
+      hideLoginModal();
+      loadAdminView(data.data);
+    } catch (e) {
+      errEl.textContent = 'API unreachable — try again';
+    } finally { btn.disabled = false; btn.textContent = 'Login →'; }
+  } else {
+    errEl.textContent = 'Invalid username or password';
+    btn.disabled = false; btn.textContent = 'Login →';
+  }
 }
 
 async function loadAdminView(passesData) {
   showView('view-admin');
   if (!passesData) {
-    const res  = await fetch(`${BOOK_URL}?list=passes`, { headers: { 'x-admin-key': ADMIN_KEY } });
+    const res  = await fetch(`${BOOK_URL}?list=passes`, { headers: ADMIN_AUTH });
     passesData = (await res.json()).data;
   }
   renderCustomerList(passesData);
@@ -500,7 +501,7 @@ function selectCustomer(el, code, name, plan, address, phone) {
 function searchCustomers(q) {
   clearTimeout(searchDebounce);
   searchDebounce = setTimeout(async () => {
-    const res  = await fetch(`${BOOK_URL}?list=passes&q=${encodeURIComponent(q)}`, { headers:{'x-admin-key':ADMIN_KEY} });
+    const res  = await fetch(`${BOOK_URL}?list=passes&q=${encodeURIComponent(q)}`, { headers: ADMIN_AUTH });
     renderCustomerList((await res.json()).data);
   }, 300);
 }
@@ -515,9 +516,11 @@ async function submitAdminBooking() {
   err.style.display = 'none';
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Creating…';
   try {
+    // Admin booking still uses public POST endpoint (pass code is credential),
+    // but flag created_by=admin so the audit trail is correct
     const res = await fetch(BOOK_URL, {
       method: 'POST',
-      headers: { 'content-type':'application/json', 'x-admin-key':ADMIN_KEY },
+      headers: { 'content-type':'application/json', ...ADMIN_AUTH },
       body: JSON.stringify({
         code, service_type: st,
         description:    document.getElementById('a-desc').value.trim() || undefined,
@@ -544,7 +547,7 @@ async function loadBookings(statusFilter) {
   el.innerHTML = '<div class="empty-state">Loading…</div>';
   try {
     const qs  = statusFilter ? `&status=${statusFilter}` : '';
-    const res = await fetch(`${BOOK_URL}?list=bookings${qs}`, { headers:{'x-admin-key':ADMIN_KEY} });
+    const res = await fetch(`${BOOK_URL}?list=bookings${qs}`, { headers: ADMIN_AUTH });
     renderBookings((await res.json()).data);
   } catch { el.innerHTML = '<div class="empty-state">Failed to load</div>'; }
 }
@@ -581,7 +584,7 @@ function renderBookings(bookings) {
 
 async function updateBookingStatus(id, status) {
   await fetch(`${BOOK_URL}?id=${id}`, {
-    method:'PATCH', headers:{'content-type':'application/json','x-admin-key':ADMIN_KEY},
+    method:'PATCH', headers:{'content-type':'application/json', ...ADMIN_AUTH},
     body: JSON.stringify({ status }),
   });
   setTimeout(() => loadBookings(null), 400);
@@ -594,7 +597,7 @@ function setTab(name) {
   document.getElementById('tab-hist-btn').classList.toggle('active', name==='hist');
 }
 
-function logout() { sessionStorage.removeItem('sc_admin_key'); adminAuthed=false; showView('view-entry'); }
+function logout() { sessionStorage.removeItem('sc_admin_ok'); adminAuthed=false; showView('view-entry'); }
 
 function esc(str) {
   return String(str||'').replace(/[<>&"']/g, c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'})[c]);
