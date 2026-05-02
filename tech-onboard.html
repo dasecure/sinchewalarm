@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>Tech Onboarding — Sin Chew Alarm</title>
-<!-- v4 2026-04-24 -->
+<!-- v5 2026-05-02 multi-tenant migration -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -86,17 +86,10 @@ footer a{color:#22c55e;text-decoration:none}
   <div id="form-view">
     <div class="card">
       <div class="card-title">Technician Details</div>
-      <div class="field">
-        <label>Full Name *</label>
-        <input id="f-name" type="text" placeholder="e.g. Ali Hassan" autocomplete="name">
-      </div>
+      <div class="field"><label>Full Name *</label><input id="f-name" type="text" placeholder="e.g. Ali Hassan" autocomplete="name"></div>
       <div class="field-row">
-        <div class="field">
-          <label>Employee ID</label>
-          <input id="f-empid" type="text" placeholder="Auto-generated if blank">
-        </div>
-        <div class="field">
-          <label>Role</label>
+        <div class="field"><label>Employee ID</label><input id="f-empid" type="text" placeholder="Auto-generated if blank"></div>
+        <div class="field"><label>Role</label>
           <select id="f-role">
             <option value="Technician">Technician</option>
             <option value="Senior Technician">Senior Technician</option>
@@ -107,48 +100,27 @@ footer a{color:#22c55e;text-decoration:none}
         </div>
       </div>
       <div class="field-row">
-        <div class="field">
-          <label>Zone / Area</label>
+        <div class="field"><label>Zone / Area</label>
           <select id="f-zone">
             <option value="">— All zones —</option>
-            <option>North</option><option>South</option>
-            <option>East</option><option>West</option>
-            <option>Central</option><option>North-East</option>
+            <option>North</option><option>South</option><option>East</option><option>West</option><option>Central</option><option>North-East</option>
           </select>
         </div>
-        <div class="field">
-          <label>Start Date</label>
-          <input id="f-start" type="date">
-        </div>
+        <div class="field"><label>Start Date</label><input id="f-start" type="date"></div>
       </div>
     </div>
-
     <div class="card">
       <div class="card-title">Contact</div>
       <div class="field-row">
-        <div class="field">
-          <label>Mobile</label>
-          <input id="f-phone" type="tel" placeholder="+65 9xxx xxxx">
-        </div>
-        <div class="field">
-          <label>Email</label>
-          <input id="f-email" type="email" placeholder="tech@sinchewalarm.com">
-        </div>
+        <div class="field"><label>Mobile</label><input id="f-phone" type="tel" placeholder="+65 9xxx xxxx"></div>
+        <div class="field"><label>Email</label><input id="f-email" type="email" placeholder="tech@sinchewalarm.com"></div>
       </div>
-      <div class="field">
-        <label>Vehicle Number</label>
-        <input id="f-vehicle" type="text" placeholder="SGxxxxX (optional)">
-      </div>
+      <div class="field"><label>Vehicle Number</label><input id="f-vehicle" type="text" placeholder="SGxxxxX (optional)"></div>
     </div>
-
     <div class="card">
       <div class="card-title">Certifications</div>
-      <div class="field">
-        <textarea id="f-certs" placeholder="One per line, e.g.&#10;SCDF Alarm Installation&#10;CCTV Systems&#10;Access Control"></textarea>
-        <div class="field-hint">Optional — leave blank if none yet</div>
-      </div>
+      <div class="field"><textarea id="f-certs" placeholder="One per line, e.g.&#10;SCDF Alarm Installation&#10;CCTV Systems&#10;Access Control"></textarea><div class="field-hint">Optional — leave blank if none yet</div></div>
     </div>
-
     <div id="err" class="err"></div>
     <button class="btn green" id="submit-btn" onclick="onboard()">Issue Technician Pass 🔧</button>
   </div>
@@ -175,24 +147,14 @@ footer a{color:#22c55e;text-decoration:none}
       <button class="btn-launch" onclick="goToScanner()">🔧 Launch Scanner Now</button>
       <button class="btn-cancel" onclick="cancelCountdown()">Cancel auto-launch</button>
     </div>
-
     <div class="details-card">
       <div class="card-title">Pass Details</div>
       <div class="info-grid" id="s-info"></div>
       <div class="qr-wrap"><div id="qr"></div></div>
       <div class="qr-hint">Scanner QR — save or print for the technician</div>
-      <a class="wallet-btn apple" id="s-apple" href="#" target="_blank">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        Add to Apple Wallet
-      </a>
-      <a class="wallet-btn google" id="s-google" href="#" target="_blank">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
-        Add to Google Wallet
-      </a>
-      <a class="wallet-btn wa" id="s-wa" href="#" target="_blank">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Send via WhatsApp
-      </a>
+      <a class="wallet-btn apple" id="s-apple" href="#" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>Add to Apple Wallet</a>
+      <a class="wallet-btn google" id="s-google" href="#" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>Add to Google Wallet</a>
+      <a class="wallet-btn wa" id="s-wa" href="#" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Send via WhatsApp</a>
       <a class="view-link" id="s-view" href="#" target="_blank">View pass page →</a>
       <button class="btn-another" onclick="resetForm()">+ Onboard another technician</button>
     </div>
@@ -202,8 +164,12 @@ footer a{color:#22c55e;text-decoration:none}
 <footer><a href="./">← Home</a> &nbsp;·&nbsp; <a href="onboard.html">Customer Onboarding</a> &nbsp;·&nbsp; © 2026 Sin Chew Alarm Pte Ltd</footer>
 
 <script>
-const TECH_URL  = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/sinchew-tech-onboard';
-const ADMIN_KEY = 'demo:demo';
+// Multi-tenant pass-create with template_alias=technician.
+// pass_type=technician inside data routes Google Wallet to the green
+// per_pass_type class via business.config.google_wallet.class_strategy.
+const CREATE_URL = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/pass-create';
+const SC_API_KEY = 'pqr_sinchew_a8f3d92c1e6b74051f9d3c8e27ab10d4';
+const SCANNER_BASE = 'https://dasecure.github.io/sinchewalarm/scan.html';
 const COUNTDOWN = 5;
 const CIRC      = 2 * Math.PI * 22;
 
@@ -216,45 +182,97 @@ window.addEventListener('DOMContentLoaded', () => {
   g('f-start').value = new Date().toLocaleDateString('en-CA');
 });
 
+// Generate a TECH-NNNN employee ID if not provided
+function generateEmpId() {
+  return 'TECH-' + String(Math.floor(Math.random() * 9000) + 1000);
+}
+
+// 2-year contract default for techs
+function addYears(dateStr, years) {
+  const d = new Date(dateStr + 'T00:00:00');
+  d.setFullYear(d.getFullYear() + years);
+  return d.toLocaleDateString('en-CA');
+}
+
 async function onboard() {
   const errEl = g('err'), btn = g('submit-btn');
   if (!v('f-name')) {
     errEl.textContent = "Please enter the technician's full name.";
-    errEl.style.display = 'block';
-    g('f-name').focus();
-    return;
+    errEl.style.display = 'block'; g('f-name').focus(); return;
   }
   errEl.style.display = 'none';
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spin"></span> Issuing pass…';
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Issuing pass…';
 
-  const certs = v('f-certs') ? v('f-certs').split('\n').map(s => s.trim()).filter(Boolean) : [];
+  const certs       = v('f-certs') ? v('f-certs').split('\n').map(s => s.trim()).filter(Boolean) : [];
+  const employeeId  = v('f-empid') || generateEmpId();
+  const contractStart  = v('f-start');
+  const contractExpiry = addYears(contractStart, 2);
+
+  // Build pass.data with technician-specific fields. pass_type=technician
+  // routes Google Wallet to the per-pass-type green class.
+  const data = {
+    pass_type:       'technician',
+    employee_id:     employeeId,
+    role:            v('f-role'),
+    contract_start:  contractStart,
+    contract_expiry: contractExpiry,
+    jobs_completed:  0,
+    jobs_this_month: 0,
+  };
+  if (v('f-zone'))    data.zone           = v('f-zone');
+  if (v('f-phone'))   data.mobile         = v('f-phone');
+  if (v('f-email'))   data.email          = v('f-email');
+  if (v('f-vehicle')) data.vehicle_number = v('f-vehicle');
+  if (certs.length)   data.certifications = certs.join(', ');
+
+  const body = {
+    template_alias:   'technician',
+    holder_name:      v('f-name'),
+    expires_at:       contractExpiry + 'T23:59:59Z',
+    data,
+    patch_deep_links: true,  // pass-create will substitute {code} in scanner_url
+  };
+  if (v('f-email')) body.holder_email = v('f-email');
+
+  // We pre-bake scanner_url in data so pass-create's patch_deep_links can substitute {code}
+  data.scanner_url = `${SCANNER_BASE}?tech={code}`;
 
   try {
-    const res = await fetch(TECH_URL, {
+    const res = await fetch(CREATE_URL, {
       method: 'POST',
-      headers: { 'content-type': 'application/json', 'x-admin-key': ADMIN_KEY },
-      body: JSON.stringify({
-        tech_name:      v('f-name'),
-        employee_id:    v('f-empid')   || undefined,
-        role:           v('f-role'),
-        zone:           v('f-zone')    || undefined,
-        phone:          v('f-phone')   || undefined,
-        email:          v('f-email')   || undefined,
-        vehicle_number: v('f-vehicle') || undefined,
-        certifications: certs,
-        contract_start: v('f-start'),
-      }),
+      headers: { 'content-type': 'application/json', 'Authorization': `Bearer ${SC_API_KEY}` },
+      body: JSON.stringify(body),
     });
-    const data = await res.json();
-    if (!res.ok || !data.success) throw new Error(data.error || JSON.stringify(data.detail) || 'Failed to issue pass');
-    showSuccess(data);
+    const result = await res.json();
+    if (!res.ok || !result.success) throw new Error(result.error || JSON.stringify(result.detail) || 'Failed to issue pass');
+
+    // Compose the success-view fields client-side (the old function shaped these server-side)
+    showSuccess({
+      ...result,
+      tech_name:    result.holder_name,
+      role:         data.role,
+      zone:         data.zone || null,
+      employee_id:  employeeId,
+      expires:      contractExpiry,
+      scanner_url:  `${SCANNER_BASE}?tech=${result.code}`,
+      whatsapp_url: buildWhatsApp(result, data, employeeId, `${SCANNER_BASE}?tech=${result.code}`),
+    });
   } catch(e) {
-    errEl.textContent = e.message;
-    errEl.style.display = 'block';
-    btn.disabled = false;
-    btn.innerHTML = 'Issue Technician Pass 🔧';
+    errEl.textContent = e.message; errEl.style.display = 'block';
+    btn.disabled = false; btn.innerHTML = 'Issue Technician Pass 🔧';
   }
+}
+
+function buildWhatsApp(result, data, empId, scannerUrl) {
+  const msg = encodeURIComponent(
+    `Welcome to Sin Chew Alarm, ${result.holder_name}! 🔧\n\n` +
+    `Your technician pass (${empId}) is ready:\n${result.public_url}\n\n` +
+    `Scanner (with your identity pre-loaded):\n${scannerUrl}\n\n` +
+    `Add to Apple Wallet: ${result.apple_url}\n` +
+    `Add to Google Wallet: ${result.google_url}`
+  );
+  const phone = (data.mobile || '').replace(/[^\d]/g, '');
+  return phone ? `https://wa.me/${phone}?text=${msg}` : `https://wa.me/?text=${msg}`;
 }
 
 function showSuccess(data) {
