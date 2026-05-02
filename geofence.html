@@ -27,11 +27,9 @@ header{background:#1F3A5F;padding:14px 22px;display:flex;align-items:center;just
 .panel-header{background:#1F3A5F;padding:12px 18px;display:flex;align-items:center;justify-content:space-between}
 .panel-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#fff}
 .panel-badge{font-size:11px;color:rgba(255,255,255,.4);background:rgba(0,0,0,.3);padding:3px 9px;border-radius:20px}
-/* Map */
 #map{height:420px;width:100%;border-radius:0}
 .map-hint{padding:9px 16px;background:#0d1424;font-size:11px;color:#6b7280;border-top:1px solid #1f2937;display:flex;align-items:center;gap:6px}
 .hint-dot{width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0}
-/* Form */
 .add-form{padding:14px 16px;border-top:1px solid #1f2937;display:none;flex-direction:column;gap:10px}
 .add-form.visible{display:flex}
 .form-title{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#CC0000}
@@ -56,7 +54,6 @@ header{background:#1F3A5F;padding:14px 22px;display:flex;align-items:center;just
 .btn-secondary{background:#1f2937;color:#9ca3af;border:1px solid #374151}
 .btn-secondary:hover:not(:disabled){background:#374151}
 .btn-danger{background:#7f1d1d;color:#fca5a5;border:1px solid #991b1b}
-/* Location list */
 .loc-list{max-height:460px;overflow-y:auto}
 .loc-item{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:background .15s}
 .loc-item:hover{background:rgba(255,255,255,.03)}
@@ -73,14 +70,11 @@ header{background:#1F3A5F;padding:14px 22px;display:flex;align-items:center;just
 .icon-btn:hover{background:rgba(255,255,255,.08)}
 .loc-empty{padding:32px;text-align:center;color:#374151;font-size:13px;line-height:1.7}
 .loc-empty strong{display:block;font-size:15px;color:#4b5563;margin-bottom:4px}
-/* Error banner */
 .err-banner{background:#7f1d1d;border:1px solid #991b1b;border-radius:8px;padding:10px 14px;font-size:12px;color:#fca5a5;display:none}
 .err-banner.visible{display:block}
-/* Legend */
 .legend{display:flex;flex-wrap:wrap;gap:14px;padding:10px 14px;background:#0d1424;border-top:1px solid #1f2937;font-size:11px;color:#6b7280}
 .legend-item{display:flex;align-items:center;gap:5px}
 .lg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-/* Spin */
 .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.1);border-top-color:#CC0000;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
 footer{text-align:center;padding:16px;font-size:11px;color:#374151;margin-top:4px}
@@ -99,7 +93,7 @@ footer a{color:#CC0000;text-decoration:none}
 <div class="container">
   <div>
     <div class="page-title">📍 Geo-fence Locations</div>
-    <div class="page-sub">Locations trigger a lock-screen notification when a customer’s phone enters the radius. Changes push to all active passes automatically.</div>
+    <div class="page-sub">Locations trigger a lock-screen notification when a customer's phone enters the radius. Changes push to all active passes automatically.</div>
   </div>
 
   <div class="platform-row">
@@ -110,7 +104,6 @@ footer a{color:#CC0000;text-decoration:none}
   <div class="err-banner" id="err-banner"></div>
 
   <div class="grid">
-    <!-- Map panel -->
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">Map · click to drop a pin</span>
@@ -161,7 +154,6 @@ footer a{color:#CC0000;text-decoration:none}
       </div>
     </div>
 
-    <!-- List panel -->
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">Active locations</span>
@@ -186,7 +178,9 @@ footer a{color:#CC0000;text-decoration:none}
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-const API = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/sinchew-geofence';
+// Multi-tenant geofence-locations endpoint. Bearer auth required (admin tool).
+const API        = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/geofence-locations';
+const SC_API_KEY = 'pqr_sinchew_a8f3d92c1e6b74051f9d3c8e27ab10d4';
 const SG  = [1.3521, 103.8198];
 
 let locations = [];
@@ -196,7 +190,6 @@ let selectedId = null;
 let isEditing  = false;
 let saving     = false;
 
-// ─ Map init
 map = L.map('map').setView(SG, 12);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap contributors', maxZoom: 19
@@ -204,12 +197,12 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 layerGroup = L.layerGroup().addTo(map);
 map.on('click', e => { onMapClick(e.latlng.lat, e.latlng.lng); });
 
-// ─ API
 async function api(method, params = {}, body = null) {
   const qs = new URLSearchParams(params).toString();
+  const headers = { 'Authorization': `Bearer ${SC_API_KEY}` };
+  if (body) headers['Content-Type'] = 'application/json';
   const r = await fetch(qs ? API + '?' + qs : API, {
-    method,
-    headers: body ? { 'Content-Type': 'application/json' } : {},
+    method, headers,
     body: body ? JSON.stringify(body) : undefined,
   });
   const d = await r.json();
@@ -226,9 +219,7 @@ async function load() {
   } catch(e) { showErr(e.message); setStatus('Error'); }
 }
 
-function setStatus(txt) {
-  document.getElementById('status-badge').textContent = txt;
-}
+function setStatus(txt) { document.getElementById('status-badge').textContent = txt; }
 function showErr(msg) {
   const el = document.getElementById('err-banner');
   el.textContent = '⚠️ ' + msg;
@@ -236,7 +227,6 @@ function showErr(msg) {
   setTimeout(() => el.classList.remove('visible'), 5000);
 }
 
-// ─ Render
 function renderAll() {
   renderMap();
   renderList();
@@ -246,24 +236,20 @@ function renderAll() {
 
 function renderMap() {
   layerGroup.clearLayers();
-
   locations.forEach(loc => {
     const sel  = loc.id === selectedId;
     const col  = sel ? '#CC0000' : loc.active ? '#22c55e' : '#4b5563';
     const fill = sel ? .2 : loc.active ? .12 : .06;
-
     L.circle([loc.lat, loc.lng], {
       radius: loc.radius_meters || 150,
       color: col, fillColor: col, fillOpacity: fill,
       weight: sel ? 2 : 1.5,
     }).on('click', () => selectLocation(loc.id)).addTo(layerGroup);
-
     L.circleMarker([loc.lat, loc.lng], {
       radius: 7, color: '#fff', fillColor: col, fillOpacity: 1, weight: 2,
     }).bindTooltip(loc.label || 'Unnamed', { direction: 'top' })
       .on('click', () => selectLocation(loc.id)).addTo(layerGroup);
   });
-
   if (pendingPin) {
     const r = parseInt(document.getElementById('f-radius').value) || 150;
     L.circle(pendingPin, {
@@ -289,7 +275,7 @@ function renderList() {
       <div class="loc-body">
         <div class="loc-label">${esc(l.label || 'Unnamed')}</div>
         <div class="loc-meta">${l.lat.toFixed(5)}, ${l.lng.toFixed(5)} · ${l.radius_meters || 150}m</div>
-        ${l.relevant_text ? `<div class="loc-text">“${esc(l.relevant_text)}”</div>` : ''}
+        ${l.relevant_text ? `<div class="loc-text">"${esc(l.relevant_text)}"</div>` : ''}
       </div>
       <div class="loc-actions">
         <button class="icon-btn" title="${l.active ? 'Deactivate' : 'Activate'}" onclick="toggleActive('${l.id}', ${!l.active}, event)">${l.active ? '🟢' : '⚫'}</button>
@@ -301,11 +287,8 @@ function renderList() {
   });
 }
 
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-// ─ Interaction
 function onMapClick(lat, lng) {
   if (isEditing) return;
   pendingPin = [lat, lng];
@@ -345,7 +328,6 @@ function selectLocation(id) {
   document.getElementById('btn-delete').style.display = 'inline-block';
   document.getElementById('add-form').classList.add('visible');
   renderAll();
-  // Scroll list to item
   const item = document.querySelector('.loc-item.selected');
   if (item) item.scrollIntoView({ block: 'nearest' });
 }
@@ -364,12 +346,9 @@ async function saveForm() {
   const text   = document.getElementById('f-text').value.trim();
   const radius = parseInt(document.getElementById('f-radius').value);
   const active = document.getElementById('f-active').checked;
-
   if (!isEditing && !pendingPin) { showErr('Click the map first to set coordinates.'); return; }
-
   const payload = { label, relevant_text: text, radius_meters: radius, active };
   if (!isEditing) { payload.lat = pendingPin[0]; payload.lng = pendingPin[1]; }
-
   const btn = document.getElementById('btn-save');
   btn.disabled = true; btn.textContent = 'Saving…';
   saving = true;
@@ -413,28 +392,20 @@ async function toggleActive(id, active, e) {
   } catch(e) { showErr(e.message); }
 }
 
-// ─ Live radius preview while dragging slider
 document.getElementById('f-radius').addEventListener('input', function() {
   document.getElementById('f-radius-val').textContent = this.value + 'm';
   renderMap();
 });
-
-// ─ Char counter
 document.getElementById('f-text').addEventListener('input', function() {
   document.getElementById('f-text-count').textContent = this.value.length;
 });
-
-// ─ Active toggle label
 document.getElementById('f-active').addEventListener('change', function() {
   document.getElementById('f-active-label').textContent = this.checked ? 'Yes — visible to device' : 'No — ignored';
 });
-
-// ─ Buttons
 document.getElementById('btn-cancel').addEventListener('click', cancelForm);
 document.getElementById('btn-save').addEventListener('click', saveForm);
 document.getElementById('btn-delete').addEventListener('click', deleteLocation);
 
-// ─ Boot
 load();
 </script>
 </body>
