@@ -120,12 +120,8 @@ footer a{color:#CC0000;text-decoration:none}
 <footer><a href="./">← Back</a> &nbsp;·&nbsp; &copy; 2026 Sin Chew Alarm Pte Ltd &nbsp;·&nbsp; Powered by PassQR × dasecure</footer>
 
 <script>
-// Multi-tenant pass-create. Sin Chew has a 'customer' template alias mapped
-// in business.config; pass-create resolves the UUID server-side.
-// Bearer auth required (this is an admin tool, no pass code yet to use as
-// anonymous credential).
 const CREATE_URL = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/pass-create';
-const SC_API_KEY = 'pqr_sinchew_a8f3d92c1e6b74051f9d3c8e27ab10d4';
+const SC_API_KEY = 'pqk_6c325b9dc2cda997564882348f439298684b462b';
 
 window.addEventListener('DOMContentLoaded', () => {
   const today = new Date().toLocaleDateString('en-CA');
@@ -136,7 +132,6 @@ window.addEventListener('DOMContentLoaded', () => {
 function val(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
 function id(i)   { return document.getElementById(i); }
 
-// Add N years to a YYYY-MM-DD date string, returning YYYY-MM-DD
 function addYears(dateStr, years) {
   const d = new Date(dateStr + 'T00:00:00');
   d.setFullYear(d.getFullYear() + years);
@@ -152,12 +147,9 @@ async function onboard() {
 
   try {
     const contractStart  = val('f-start');
-    const nextService    = addYears(contractStart, 1);   // annual maintenance
-    const contractExpiry = addYears(contractStart, 3);   // 3-year contract
+    const nextService    = addYears(contractStart, 1);
+    const contractExpiry = addYears(contractStart, 3);
 
-    // Build pass.data with all Sin Chew-specific customer fields. The
-    // customer template renders these via business.config.google_wallet
-    // text_modules / links / subheader_template.
     const data = {
       pass_type:             'customer',
       service_address:       val('f-addr'),
@@ -216,7 +208,6 @@ function showSuccess(data) {
     ['Plan',            data.plan_tier],
   ].map(([l,v]) => `<div class="row"><span class="lbl">${l}</span><span class="val">${v}</span></div>`).join('');
 
-  // WhatsApp deep-link, with phone if provided
   const waMsg = encodeURIComponent(
     `Hi ${data.holder_name}!\n\nThank you for choosing Sin Chew Alarm. 🔒\n\n` +
     `Your digital membership pass is ready. Tap to add to Apple or Google Wallet:\n${data.public_url}\n\n` +
