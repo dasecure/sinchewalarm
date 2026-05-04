@@ -1,1 +1,351 @@
-PLACEHOLDER_BOOK_WITH_NEW_KEY
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Book a Service — Sin Chew Alarm</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Helvetica Neue',Arial,sans-serif;background:#F4F6F9;min-height:100vh}
+header{background:#1F3A5F;padding:13px 18px;display:flex;align-items:center;gap:11px}
+.logo{width:34px;height:34px;flex-shrink:0}
+.brand{color:#fff;font-size:12px;font-weight:700;letter-spacing:.5px}
+.sub{color:rgba(255,255,255,.45);font-size:10px;margin-top:1px}
+.strip{background:linear-gradient(135deg,#1F3A5F,#0f2040);padding:22px 18px}
+.strip-icon{font-size:28px}
+.strip-title{color:#fff;font-size:17px;font-weight:800;margin-top:5px}
+.strip-sub{color:rgba(255,255,255,.6);font-size:12px;margin-top:3px}
+.container{max-width:520px;margin:18px auto;padding:0 14px 60px}
+.card{background:#fff;border-radius:13px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:13px}
+.card-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#CC0000;font-weight:700;margin-bottom:13px}
+.field{margin-bottom:11px}
+.field label{display:block;font-size:10px;font-weight:700;color:#555;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid #e0e0e0;border-radius:8px;padding:10px 12px;font-size:14px;background:#fff;color:#1a1a1a;-webkit-appearance:none;appearance:none;resize:vertical}
+.field textarea{min-height:80px;font-family:inherit}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#1F3A5F;box-shadow:0 0 0 3px rgba(31,58,95,.1)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{width:100%;padding:13px;border:none;border-radius:10px;font-size:14px;font-weight:800;color:#fff;background:#CC0000;cursor:pointer;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn:hover{opacity:.88}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.navy{background:#1F3A5F}
+.btn-ghost{width:100%;padding:11px;border:1.5px solid #d1d5db;border-radius:10px;font-size:13px;color:#6b7280;background:transparent;cursor:pointer;transition:border-color .2s}
+.btn-ghost:hover{border-color:#1F3A5F;color:#1F3A5F}
+.err{color:#c0392b;font-size:12px;padding:7px 11px;background:#fdf2f2;border-radius:7px;border-left:3px solid #c0392b;display:none;margin-bottom:8px}
+.spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ci-card{background:#f0f6ff;border:1px solid #bfdbfe;border-radius:12px;padding:14px 16px;margin-bottom:13px}
+.ci-name{font-size:17px;font-weight:800;color:#1F3A5F}
+.ci-row{display:flex;gap:8px;align-items:center;margin-top:5px;font-size:12px;color:#4b5563}
+.plan-pill{display:inline-block;font-size:10px;font-weight:800;padding:2px 9px;border-radius:20px;letter-spacing:.4px}
+.pill-premium{background:#CC0000;color:#fff}
+.pill-standard{background:#1F3A5F;color:#fff}
+.pill-basic{background:#6b7280;color:#fff}
+.entry-hero{text-align:center;padding:32px 0 20px}
+.entry-icon{font-size:44px;margin-bottom:10px}
+.entry-title{font-size:20px;font-weight:800;color:#1F3A5F;margin-bottom:5px}
+.entry-sub{font-size:13px;color:#6b7280;line-height:1.6}
+.divider-or{display:flex;align-items:center;gap:10px;color:#d1d5db;font-size:11px;margin:14px 0}
+.divider-or::before,.divider-or::after{content:'';flex:1;height:1px;background:#e5e7eb}
+.confirm-card{background:#fff;border-radius:16px;padding:32px 20px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.09)}
+.conf-icon{font-size:52px;margin-bottom:10px}
+.conf-title{font-size:22px;font-weight:800;color:#1F3A5F;margin-bottom:6px}
+.conf-ref{display:inline-block;font-family:monospace;font-size:16px;font-weight:700;letter-spacing:2px;color:#CC0000;background:#fff0f0;border:1.5px solid #CC0000;border-radius:8px;padding:6px 14px;margin:10px 0}
+.conf-note{font-size:13px;color:#6b7280;line-height:1.6;margin-bottom:18px}
+.conf-summary{background:#f4f9ff;border:1px solid #d0e4f7;border-radius:10px;padding:12px 14px;text-align:left;margin-bottom:18px}
+.cs-row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid #e0ecf7}
+.cs-row:last-child{border-bottom:none}
+.cs-lbl{color:#6b7280;font-size:11px}
+.cs-val{font-weight:700;color:#1F3A5F}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:center;justify-content:center;padding:16px}
+.modal-bg.open{display:flex}
+.modal{background:#fff;border-radius:16px;padding:26px 22px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:pop .2s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
+.modal h3{font-size:17px;font-weight:800;color:#1F3A5F;margin-bottom:4px}
+.modal p{font-size:12px;color:#6b7280;margin-bottom:16px}
+.modal .field{margin-bottom:10px}
+.modal-actions{display:flex;gap:8px;margin-top:14px}
+.modal-err{font-size:12px;color:#CC0000;min-height:18px;margin-bottom:4px}
+.admin-wrap{display:flex;gap:0;min-height:calc(100vh - 110px)}
+.admin-left{width:280px;flex-shrink:0;background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column}
+.admin-right{flex:1;overflow-y:auto;padding:16px}
+.admin-header{padding:14px 14px 10px;border-bottom:1px solid #f1f5f9}
+.admin-search{width:100%;border:1.5px solid #e5e7eb;border-radius:8px;padding:8px 12px;font-size:13px;outline:none}
+.admin-search:focus{border-color:#1F3A5F}
+.cust-list{flex:1;overflow-y:auto}
+.cust-row{padding:11px 14px;border-bottom:1px solid #f1f5f9;cursor:pointer;transition:background .15s}
+.cust-row:hover{background:#f8faff}
+.cust-row.sel{background:#eff6ff;border-left:3px solid #1F3A5F}
+.cr-name{font-size:13px;font-weight:700;color:#1a1a1a}
+.cr-meta{display:flex;gap:6px;align-items:center;margin-top:3px}
+.cr-addr{font-size:11px;color:#9ca3af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
+.tabs{display:flex;border-bottom:2px solid #f1f5f9;margin-bottom:14px}
+.tab{padding:8px 16px;font-size:12px;font-weight:700;color:#9ca3af;background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;letter-spacing:.3px;text-transform:uppercase}
+.tab.active{color:#1F3A5F;border-bottom-color:#1F3A5F}
+.sel-card{background:#f0f6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.sel-card .sc-name{font-weight:800;color:#1F3A5F;font-size:15px}
+.sel-card .sc-meta{font-size:12px;color:#4b5563;margin-top:4px}
+.sel-placeholder{background:#f9fafb;border:1.5px dashed #d1d5db;border-radius:10px;padding:20px;text-align:center;color:#9ca3af;font-size:13px;margin-bottom:14px}
+.bk-row{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.bk-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bk-ref{font-family:monospace;font-size:11px;font-weight:700;color:#CC0000;background:#fff0f0;padding:2px 7px;border-radius:4px}
+.bk-name{font-size:13px;font-weight:700;color:#1a1a1a}
+.bk-type{font-size:12px;color:#4b5563}
+.bk-bot{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
+.status-badge{font-size:10px;font-weight:700;padding:2px 9px;border-radius:12px;letter-spacing:.3px}
+.sb-pending{background:#fef9c3;color:#854d0e}
+.sb-scheduled{background:#dbeafe;color:#1e40af}
+.sb-completed{background:#dcfce7;color:#166534}
+.sb-cancelled{background:#f3f4f6;color:#6b7280}
+.status-sel{border:1px solid #d1d5db;border-radius:6px;padding:4px 8px;font-size:11px;background:#fff;cursor:pointer;color:#374151;outline:none}
+.empty-state{text-align:center;padding:40px 20px;color:#9ca3af;font-size:13px}
+.hist-wrap{margin-top:14px}
+.hist-title{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#9ca3af;margin-bottom:8px;font-weight:700}
+.hist-item{background:#f9fafb;border-radius:8px;padding:8px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.hi-ref{font-family:monospace;font-size:11px;color:#CC0000;font-weight:700}
+.hi-type{font-size:12px;color:#374151}
+.hi-status{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px}
+@media(max-width:640px){.admin-wrap{flex-direction:column}.admin-left{width:100%;max-height:240px;border-right:none;border-bottom:1px solid #e5e7eb}.field-row{grid-template-columns:1fr}}
+footer{text-align:center;padding:18px;font-size:11px;color:#9ca3af}
+footer a{color:#CC0000;text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="100" fill="#1F3A5F"/><circle cx="100" cy="100" r="92" fill="none" stroke="#CC0000" stroke-width="3"/><rect x="70" y="55" width="60" height="90" rx="4" fill="#CC0000"/><rect x="80" y="65" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="102" y="65" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="80" y="88" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="102" y="88" width="18" height="18" rx="2" fill="#1F3A5F"/><rect x="85" y="111" width="30" height="34" rx="2" fill="#1F3A5F"/><text x="100" y="170" font-family="Arial,sans-serif" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle" letter-spacing="2">SIN CHEW ALARM</text></svg></div>
+  <div style="flex:1"><div class="brand">Sin Chew Alarm</div><div class="sub">Service Booking</div></div>
+  <button id="admin-link" onclick="showLoginModal()" style="background:none;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.7);border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;display:none">Staff</button>
+</header>
+
+<div id="view-entry" style="display:none">
+  <div class="strip"><div class="strip-icon">🔧</div><div class="strip-title">Book a Service</div><div class="strip-sub">Enter your pass code or tap the link from your wallet pass</div></div>
+  <div class="container">
+    <div class="card">
+      <div class="entry-hero"><div class="entry-icon">📋</div><div class="entry-title">Request a Service Visit</div><div class="entry-sub">Enter your pass code to get started.<br>Your details will be pre-filled automatically.</div></div>
+      <div class="field"><label>Your Pass Code</label><input id="e-code" type="text" placeholder="PASS-XXXXXXXX" maxlength="14" autocomplete="off" autocorrect="off" spellcheck="false" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9-]/g,'')"></div>
+      <div id="e-err" class="err"></div>
+      <button class="btn navy" id="e-btn" onclick="lookupCode()">Continue →</button>
+    </div>
+    <div class="divider-or">or</div>
+    <button class="btn-ghost" onclick="showLoginModal()">Staff / Admin Login</button>
+  </div>
+</div>
+
+<div id="view-customer" style="display:none">
+  <div class="strip" style="padding:14px 18px"><div style="display:flex;align-items:center;gap:8px"><button onclick="showView('view-entry')" style="background:none;border:none;color:rgba(255,255,255,.6);font-size:18px;cursor:pointer;padding:0">←</button><div><div style="color:#fff;font-size:13px;font-weight:700">Book a Service</div><div style="color:rgba(255,255,255,.5);font-size:11px">Request a visit from Sin Chew</div></div></div></div>
+  <div class="container">
+    <div class="ci-card" id="ci-card"></div>
+    <div class="card">
+      <div class="card-title">Service Request</div>
+      <div class="field"><label>Service Type *</label><select id="b-type"><option value="">— Select service type —</option><option value="Fault / Alarm Issue">⚠️ Fault / Alarm Issue</option><option value="Routine Maintenance">🔧 Routine Maintenance</option><option value="Battery Replacement">🔋 Battery Replacement</option><option value="Sensor Check">🔍 Sensor Check</option><option value="Upgrade / Expansion">⬆️ Upgrade / Expansion</option><option value="New Installation">🔌 New Installation</option><option value="General Enquiry">💬 General Enquiry</option></select></div>
+      <div class="field"><label>Describe the issue or request</label><textarea id="b-desc" placeholder="e.g. Motion sensor not triggering, need battery replaced in zone 3…"></textarea></div>
+      <div class="field-row"><div class="field"><label>Preferred Date</label><input id="b-date" type="date"></div><div class="field"><label>Contact Number</label><input id="b-phone" type="tel" placeholder="+65 9123 4567"></div></div>
+      <div id="b-err" class="err"></div>
+      <button class="btn" id="b-btn" onclick="submitCustomerBooking()">Submit Request 📋</button>
+    </div>
+    <div class="hist-wrap" id="hist-wrap" style="display:none"><div class="hist-title">Your Recent Requests</div><div id="hist-list"></div></div>
+  </div>
+</div>
+
+<div id="view-confirm" style="display:none">
+  <div class="container" style="padding-top:28px">
+    <div class="confirm-card">
+      <div class="conf-icon">✅</div><div class="conf-title">Request Received!</div>
+      <div class="conf-ref" id="conf-ref"></div>
+      <div class="conf-note">Our team will contact you within 1 business day to confirm the visit.</div>
+      <div class="conf-summary" id="conf-summary"></div>
+      <button class="btn navy" onclick="showView('view-entry')">Done</button>
+    </div>
+  </div>
+</div>
+
+<div id="view-admin" style="display:none">
+  <div class="admin-wrap">
+    <div class="admin-left">
+      <div class="admin-header"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6b7280;margin-bottom:7px">Customers</div><input class="admin-search" id="a-search" placeholder="Search by name…" oninput="searchCustomers(this.value)"></div>
+      <div class="cust-list" id="a-cust-list"><div class="empty-state">Loading…</div></div>
+    </div>
+    <div class="admin-right">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><div style="font-size:15px;font-weight:800;color:#1F3A5F">Admin Panel</div><button onclick="logout()" style="font-size:11px;color:#9ca3af;background:none;border:1px solid #e5e7eb;border-radius:6px;padding:4px 10px;cursor:pointer">Logout</button></div>
+      <div class="tabs"><button class="tab active" id="tab-new-btn" onclick="setTab('new')">New Booking</button><button class="tab" id="tab-hist-btn" onclick="setTab('hist')">All Bookings</button></div>
+      <div id="tab-new">
+        <div id="a-sel-placeholder" class="sel-placeholder">← Select a customer to create a booking</div>
+        <div id="a-sel-card" class="sel-card" style="display:none"><div class="sc-name" id="a-sc-name"></div><div class="sc-meta" id="a-sc-meta"></div></div>
+        <input type="hidden" id="a-code-hidden">
+        <div class="card">
+          <div class="card-title">Booking Details</div>
+          <div class="field"><label>Service Type *</label><select id="a-type"><option value="">— Select —</option><option value="Fault / Alarm Issue">⚠️ Fault / Alarm Issue</option><option value="Routine Maintenance">🔧 Routine Maintenance</option><option value="Battery Replacement">🔋 Battery Replacement</option><option value="Sensor Check">🔍 Sensor Check</option><option value="Upgrade / Expansion">⬆️ Upgrade / Expansion</option><option value="New Installation">🔌 New Installation</option><option value="General Enquiry">💬 General Enquiry</option></select></div>
+          <div class="field"><label>Notes / Description</label><textarea id="a-desc" placeholder="Internal notes or customer-reported issue…"></textarea></div>
+          <div class="field-row"><div class="field"><label>Preferred Date</label><input id="a-date" type="date"></div><div class="field"><label>Contact Number</label><input id="a-phone" type="tel" placeholder="+65 9123 4567"></div></div>
+          <div id="a-err" class="err"></div>
+          <button class="btn navy" id="a-btn" onclick="submitAdminBooking()">Create Booking</button>
+        </div>
+      </div>
+      <div id="tab-hist" style="display:none">
+        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+          <button class="btn-ghost" style="width:auto;padding:6px 14px;font-size:11px" onclick="loadBookings(null)">All</button>
+          <button class="btn-ghost" style="width:auto;padding:6px 14px;font-size:11px" onclick="loadBookings('pending')">Pending</button>
+          <button class="btn-ghost" style="width:auto;padding:6px 14px;font-size:11px" onclick="loadBookings('scheduled')">Scheduled</button>
+          <button class="btn-ghost" style="width:auto;padding:6px 14px;font-size:11px" onclick="loadBookings('completed')">Completed</button>
+          <button class="btn-ghost" style="width:auto;padding:6px 14px;font-size:11px;margin-left:auto" onclick="loadBookings(null)">↻</button>
+        </div>
+        <div id="a-bookings"><div class="empty-state">Loading bookings…</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <h3>🔐 Staff Login</h3><p>For Sin Chew Alarm admin and sales team</p>
+    <div class="field"><label>Username</label><input id="l-user" type="text" autocomplete="username" oninput="clearLoginErr()"></div>
+    <div class="field"><label>Password</label><input id="l-pass" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()" oninput="clearLoginErr()"></div>
+    <div class="modal-err" id="l-err"></div>
+    <div class="modal-actions"><button class="btn-ghost" style="flex:1" onclick="hideLoginModal()">Cancel</button><button class="btn navy" style="flex:1" id="l-btn" onclick="doLogin()">Login →</button></div>
+  </div>
+</div>
+
+<footer id="page-footer"><a href="./">← Home</a> &nbsp;·&nbsp; <a href="scan.html">Scan</a> &nbsp;·&nbsp; © 2026 Sin Chew Alarm Pte Ltd</footer>
+
+<script>
+const BOOK_URL    = 'https://gyllfnsnniuqaarsulsk.supabase.co/functions/v1/service-requests';
+const SC_API_KEY  = 'pqk_6c325b9dc2cda997564882348f439298684b462b';
+const ADMIN_AUTH  = { 'Authorization': `Bearer ${SC_API_KEY}` };
+
+let currentPassCode=null,currentCustomer=null,adminAuthed=false,searchDebounce=null;
+
+window.addEventListener('DOMContentLoaded',()=>{
+  const p=new URLSearchParams(location.search);
+  const code=p.get('code');
+  const adm=p.get('admin');
+  const today=new Date().toLocaleDateString('en-CA');
+  document.getElementById('b-date').min=today;
+  document.getElementById('a-date').min=today;
+  document.getElementById('admin-link').style.display='';
+  if(sessionStorage.getItem('sc_admin_ok')==='1'){adminAuthed=true;}
+  if(adminAuthed&&adm!==null){loadAdminView();}
+  else if(code){
+    document.getElementById('e-code').value=code;
+    document.getElementById('ci-card').innerHTML='<div style="display:flex;align-items:center;gap:10px;padding:6px 0;color:#4b5563"><span class="spin" style="border-color:rgba(31,58,95,.15);border-top-color:#1F3A5F;flex-shrink:0"></span><span>Loading your details…</span></div>';
+    document.getElementById('b-btn').disabled=true;
+    showView('view-customer');
+    lookupCode(code);
+  }else{showView('view-entry');}
+});
+
+function showView(id){['view-entry','view-customer','view-confirm','view-admin'].forEach(v=>{document.getElementById(v).style.display=v===id?'':'none';});document.getElementById('page-footer').style.display=id==='view-admin'?'none':'';}
+
+async function lookupCode(codeOverride){
+  const fromUrl=codeOverride!==undefined&&document.getElementById('view-customer').style.display!=='none';
+  const code=(codeOverride||document.getElementById('e-code').value.trim()).toUpperCase();
+  const eErr=document.getElementById('e-err');const eBtn=document.getElementById('e-btn');
+  if(!fromUrl){if(!code.startsWith('PASS-')){eErr.textContent='Enter a valid pass code (PASS-XXXXXXXX)';eErr.style.display='block';return;}eErr.style.display='none';eBtn.disabled=true;eBtn.innerHTML='<span class="spin"></span> Looking up…';}
+  try{
+    const res=await fetch(`${BOOK_URL}?code=${encodeURIComponent(code)}`);
+    const data=await res.json();
+    if(!res.ok||!data.holder_name)throw new Error(data.error||'Pass not found');
+    currentPassCode=code;currentCustomer=data;renderCustomerView(data);showView('view-customer');
+  }catch(e){eErr.textContent=e.message;eErr.style.display='block';showView('view-entry');}
+  finally{eBtn.disabled=false;eBtn.textContent='Continue →';document.getElementById('b-btn').disabled=false;}
+}
+
+function renderCustomerView(info){
+  const planClass={Premium:'pill-premium',Standard:'pill-standard',Basic:'pill-basic'}[info.plan_tier]||'pill-basic';
+  document.getElementById('ci-card').innerHTML=`<div class="ci-name">${esc(info.holder_name)}</div><div class="ci-row">${info.plan_tier?`<span class="plan-pill ${planClass}">${esc(info.plan_tier)}</span>`:''} ${info.service_address?`<span>${esc(info.service_address)}</span>`:''}</div>${info.next_service_date?`<div class="ci-row" style="margin-top:4px">📅 Next scheduled service: <strong>${esc(info.next_service_date)}</strong></div>`:''}`;
+  if(info.contact_phone)document.getElementById('b-phone').value=info.contact_phone;
+  const hist=document.getElementById('hist-wrap');
+  if(info.recent_bookings&&info.recent_bookings.length>0){hist.style.display='';document.getElementById('hist-list').innerHTML=info.recent_bookings.map(b=>`<div class="hist-item"><div><div class="hi-ref">${esc(b.reference)}</div><div class="hi-type">${esc(b.service_type)}${b.preferred_date?' · '+esc(b.preferred_date):''}</div></div><span class="hi-status sb-${b.status}">${b.status}</span></div>`).join('');}else{hist.style.display='none';}
+}
+
+async function submitCustomerBooking(){
+  const err=document.getElementById('b-err');const btn=document.getElementById('b-btn');
+  const serviceType=document.getElementById('b-type').value;
+  if(!serviceType){err.textContent='Please select a service type.';err.style.display='block';return;}
+  err.style.display='none';btn.disabled=true;btn.innerHTML='<span class="spin"></span> Submitting…';
+  try{
+    const res=await fetch(BOOK_URL,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code:currentPassCode,service_type:serviceType,description:document.getElementById('b-desc').value.trim()||undefined,preferred_date:document.getElementById('b-date').value||undefined,contact_phone:document.getElementById('b-phone').value.trim()||undefined,created_by:'customer'})});
+    const data=await res.json();
+    if(!res.ok||!data.success)throw new Error(data.error||'Booking failed');
+    showConfirmation(data.reference,serviceType,document.getElementById('b-date').value,currentCustomer);
+  }catch(e){err.textContent=e.message;err.style.display='block';}
+  finally{btn.disabled=false;btn.innerHTML='Submit Request 📋';}
+}
+
+function showConfirmation(reference,serviceType,preferredDate,customer){
+  document.getElementById('conf-ref').textContent=reference;
+  const rows=[['Service',serviceType],['Customer',customer?.holder_name||''],preferredDate?['Preferred Date',preferredDate]:null,customer?.service_address?['Address',customer.service_address]:null].filter(Boolean);
+  document.getElementById('conf-summary').innerHTML=rows.map(([l,v])=>`<div class="cs-row"><span class="cs-lbl">${l}</span><span class="cs-val">${esc(String(v))}</span></div>`).join('');
+  showView('view-confirm');
+}
+
+function showLoginModal(){document.getElementById('modal-bg').classList.add('open');setTimeout(()=>document.getElementById('l-user').focus(),50);}
+function hideLoginModal(){document.getElementById('modal-bg').classList.remove('open');}
+function clearLoginErr(){document.getElementById('l-err').textContent='';}
+
+async function doLogin(){
+  const user=document.getElementById('l-user').value.trim();const pass=document.getElementById('l-pass').value;
+  const btn=document.getElementById('l-btn');const errEl=document.getElementById('l-err');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>';
+  if(user==='demo'&&pass==='demo'){
+    try{
+      const res=await fetch(`${BOOK_URL}?list=passes`,{headers:ADMIN_AUTH});
+      if(!res.ok)throw new Error(`API returned ${res.status}`);
+      const data=await res.json();
+      adminAuthed=true;sessionStorage.setItem('sc_admin_ok','1');hideLoginModal();loadAdminView(data.data);
+    }catch(e){errEl.textContent='API unreachable — try again';}
+    finally{btn.disabled=false;btn.textContent='Login →';}
+  }else{errEl.textContent='Invalid username or password';btn.disabled=false;btn.textContent='Login →';}
+}
+
+async function loadAdminView(passesData){
+  showView('view-admin');
+  if(!passesData){const res=await fetch(`${BOOK_URL}?list=passes`,{headers:ADMIN_AUTH});passesData=(await res.json()).data;}
+  renderCustomerList(passesData);loadBookings(null);
+}
+
+function renderCustomerList(passes){
+  const el=document.getElementById('a-cust-list');
+  if(!passes||passes.length===0){el.innerHTML='<div class="empty-state">No customers found</div>';return;}
+  el.innerHTML=passes.map(p=>{const tier=p.data?.plan_tier||'';const addr=(p.data?.service_address||'').split(',')[0];const pc={Premium:'pill-premium',Standard:'pill-standard',Basic:'pill-basic'}[tier]||'pill-basic';return`<div class="cust-row" onclick="selectCustomer(this,'${esc(p.code)}','${esc(p.holder_name||'')}','${esc(tier)}','${esc(p.data?.service_address||'')}','${esc(p.data?.contact_phone||'')}')"><div class="cr-name">${esc(p.holder_name||'Unknown')}</div><div class="cr-meta">${tier?`<span class="plan-pill ${pc}" style="font-size:9px">${esc(tier)}</span>`:''}<span class="cr-addr">${esc(addr)}</span></div></div>`;}).join('');
+}
+
+function selectCustomer(el,code,name,plan,address,phone){document.querySelectorAll('.cust-row').forEach(r=>r.classList.remove('sel'));el.classList.add('sel');document.getElementById('a-code-hidden').value=code;document.getElementById('a-sc-name').textContent=name;document.getElementById('a-sc-meta').textContent=[plan,address].filter(Boolean).join(' · ');document.getElementById('a-sel-card').style.display='';document.getElementById('a-sel-placeholder').style.display='none';if(phone)document.getElementById('a-phone').value=phone;setTab('new');}
+
+function searchCustomers(q){clearTimeout(searchDebounce);searchDebounce=setTimeout(async()=>{const res=await fetch(`${BOOK_URL}?list=passes&q=${encodeURIComponent(q)}`,{headers:ADMIN_AUTH});renderCustomerList((await res.json()).data);},300);}
+
+async function submitAdminBooking(){
+  const code=document.getElementById('a-code-hidden').value;const err=document.getElementById('a-err');const btn=document.getElementById('a-btn');const st=document.getElementById('a-type').value;
+  if(!code){err.textContent='Select a customer first.';err.style.display='block';return;}
+  if(!st){err.textContent='Select a service type.';err.style.display='block';return;}
+  err.style.display='none';btn.disabled=true;btn.innerHTML='<span class="spin"></span> Creating…';
+  try{
+    const res=await fetch(BOOK_URL,{method:'POST',headers:{'content-type':'application/json',...ADMIN_AUTH},body:JSON.stringify({code,service_type:st,description:document.getElementById('a-desc').value.trim()||undefined,preferred_date:document.getElementById('a-date').value||undefined,contact_phone:document.getElementById('a-phone').value.trim()||undefined,created_by:'admin'})});
+    const data=await res.json();
+    if(!res.ok||!data.success)throw new Error(data.error||'Failed');
+    ['a-type','a-desc','a-date','a-phone'].forEach(id=>{document.getElementById(id).value='';});
+    document.getElementById('a-sel-card').style.display='none';document.getElementById('a-sel-placeholder').style.display='';document.getElementById('a-code-hidden').value='';document.querySelectorAll('.cust-row').forEach(r=>r.classList.remove('sel'));
+    btn.innerHTML=`✅ Created: ${data.reference}`;setTimeout(()=>{btn.disabled=false;btn.textContent='Create Booking';},3000);setTab('hist');loadBookings(null);
+  }catch(e){err.textContent=e.message;err.style.display='block';btn.disabled=false;btn.textContent='Create Booking';}
+}
+
+async function loadBookings(statusFilter){
+  const el=document.getElementById('a-bookings');el.innerHTML='<div class="empty-state">Loading…</div>';
+  try{const qs=statusFilter?`&status=${statusFilter}`:'';const res=await fetch(`${BOOK_URL}?list=bookings${qs}`,{headers:ADMIN_AUTH});renderBookings((await res.json()).data);}catch{el.innerHTML='<div class="empty-state">Failed to load</div>';}
+}
+
+function renderBookings(bookings){
+  const el=document.getElementById('a-bookings');
+  if(!bookings||bookings.length===0){el.innerHTML='<div class="empty-state">No bookings yet</div>';return;}
+  const sbMap={pending:'sb-pending',scheduled:'sb-scheduled',completed:'sb-completed',cancelled:'sb-cancelled'};
+  el.innerHTML=bookings.map(b=>`<div class="bk-row"><div class="bk-top"><span class="bk-ref">${esc(b.reference)}</span><span class="bk-name">${esc(b.holder_name||'-')}</span><span class="bk-type">${esc(b.service_type)}</span><span class="status-badge ${sbMap[b.status]||''}">${b.status}</span>${b.created_by==='admin'?'<span style="font-size:10px;color:#9ca3af;background:#f3f4f6;padding:2px 7px;border-radius:10px">admin</span>':''}</div>${b.service_address?`<div style="font-size:11px;color:#9ca3af;margin-top:4px">${esc(b.service_address)}</div>`:''} ${b.description?`<div style="font-size:12px;color:#4b5563;margin-top:5px;font-style:italic">"${esc(b.description.slice(0,100))}${b.description.length>100?'…':''}"</div>`:''}<div class="bk-bot"><span style="font-size:11px;color:#9ca3af">${b.preferred_date?'📅 '+esc(b.preferred_date):'ASAP'}</span><span style="font-size:11px;color:#9ca3af">Created: ${new Date(b.created_at).toLocaleDateString('en-SG')}</span>${b.contact_phone?`<span style="font-size:11px;color:#4b5563">📞 ${esc(b.contact_phone)}</span>`:''}<select class="status-sel" onchange="updateBookingStatus('${b.id}',this.value)" style="margin-left:auto"><option value="pending" ${b.status==='pending'?'selected':''}>Pending</option><option value="scheduled" ${b.status==='scheduled'?'selected':''}>Scheduled</option><option value="completed" ${b.status==='completed'?'selected':''}>Completed</option><option value="cancelled" ${b.status==='cancelled'?'selected':''}>Cancelled</option></select></div></div>`).join('');
+}
+
+async function updateBookingStatus(id,status){await fetch(`${BOOK_URL}?id=${id}`,{method:'PATCH',headers:{'content-type':'application/json',...ADMIN_AUTH},body:JSON.stringify({status})});setTimeout(()=>loadBookings(null),400);}
+
+function setTab(name){document.getElementById('tab-new').style.display=name==='new'?'':'none';document.getElementById('tab-hist').style.display=name==='hist'?'':'none';document.getElementById('tab-new-btn').classList.toggle('active',name==='new');document.getElementById('tab-hist-btn').classList.toggle('active',name==='hist');}
+
+function logout(){sessionStorage.removeItem('sc_admin_ok');adminAuthed=false;showView('view-entry');}
+
+function esc(str){return String(str||'').replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'})[c]);}
+</script>
+</body>
+</html>
